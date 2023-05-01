@@ -161,6 +161,18 @@
         .menu-active {
             color: #f6be17 !important;
         }
+
+        .color-1 {
+            color: #333333 !important;
+        }
+
+        .bg-second2 {
+            background-color: #f6be17 !important;
+        }
+
+        .bg-primary1 {
+            background-color: #333333 !important;
+        }
     </style>
 
     @yield('css')

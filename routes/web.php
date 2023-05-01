@@ -18,5 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/cv-kerja', 'CvKerjaController@index');
+Route::get('/akun', function() {
+    return 'Masih Proses Pengembangan';
+});
+Route::post('/preview', 'CvKerjaController@preview');
