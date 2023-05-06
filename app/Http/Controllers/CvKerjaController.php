@@ -13,12 +13,12 @@ class CvKerjaController extends Controller
         $data['templates'] = [
             [
                 'id' => 1,
-                'image' => "assets/images/test.jpg",
+                'image' => "assets/images/templates/template-1.jpg",
                 'nama' => 'Template 1'
             ],
             [
                 'id' => 2,
-                'image' => "assets/images/test.jpg",
+                'image' => "assets/images/templates/template-2.jpg",
                 'nama' => 'Template 2'
             ]
         ];
@@ -30,10 +30,10 @@ class CvKerjaController extends Controller
     {
         $data['data'] = $request->all();
 
-    
-        // return view('menus.preview', $data);
-        $pdf = Pdf::loadView('menus.preview', $data);
-        return $pdf->stream('invoice.pdf', ['Attachment' => false]);
+        // return view('menus.preview.cv-kerja.templates.1');
+        return view('menus.preview.cv-kerja.templates.'.$request->template_use.'', $data)->render();
 
+        // $pdf = Pdf::loadView('menus.preview', $data);
+        // return $pdf->stream('invoice.pdf', ['Attachment' => false]);
     }
 }

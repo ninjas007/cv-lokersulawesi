@@ -144,8 +144,8 @@
         }
 
         body {
-            /* background-image: url('https://www.linkpicture.com/q/background_37.jpg'); */
             /* background-repeat: no-repeat; */
+            background-image: url('{{ asset('assets/images/background.jpg') }}');
             background-size: cover;
         }
 
@@ -201,6 +201,9 @@
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @yield('js')
     <script type="text/javascript">
+        var template_use = 1;
+        var storage = [];
+
         @if (Session::has('success'))
             swal({
                 title: "Berhasil!",
@@ -229,6 +232,25 @@
                 $(`input[name="${name}"]`).attr('type', 'text')
             }
         });
+
+        function pakaiTemplate() {
+            template_use = $('input[name="template"]:checked').val();
+
+            $('#templateUse').val(template_use);
+
+            swal({
+                title: "Berhasil!",
+                text: "Berhasil pilih template",
+                icon: "success",
+                button: "Ok",
+            }).then(() => {
+                $('#modalPilihTemplate').modal('hide');
+            });
+        }
+
+        function saveData() {
+
+        }
     </script>
 </body>
 

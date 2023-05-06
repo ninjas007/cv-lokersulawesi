@@ -6,6 +6,7 @@
             <div class="col-12">
                 <form method="POST" action="{{ url('preview') }}" enctype="multipart/form-data" id="formCvKerja">
                     @csrf
+                    <input type="text" style="display: none" value="1" id="templateUse" name="template_use">
                     @include('pages.parts.cv-kerja-data-diri')
 
                     @include('pages.parts.cv-kerja-pendidikan')
@@ -25,71 +26,11 @@
                 </div>
             </div> --}}
 
-            <!-- Modal -->
-            <div class="modal fade" id="modalCustom" tabindex="-1" aria-labelledby="modalCustomLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalCustomLabel">Tambah Custom Inputan</h5>
-                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group mb-3">
-                                <label for="judul" class="mb-1">Judul</label>
-                                <input type="text" class="form-control" name="judul" id="judul">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="tipe">Tipe</label>
-                                <select name="tipe" id="tipe" class="form-control">
-                                    <option value="text">Text</option>
-                                    <option value="list">List</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success" onclick="tambahCustom()">
-                                <i class="fa fa-plus"></i> Tambah
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {{-- @include('pages.modals.modal-custom-inputan') --}}
 
-            <!-- Modal Pilih Template-->
-            <div class="modal modal-lg fade" id="modalPilihTemplate" tabindex="-1" aria-labelledby="modalPilihTemplate"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="pilihTemplate">Pilih Template</h5>
-                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                @foreach ($templates as $key => $template)
-                                    <div class="col-4">
-                                        <img src="{{ asset(''.$template['image'].'') }}" alt="{{ $template['nama'] }}" width="100%" height="100%" class="mb-2">
-                                        <div class="form-check">
-                                            <input class="form-check-input" name="template" type="radio" value="" id="template{{ $key }}" 
-                                            @if ($template['id'] == 1)
-                                                checked
-                                            @endif>
-                                            <label class="form-check-label" for="template{{ $key }}">{{ $template['nama'] }}</label>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success" onclick="pakaiTemplate()">
-                                <i class="fa fa-plus"></i> Pakai Template
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @include('pages.modals.modal-pilih-template')
+
+            @include('pages.modals.modal-preview')
         </div>
     </div>
 @endsection
@@ -164,20 +105,35 @@
             elem.parentElement.remove();
         }
 
-        function tambahCustom() {
-            let judul = $('#modalCustom #judul').val();
-            let tipe = $('#modalCustom #tipe').find(':selected').val();
-
-            data_custom.push({
-                judul: judul,
-                tipe: tipe
-            })
-            localStorage.setItem('data_custom', data_custom);
-        }
-
         function preview() {
-            $(`#formCvKerja`).attr('target', '_blank');
-            $(`#formCvKerja`).submit();
+            // $(`#formCvKerja`).attr('target', '_blank');
+            // $(`#formCvKerja`).submit();
+
+            let data = $("#formCvKerja").serialize();
+            $.ajax({
+                url: `{{ url('') }}/preview`,
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: data,
+                success: function(response) {
+                    $('#modalPreview .modal-body').html(response);
+                    $('#modalPreview').modal('show');
+                }
+            })
         }
+
+        // TODO: add custom input
+        // function tambahCustom() {
+        //     let judul = $('#modalCustom #judul').val();
+        //     let tipe = $('#modalCustom #tipe').find(':selected').val();
+
+        //     data_custom.push({
+        //         judul: judul,
+        //         tipe: tipe
+        //     })
+        //     localStorage.setItem('data_custom', data_custom);
+        // }
     </script>
 @endsection

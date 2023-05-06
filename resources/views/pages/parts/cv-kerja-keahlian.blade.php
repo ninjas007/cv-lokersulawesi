@@ -9,7 +9,7 @@
             <div class="col-12">
                 <div class="form-group mb-3">
                     <label for="type" class="mb-1">Tipe Input</label>
-                    <select name="tipe_input" id="tipeInput" class="form-control" onchange="changeTipeInputKeahlian(this)">
+                    <select name="tipe_input_keahlian" id="tipeInput" class="form-control" onchange="changeTipeInputKeahlian(this)">
                         <option value="text">Text Area</option>
                         <option value="list">List</option>
                     </select>
