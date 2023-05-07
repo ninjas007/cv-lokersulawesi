@@ -1,42 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('menus.preview.index')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Preview</title>
-    <style>
-        html {
-            margin: 0px;
-        }
-
-        * {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13px;
-        }
-
-        table {
-            width: 101%;
-            border-collapse: none;
-        }
-
-        table tr td {
-            vertical-align: top;
-        }
-
-        .page-break {
-            page-break-inside: always !important;
-        }
-    </style>
-</head>
-
-<body>
+@section('content')
     <div style="background-color: #333333; padding: 20px 25px; color: white; line-height: 1.3">
         <table>
             <tr>
                 <td width="15%" style="vertical-alignt: middle !important">
-                    <img src="{{ asset('assets/images/test.jpg') }}" alt="image" width="100%" height="100px"
+                    <img src="{{ public_path('assets/images/test.jpg') }}" alt="image" width="100%" height="100px"
                         style="border-radius: 50%;">
                 </td>
                 <td width="3%">&nbsp;</td>
@@ -111,8 +80,7 @@
                             @for ($i = 0; $i < count($data['sosial_media']['nama']); $i++)
                                 <tr>
                                     <td>
-                                        <a href="{{ $data['sosial_media']['link'][$i] }}" style="color: #000;"
-                                            target="_blank">
+                                        <a href="{{ $data['sosial_media']['link'][$i] }}" style="color: #000;" target="_blank">
                                             {{ $data['sosial_media']['nama'][$i] }}
                                         </a>
                                     </td>
@@ -234,6 +202,4 @@
             @endisset
         </table>
     </div>
-</body>
-
-</html>
+@endsection

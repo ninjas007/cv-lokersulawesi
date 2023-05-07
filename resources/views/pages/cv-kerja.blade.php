@@ -105,23 +105,59 @@
             elem.parentElement.remove();
         }
 
-        function preview() {
-            // $(`#formCvKerja`).attr('target', '_blank');
-            // $(`#formCvKerja`).submit();
+        function selectTemplate() {
+            template_use = $('input[name="template"]:checked').val();
 
-            let data = $("#formCvKerja").serialize();
-            $.ajax({
-                url: `{{ url('') }}/preview`,
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: data,
-                success: function(response) {
-                    $('#modalPreview .modal-body').html(response);
-                    $('#modalPreview').modal('show');
-                }
-            })
+            $('#templateUse').val(template_use);
+        }
+
+        function download() {
+            selectTemplate();
+
+            $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
+            $(`#formCvKerja`).attr('target', '_blank');
+            $(`#formCvKerja`).submit();
+        }
+
+        function preview() {
+            selectTemplate();
+
+            $(`#formCvKerja`).attr('target', '_blank');
+            $(`#formCvKerja`).submit();
+
+            // let data = $("#formCvKerja").serialize();
+            // $.ajax({
+            //     url: `{{ url('') }}/preview`,
+            //     method: 'POST',
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     data: data,
+            //     success: function(response) {
+            //         console.log(response);
+            //         // var element = response;
+
+            //         // html2canvas(element, {
+            //         //     background: '#ffffff',
+            //         //     onrendered: function(canvas){
+            //         //         console.log(canvas)
+            //         //         var imgData = canvas.toDataURL('image/jpeg');
+            //         //         $('#modalPreview .modal-body').html(response);
+            //         //         $('#modalPreview').modal('show');
+            //         //         alert('Success!');
+            //         //         console.log(imgData);
+            //         //     }
+            //         // });
+                    
+                    
+
+            //         // w = window.open(window.location.href,"_blank");
+            //         // w.document.open();
+            //         // w.document.write(response);
+            //         // w.document.close();
+            //         // w.window.print();
+            //     }
+            // })
         }
 
         // TODO: add custom input

@@ -23,6 +23,7 @@ Route::get('/akun', function() {
     return 'Masih Proses Pengembangan';
 });
 Route::post('/preview', 'CvKerjaController@preview');
+Route::post('/download', 'CvKerjaController@download');
 
 Route::get('/test', function() {
     return view('menus.preview')->render();

@@ -27,8 +27,11 @@ aria-hidden="true">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success" onclick="pakaiTemplate()">
-                <i class="fa fa-plus"></i> Pakai Template
+            <button type="button" class="btn btn-primary" onclick="preview()">
+                <i class="fa fa-eye"></i> Preview
+            </button>
+            <button type="button" class="btn btn-success" onclick="download()">
+                <i class="fa fa-download"></i> Download
             </button>
         </div>
     </div>
