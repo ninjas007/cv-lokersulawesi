@@ -23,7 +23,10 @@ Route::get('/akun', function() {
     return 'Masih Proses Pengembangan';
 });
 Route::post('/preview', 'CvKerjaController@preview');
+// Route::post('/pembayaran', 'CvKerjaController@pembayaran');
 Route::post('/download', 'CvKerjaController@download');
+Route::get('/payments/midtrans-notification', 'PaymentCallbackController@receive');
+Route::get('/download-pdf', 'CvKerjaController@downloadPdf');
 
 Route::get('/test', function() {
     return view('menus.preview')->render();

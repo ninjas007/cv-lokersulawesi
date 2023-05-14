@@ -7,6 +7,8 @@
                 <form method="POST" action="{{ url('preview') }}" enctype="multipart/form-data" id="formCvKerja">
                     @csrf
                     <input type="text" style="display: none" value="1" id="templateUse" name="template_use">
+                    <input type="hidden" id="snapToken" name="snap_token">
+                    <input type="hidden" id="responseVal" name="responseVal">
                     @include('pages.parts.cv-kerja-data-diri')
 
                     @include('pages.parts.cv-kerja-pendidikan')
