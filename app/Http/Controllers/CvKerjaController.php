@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\Midtrans\CreateSnapTokenService;
 use App\Order;
+use Illuminate\Support\Facades\DB;
 
 class CvKerjaController extends Controller
 {
@@ -55,48 +56,58 @@ class CvKerjaController extends Controller
 
     public function download(Request $request)
     {
-        $snapToken = $request->snap_token;
+        DB::beginTransaction();
+        try {
+            $snapToken = $request->snap_token;
 
-        if (empty($snapToken)) {
-            // Jika snap token masih NULL, buat token snap dan simpan ke database
-            $latestIdOrder = Order::count() + 1;
-            $dateNow = date('ymdhis');
+            if (empty($snapToken)) {
+                // Jika snap token masih NULL, buat token snap dan simpan ke database
+                $latestIdOrder = Order::count() + 1;
+                $dateNow = date('ymdhis');
+    
+                $item_details = [
+                    [
+                        'id' => $latestIdOrder,
+                        'price' => '20000',
+                        'quantity' => 1,
+                        'name' => 'Order CV Kerja',
+                    ],
+                ];
+                $customer_details = [
+                    'first_name' => $request->nama,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                ];
+    
+                $order = new Order;
+                $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
+                $order->total_price = 20000;
+                $order->item_details = json_encode($item_details);
+                $order->customer_details = json_encode($customer_details);
+                $order->payload = json_encode($request->all());
+                $order->template_use = $request->template_use;
+    
+                // TODO: check template use berbayar atau tidak
+                // kalau berbayar tambah biayanya
+                $midtrans = new CreateSnapTokenService($order);
+                $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
+                
+                $order->snap_token = $snapToken;
+                $order->save();
+    
+                $data['order'] = $order;
+                $data['snapToken'] = $snapToken;
 
-            $item_details = [
-                [
-                    'id' => $latestIdOrder,
-                    'price' => '20000',
-                    'quantity' => 1,
-                    'name' => 'Order CV Kerja',
-                ],
-            ];
-            $customer_details = [
-                'first_name' => $request->nama,
-                'email' => $request->email,
-                'phone' => $request->phone,
-            ];
 
-            $order = new Order;
-            $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
-            $order->total_price = 20000;
-            $order->item_details = json_encode($item_details);
-            $order->customer_details = json_encode($customer_details);
-            $order->payload = json_encode($request->all());
-            $order->template_use = $request->template_use;
+                DB::commit();
+    
+                return view('menus.order.midtrans', compact('order', 'snapToken'));
+            }
+        } catch (\Throwable $th) {
 
-            // TODO: check template use berbayar atau tidak
-            // kalau berbayar tambah biayanya
+            DB::rollBack();
 
-            $midtrans = new CreateSnapTokenService($order);
-            $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
-            
-            $order->snap_token = $snapToken;
-            $order->save();
-
-            $data['order'] = $order;
-            $data['snapToken'] = $snapToken;
-
-            return view('menus.order.midtrans', compact('order', 'snapToken'));
+            dd($th);
         }
     }
 }
