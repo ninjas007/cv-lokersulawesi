@@ -8,4 +8,5 @@ return [
     'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     'is_sanitized' => false,
     'is_3ds' => false,
+    'snap_url' => env('MIDTRANS_SNAP_URL')
 ];
