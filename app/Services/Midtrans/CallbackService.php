@@ -2,7 +2,7 @@
  
 namespace App\Services\Midtrans;
  
-use App\Models\Order;
+use App\Order;
 use App\Services\Midtrans\Midtrans;
 use Midtrans\Notification;
  

@@ -42,15 +42,17 @@ class CvKerjaController extends Controller
 
     public function downloadPdf(Request $request)
     {
-        $status = $request->transaction_status == 'settlement' ? 2 : 4;
         $order = Order::where('number', $request->order_id)->first();
-        $order->payment_status = $status;
-        $order->save();
 
-        $data['data'] = json_decode($order->payload, true);
+        if ($order->payment_status == 2) {
+            $data['data'] = json_decode($order->payload, true);
 
-        $pdf = Pdf::loadView('menus.preview.cv-kerja.templates.'.$order->template_use.'', $data);
-        return $pdf->stream('Curicullum Vitae.pdf', ['Attachment' => false]);   
+            $pdf = Pdf::loadView('menus.preview.cv-kerja.templates.'.$order->template_use.'', $data);
+            return $pdf->stream('Curicullum Vitae.pdf', ['Attachment' => false]);  
+        }
+
+        // TODO: update ke halaman belum bayar dan tampilkan status ordernya 
+        abort(404);
     }
 
 
@@ -58,51 +60,42 @@ class CvKerjaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $snapToken = $request->snap_token;
+            $latestIdOrder = Order::count() + 1;
+            $dateNow = date('ymdhis');
 
-            if (empty($snapToken)) {
-                // Jika snap token masih NULL, buat token snap dan simpan ke database
-                $latestIdOrder = Order::count() + 1;
-                $dateNow = date('ymdhis');
-    
-                $item_details = [
-                    [
-                        'id' => $latestIdOrder,
-                        'price' => '20000',
-                        'quantity' => 1,
-                        'name' => 'Order CV Kerja',
-                    ],
-                ];
-                $customer_details = [
-                    'first_name' => $request->nama,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                ];
-    
-                $order = new Order;
-                $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
-                $order->total_price = 20000;
-                $order->item_details = json_encode($item_details);
-                $order->customer_details = json_encode($customer_details);
-                $order->payload = json_encode($request->all());
-                $order->template_use = $request->template_use;
-    
-                // TODO: check template use berbayar atau tidak
-                // kalau berbayar tambah biayanya
-                $midtrans = new CreateSnapTokenService($order);
-                $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
-                
-                $order->snap_token = $snapToken;
-                $order->save();
-    
-                $data['order'] = $order;
-                $data['snapToken'] = $snapToken;
+            $item_details = [
+                [
+                    'id' => $latestIdOrder,
+                    'price' => '20000',
+                    'quantity' => 1,
+                    'name' => 'Order CV Kerja',
+                ],
+            ];
+            $customer_details = [
+                'first_name' => $request->nama,
+                'email' => $request->email,
+                'phone' => $request->no_hp,
+            ];
 
+            $order = new Order;
+            $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
+            $order->total_price = 20000;
+            $order->item_details = json_encode($item_details);
+            $order->customer_details = json_encode($customer_details);
+            $order->payload = json_encode($request->all());
+            $order->template_use = $request->template_use;
 
-                DB::commit();
-    
-                return view('menus.order.midtrans', compact('order', 'snapToken'));
-            }
+            // TODO: check template use berbayar atau tidak
+            // kalau berbayar tambah biayanya
+            $midtrans = new CreateSnapTokenService($order);
+            $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
+            
+            $order->snap_token = $snapToken;
+            $order->save();
+
+            DB::commit();
+
+            return redirect('pembayaran?order_id='.$order->number.'&snap_token='.$snapToken.'');
         } catch (\Throwable $th) {
 
             DB::rollBack();

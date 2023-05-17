@@ -32,7 +32,7 @@
 
             @include('pages.modals.modal-pilih-template')
 
-            @include('pages.modals.modal-preview')
+            {{-- @include('pages.modals.modal-preview') --}}
         </div>
     </div>
 @endsection

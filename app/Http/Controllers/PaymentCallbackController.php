@@ -2,7 +2,7 @@
  
 namespace App\Http\Controllers;
  
-use App\Models\Order;
+use App\Order;
 use Illuminate\Http\Request;
 use App\Services\Midtrans\CallbackService;
  
@@ -13,7 +13,7 @@ class PaymentCallbackController extends Controller
         $callback = new CallbackService;
  
         if ($callback->isSignatureKeyVerified()) {
-            // $notification = $callback->getNotification();
+            $notification = $callback->getNotification();
             $order = $callback->getOrder();
  
             if ($callback->isSuccess()) {
