@@ -53,6 +53,11 @@
                             <td>:</td>
                             <td> {{ $data['no_hp'] }}</td>
                         </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>:</td>
+                            <td> {{ $data['email'] ?? '' }}</td>
+                        </tr>
                     </table>
 
                     <table style="margin-top: 30px; line-height: 1.5">

@@ -38,6 +38,11 @@
             </select>
         </div>
         <div class="form-group mb-3">
+            <label for="email" class="mb-1">Email</label>
+            <input type="text" class="form-control" name="email" id="email"
+                placeholder="Contoh: johndoe@mail.com">
+        </div>
+        <div class="form-group mb-3">
             <label for="no_hp" class="mb-1">No HP</label>
             <input type="text" class="form-control" name="no_hp" id="no_hp"
                 placeholder="Contoh: 0812345678998">
