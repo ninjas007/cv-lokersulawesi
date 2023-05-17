@@ -7,7 +7,7 @@
             </button>
         </a>
         {{-- TODO: nanti muncul modal tips untuk nulis cv yang baik --}}
-        <a href="" target="_blank">
+        <a href="https://lokersulawesi.com/4-hal-penting-yang-harus-ada-di-cv-kamu/" target="_blank">
             <button class="btn-menubar">
                 <i class="fa fa-list color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
                 <span class="color-2" style="font-size: 10px">Tips</span>
