@@ -3,19 +3,17 @@
 @endphp
 <table style="width: 100%; margin-top: 100px; margin-bottom: 30px" id="tableDetail">
     <tr>
-        <td width="30%">Order ID</td>
-        <td width="3%">:</td>
+        <td width="30%">Order ID &nbsp;<span id="copyId" onclick="copyId()" class="text-info"><i class="fa fa-pencil"></i> Copy</span></td>
+        <td width="1%">:</td>
         <td>
             <span id="orderId">{{ $order->number }}</span>
-            &nbsp;&nbsp; <span id="copyId" onclick="copyId()"><i class="fa fa-pencil"></i> Copy</span>
         </td>
     </tr>
     <tr>
-        <td>Snap Token</td>
-        <td width="3%">:</td>
+        <td>Snap Token &nbsp; <span id="copyId" onclick="copySnap()" class="text-info"><i class="fa fa-pencil"></i> Copy</span></td>
+        <td>:</td>
         <td>
-            <span>{{ $order->snap_token }}</span>
-            &nbsp;&nbsp; <span id="copyId" onclick="copySnap()"><i class="fa fa-pencil"></i> Copy</span>
+            {{ $order->snap_token }}
         </td>
     </tr>
     <tr>
