@@ -73,7 +73,7 @@ class CvKerjaController extends Controller
         ];
 
         $request->validate([
-            'ringkasan_profile' => 'required',
+            'ringkasan_profil' => 'required',
             'nama' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
