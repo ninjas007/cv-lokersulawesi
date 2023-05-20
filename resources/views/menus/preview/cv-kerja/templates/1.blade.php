@@ -5,7 +5,10 @@
         <table>
             <tr>
                 <td width="15%" style="vertical-alignt: middle !important">
-                    <img src="{{ public_path('storage/assets/photos/'.$data['name_foto'].'') }}" alt="image" width="100%" height="100px"
+                    @php
+                        $photo = $data['name_foto'] ?? 'default.jpg';
+                    @endphp
+                    <img src="{{ public_path('storage/assets/photos/'.$photo.'') }}" alt="image" width="100%" height="100px"
                         style="border-radius: 50%;">
                 </td>
                 <td width="3%">&nbsp;</td>
