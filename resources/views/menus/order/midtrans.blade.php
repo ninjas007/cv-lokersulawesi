@@ -10,7 +10,7 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center" style="margin-bottom: 70px">
+        <div class="row justify-content-center bg-white" style="margin-bottom: 70px">
             <div class="col-12">
                 <div id="resultJson" class="p-3">
                     @include('menus.order.component-detail')
