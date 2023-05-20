@@ -117,19 +117,19 @@
         function download() {
             selectTemplate();
 
-            // if (validation() > 0) {
-            //     swal({
-            //         title: 'Info',
-            //         text: 'Terdapat data yang harus di isi',
-            //         icon: 'info',
-            //         button: true,
-            //     })
-            //     .then(() => {
-            //         $('#modalPilihTemplate').modal('hide');
-            //     });
+            if (validation() > 0) {
+                swal({
+                    title: 'Info',
+                    text: 'Terdapat data yang harus di isi',
+                    icon: 'info',
+                    button: true,
+                })
+                .then(() => {
+                    $('#modalPilihTemplate').modal('hide');
+                });
 
-            //     return
-            // }
+                return
+            }
 
             $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
             $(`#formCvKerja`).submit();
