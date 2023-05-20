@@ -173,6 +173,10 @@
         .bg-primary1 {
             background-color: #333333 !important;
         }
+
+        .is-invalid {
+            margin-bottom: 0px !important;
+        }
     </style>
 
     @yield('css')

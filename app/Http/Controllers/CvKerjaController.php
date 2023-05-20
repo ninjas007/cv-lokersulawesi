@@ -58,6 +58,36 @@ class CvKerjaController extends Controller
 
     public function download(Request $request)
     {
+        $messages = [
+            'ringkasan_profile.required' => 'Ringkasan profil harus diisi.',
+            'nama.required' => 'Nama harus diisi.',
+            'tempat_lahir.required' => 'Tempat lahir harus diisi.',
+            'tanggal_lahir.required' => 'Tanggal lahir harus diisi.',
+            'jenis_kelamin.required' => 'Jenis kelamin harus diisi.',
+            'email.required' => 'Email harus diisi.',
+            'no_hp.required' => 'Nomor HP harus diisi.',
+            'alamat_lengkap.required' => 'Alamat lengkap harus diisi.',
+            'foto.required' => 'Gambar harus diunggah.',
+            'foto.image' => 'Gambar harus berupa file gambar.',
+            'foto.max' => 'Ukuran gambar harus kurang dari 512KB.',
+        ];
+
+        $request->validate([
+            'ringkasan_profile' => 'required',
+            'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
+            'email' => 'required',
+            'no_hp' => 'required',
+            'alamat_lengkap' => 'required',
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:512'
+        ], $messages);
+
+        $foto = app(\App\Http\Controllers\HelperController::class)->uploadFile($request);
+        $request->merge(['path_foto' => $foto['path_foto']]);
+        $request->merge(['name_foto' => $foto['name_foto']]);
+
         DB::beginTransaction();
         try {
             $latestIdOrder = Order::count() + 1;
@@ -87,8 +117,14 @@ class CvKerjaController extends Controller
 
             // TODO: check template use berbayar atau tidak
             // kalau berbayar tambah biayanya
-            $midtrans = new CreateSnapTokenService($order);
-            $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
+            if (config('midtrans.is_active')) {
+                $midtrans = new CreateSnapTokenService($order);
+                $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
+                $order->payment_status = 1;
+            } else {
+                $snapToken = 'd520fe0d-89d5-428d-a9e9-f58017d06fd7'; // dummy, untuk develop makanya pakai ini
+                $order->payment_status = 2;
+            }
             
             $order->snap_token = $snapToken;
             $order->save();

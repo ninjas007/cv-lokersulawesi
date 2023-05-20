@@ -13,11 +13,12 @@
 
                     @include('pages.parts.cv-kerja-pendidikan')
 
+                    @include('pages.parts.cv-kerja-sosial')
+
                     @include('pages.parts.cv-kerja-pengalaman')
 
                     @include('pages.parts.cv-kerja-keahlian')
 
-                    @include('pages.parts.cv-kerja-sosial')
 
                     @include('pages.parts.cv-kerja-portofolio')
                 </form>
@@ -116,10 +117,43 @@
         function download() {
             selectTemplate();
 
+            // if (validation() > 0) {
+            //     swal({
+            //         title: 'Info',
+            //         text: 'Terdapat data yang harus di isi',
+            //         icon: 'info',
+            //         button: true,
+            //     })
+            //     .then(() => {
+            //         $('#modalPilihTemplate').modal('hide');
+            //     });
+
+            //     return
+            // }
+
             $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
-            $(`#formCvKerja`).attr('target', '_blank');
             $(`#formCvKerja`).submit();
         }
+
+        function validation() {
+            let is_valid = 0;
+
+            $('.custom_validation').each(function() {
+                $(this).removeClass('is-invalid');
+                $(this).removeClass('custom_invalid');
+                if ($(this).val() == '') {
+                    const fieldText = $(this).prev('label').text();
+                    
+                    $(this).addClass('is-invalid');
+                    $(this).after(`<div class="invalid-feedback mt-1 custom_invalid">${fieldText} harus diisi.</div>`);
+                    
+                    is_valid++;
+                }
+            });
+
+            return is_valid;
+        }
+
 
         function preview() {
             selectTemplate();
@@ -150,8 +184,6 @@
             //         //         console.log(imgData);
             //         //     }
             //         // });
-                    
-                    
 
             //         // w = window.open(window.location.href,"_blank");
             //         // w.document.open();

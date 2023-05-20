@@ -48,7 +48,7 @@
     </tr>
     <tr>
         <td colspan="3" align="right">
-            @if ($order->payment_status == 2)
+            @if ($order->payment_status == 2 || config('midtrans.is_active') == false)
                 <a href="{{ url('download-pdf') }}?order_id={{ $order->number }}&snap_token={{ $order->snap_token }}" class="btn btn-primary">
                     Download PDF
                 </a>

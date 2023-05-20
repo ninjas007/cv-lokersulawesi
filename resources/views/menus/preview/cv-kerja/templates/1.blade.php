@@ -5,7 +5,7 @@
         <table>
             <tr>
                 <td width="15%" style="vertical-alignt: middle !important">
-                    <img src="{{ public_path('assets/images/test.jpg') }}" alt="image" width="100%" height="100px"
+                    <img src="{{ public_path('storage/assets/photos/'.$data['name_foto'].'') }}" alt="image" width="100%" height="100px"
                         style="border-radius: 50%;">
                 </td>
                 <td width="3%">&nbsp;</td>
@@ -157,7 +157,7 @@
                                 </td>
                             </tr>
                             @for ($i = 0; $i < count($data['pengalaman']['posisi']); $i++)
-                                <tr>
+                                <tr style="page-break-before: auto">
                                     <td>
                                         <span style="font-weight: bold;">{{ $data['pengalaman']['posisi'][$i] }}</span> -
                                         {{ $data['pengalaman']['kota'][$i] }}<br>
