@@ -4,15 +4,26 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
+
+    <meta property="og:title" content="Cv Maker - Loker Sulawesi">
+    <meta property="og:description" content="@yield('description')">
+    <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi.jpeg') }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:site_name" content="https://cv.lokersulawesi.com/cv-maker">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>CV GENERATE LOKER SULAWESI</title>
+    <title>CV Maker - LOKER SULAWESI</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}" sizes="32x32" />
+    <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
+    <link rel="apple-touch-icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="180x180" />
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
