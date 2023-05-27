@@ -144,8 +144,8 @@ class CvKerjaController extends Controller
     public function templateHarga($template_id)
     {
         $templates = [
-            "1" => "20000",
-            "2" => "15000" 
+            "1" => "15000",
+            "2" => "10000" 
         ];
 
         return $templates[$template_id] ?? "20000";

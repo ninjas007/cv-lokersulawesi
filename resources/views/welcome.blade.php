@@ -86,9 +86,9 @@
 
                 <div class="links">
                     <a href="{{ url('/cv-kerja') }}">CV Kerja</a>
-                    <a href="https://laracasts.com">Surat Lamaran Kerja</a>
-                    <a href="https://laravel-news.com">CV Ta'aruf</a>
-                    <a href="https://blog.laravel.com">Surat Sakit</a>
+                    <a href="javascript:void(0)" onclick="return alert('Sedang dalam tahap pengembangan')">Surat Lamaran Kerja</a>
+                    <a href="javascript:void(0)" onclick="return alert('Sedang dalam tahap pengembangan')">CV Ta'aruf</a>
+                    <a href="javascript:void(0)" onclick="return alert('Sedang dalam tahap pengembangan')">Surat Sakit</a>
                 </div>
             </div>
         </div>
