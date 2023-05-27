@@ -65,6 +65,7 @@ class CvKerjaController extends Controller
             'tanggal_lahir.required' => 'Tanggal lahir harus diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin harus diisi.',
             'email.required' => 'Email harus diisi.',
+            'email.email' => 'Email harus valid.',
             'no_hp.required' => 'Nomor HP harus diisi.',
             'alamat_lengkap.required' => 'Alamat lengkap harus diisi.',
             'foto.required' => 'Gambar harus diunggah.',
@@ -74,7 +75,7 @@ class CvKerjaController extends Controller
 
         $request->validate([
             'ringkasan_profil' => 'required',
-            'nama' => 'required',
+            'nama' => 'required:email',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -96,7 +97,7 @@ class CvKerjaController extends Controller
             $item_details = [
                 [
                     'id' => $latestIdOrder,
-                    'price' => '20000',
+                    'price' => $this->templateHarga($request->template_use),
                     'quantity' => 1,
                     'name' => 'Order CV Kerja',
                 ],
@@ -136,7 +137,17 @@ class CvKerjaController extends Controller
 
             DB::rollBack();
 
-            dd($th);
+            return redirect()->back()->with(['error' => true]);
         }
+    }
+
+    public function templateHarga($template_id)
+    {
+        $templates = [
+            "1" => "20000",
+            "2" => "15000" 
+        ];
+
+        return $templates[$template_id] ?? "20000";
     }
 }
