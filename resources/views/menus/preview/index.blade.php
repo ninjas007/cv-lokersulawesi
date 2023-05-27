@@ -28,7 +28,22 @@
         .page-break {
             page-break-inside: always !important;
         }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .garis {
+            border: .7px solid #3f3d3de5;
+        }
+
     </style>
+
+    @yield('css')
 </head>
 
 <body>

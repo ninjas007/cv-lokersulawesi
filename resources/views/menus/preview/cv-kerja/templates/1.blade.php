@@ -116,7 +116,7 @@
                                         <span style="font-style: italic">{{ $data['pendidikan']['tahun_masuk'][$i] }} -
                                             {{ $data['pendidikan']['tahun_keluar'][$i] }}</span>
 
-                                        @if (!empty($data['pendidikan']['jurusan']))
+                                        @if (!empty($data['pendidikan']['jurusan'][$i]))
                                             <br>
                                             <span>{{ $data['pendidikan']['jurusan'][$i] }}</span>
                                         @endif

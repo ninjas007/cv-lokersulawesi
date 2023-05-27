@@ -161,6 +161,7 @@
         function preview() {
             selectTemplate();
 
+            $(`#formCvKerja`).attr('action', `{{ url('preview') }}`);
             $(`#formCvKerja`).attr('target', '_blank');
             $(`#formCvKerja`).submit();
 
