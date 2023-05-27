@@ -12,7 +12,10 @@
                 cols="30" rows="5">{{ old('ringkasan_profil') }}</textarea>
         </div>
         <div class="form-group mb-3">
-            <label for="foto" class="mb-1">Foto Profil</label>
+            <label for="foto" class="mb-1">Foto Profil</label> 
+            <span class="text-primary" style="font-size: 11px; font-style: italic"><i class="fa fa-info text-white bg-info" data-mdb-toggle="tooltip" title="Untuk mendapatkan hasil gambar yang bagus baiknya gambar berukuran 100x100 px" style="font-size: 11px; border-radius: 50%; padding: 2px 5px"></i> (Foto harus berupa: jpg, jpeg, png, gif, max size: 512KB) 
+                
+            </span>
             <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto" id="foto">
 
             @error('foto')
