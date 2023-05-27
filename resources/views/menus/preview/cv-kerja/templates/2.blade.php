@@ -187,7 +187,7 @@
                     <td colspan="2">
                         <div style="font-style: italic; margin-top: -5px">{{ $data['pengalaman']['perusahaan'][$i] }}</div>
                         <div style="margin-top: 3px; padding-bottom: 8px;">
-                            {{ $data['pengalaman']['deskripsi_pekerjaan'][$i] }}
+                            {!! $data['pengalaman']['deskripsi_pekerjaan'][$i] !!}
                         </div>
                     </td>
                 </tr>
@@ -210,7 +210,7 @@
                     <td>
                         <div style="margin-bottom: 5px">
                             <div class="bold">{{ $data['portofolio']['nama_portofolio'][$i] }}</div>
-                            {{ $data['portofolio']['deskripsi_portofolio'][$i] }}
+                            {!! $data['portofolio']['deskripsi_portofolio'][$i] !!}
                         </div>
                     </td>
                 </tr>

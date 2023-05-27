@@ -272,6 +272,12 @@
             });
         }
     </script>
+
+    <script>
+        tinymce.init({
+        selector: 'textarea.tiny'
+        });
+    </script>
 </body>
 
 </html>

@@ -42,6 +42,7 @@
 @endsection
 
 @section('js')
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script type="text/javascript">
         const data_custom = [];
 
@@ -197,6 +198,15 @@
             //     }
             // })
         }
+
+        function addTinyMce()
+        {
+            tinymce.init({
+                selector: 'textarea.tiny'
+            });
+        }
+
+        addTinyMce()
 
         // TODO: add custom input
         // function tambahCustom() {

@@ -27,6 +27,7 @@ return [
     */
 
     'env' => env('APP_ENV', 'production'),
+    'seed_preview' => env('SEED_PREVIEW', false),
 
     /*
     |--------------------------------------------------------------------------

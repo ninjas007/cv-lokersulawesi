@@ -9,6 +9,6 @@
     </div>
     <div class="form-group mb-3">
         <label for="deskripsiPortofolio" class="mb-1">Deskripsi Portofolio <span class="small text-info">(jelaskan portofolio)</span></label>
-        <textarea class="form-control" name="portofolio[deskripsi_portofolio][]"  cols="30" rows="5" placeholder="Portofolio ini dibuat menggunakan Microsoft Excel"></textarea>
+        <textarea class="tiny form-control" name="portofolio[deskripsi_portofolio][]"  cols="30" rows="5" placeholder="Portofolio ini dibuat menggunakan Microsoft Excel"></textarea>
     </div>
 </div>

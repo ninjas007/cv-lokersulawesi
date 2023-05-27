@@ -31,7 +31,12 @@ class CvKerjaController extends Controller
 
     public function preview(Request $request)
     {
-        $data['data'] = $request->all();
+        if (config('app.seed_preview')) {
+            $data['data'] = app(HelperController::class)->seederEnvDevelopment();
+        } else {
+            $data['data'] = $request->all();
+        }
+        
         $data['preview'] = true;
 
         // return view('menus.preview.cv-kerja.templates.1');
@@ -110,7 +115,7 @@ class CvKerjaController extends Controller
 
             $order = new Order;
             $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
-            $order->total_price = 20000;
+            $order->total_price = $this->templateHarga($request->template_use);
             $order->item_details = json_encode($item_details);
             $order->customer_details = json_encode($customer_details);
             $order->payload = json_encode($request->all());

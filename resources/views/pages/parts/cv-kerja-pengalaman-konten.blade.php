@@ -29,6 +29,6 @@
     </div>
     <div class="form-group mb-3">
         <label for="deksiripsPekerjaan" class="mb-1">Deskripsi Pekerjaan <span class="small text-info">(jika ada)</span></label>
-        <textarea class="form-control" name="pengalaman[deskripsi_pekerjaan][]"  cols="30" rows="5" placeholder="Membuat laporan menggunakan excel, membuat audit keuangan, dll"></textarea>
+        <textarea class="tiny form-control" name="pengalaman[deskripsi_pekerjaan][]"  cols="30" rows="5" placeholder="Membuat laporan menggunakan excel, membuat audit keuangan, dll"></textarea>
     </div>
 </div>
