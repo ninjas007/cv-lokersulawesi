@@ -6,11 +6,11 @@
     <div class="col-md-5 mb-3">
         <label for="levelKeahlian" class="mb-1">Level Keahilan</label>
         <select  class="form-control" name="keahlian[level_keahlian][]">
-            <option value="0">Pemula</option>
-            <option value="1">Menengah</option>
-            <option value="2">Terampil</option>
-            <option value="3">Berpengalaman</option>
-            <option value="4">Ahli</option>
+            <option value="Pemula">Pemula</option>
+            <option value="Menengah">Menengah</option>
+            <option value="Senior">Senior</option>
+            <option value="Berpengalaman">Berpengalaman</option>
+            <option value="Profesional">Profesional</option>
         </select>
     </div>
     <div class="col-md-2 mb-3">

@@ -1,7 +1,17 @@
 @extends('menus.preview.index')
 
+@section('css')
+<style>
+    @page {
+        margin-top: 30px !important;
+        line-height: 2;
+        color: #3f3d3de5;
+    }
+</style>
+@endsection
+
 @section('content')
-    <div style="background-color: #333333; padding: 20px 25px; color: white; line-height: 1.3">
+    <div style="background-color: #333333; padding: 20px 25px; color: white; line-height: 1.3; margin-top: -30px">
         <table>
             <tr>
                 <td width="15%" style="vertical-alignt: middle !important">
@@ -24,7 +34,7 @@
         <table>
             <tr>
                 <td width="35%">
-                    <table style="margin-top: 30px; line-height: 1.5">
+                    <table style="margin-top: 15px; line-height: 1.5">
                         <tr>
                             <td colspan="3" style="font-weight: bold;">
                                 <div style="font-size: 15px">PROFIL</div>
@@ -63,7 +73,7 @@
                         </tr>
                     </table>
 
-                    <table style="margin-top: 30px; line-height: 1.5">
+                    <table style="margin-top: 10px; line-height: 1.5">
                         <tr>
                             <td style="font-weight: bold;">
                                 <div style="font-size: 15px">ALAMAT</div>
@@ -78,7 +88,7 @@
                     </table>
 
                     @isset($data['sosial_media'])
-                        <table style="margin-top: 30px">
+                        <table style="margin-top: 10px">
                             <tr>
                                 <td style="font-weight: bold;">
                                     <div style="font-size: 15px">SOSIAL MEDIA / KONTAK</div>
@@ -100,7 +110,7 @@
                 <td width="10%">&nbsp;</td>
                 <td width="60%">
                     @isset($data['pendidikan'])
-                        <table style="margin-top: 25px">
+                        <table style="margin-top: 10px">
                             <tr>
                                 <td style="font-weight: bold;">
                                     <div style="font-size: 15px">PENDIDIKAN</div>
@@ -130,10 +140,10 @@
                     @if (
                         !empty($data['deskripsi_keahlian']) ||
                             (count($data['keahlian']) > 0 && !empty($data['keahlian']['nama_keahlian'][0])))
-                        <table style="margin-top: 30px">
+                        <table style="margin-top: 10px">
                             <tr>
                                 <td style="font-weight: bold;">
-                                    <div style="font-size: 15px">KEAHLIAN / SKILL</div>
+                                    <div style="font-size: 15px">KEAHLIAN</div>
                                     <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                                 </td>
                             </tr>
@@ -144,70 +154,78 @@
                                     </td>
                                 @else
                                     <td>
-                                        Make keahlian list
+                                        <div style="margin-bottom: 5px">{{ $data['keahlian']['nama_keahlian'][$i] }} : {{ $data['keahlian']['level_keahlian'][$i] }}</div>
                                     </td>
                                 @endif
                             </tr>
                         </table>
                     @endif
 
-                    @isset($data['pengalaman'])
-                        <table style="margin-top: 30px;">
-                            <tr>
-                                <td style="font-weight: bold;">
-                                    <div style="font-size: 15px">PENGALAMAN</div>
-                                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
-                                </td>
-                            </tr>
-                            @for ($i = 0; $i < count($data['pengalaman']['posisi']); $i++)
-                                <tr style="page-break-before: auto">
-                                    <td>
-                                        <span style="font-weight: bold;">{{ $data['pengalaman']['posisi'][$i] }}</span> -
-                                        {{ $data['pengalaman']['kota'][$i] }}<br>
-                                        <span>{{ $data['pengalaman']['perusahaan'][$i] }}</span> <br>
-                                        <span style="font-style: italic">{{ $data['pengalaman']['bulan_tahun_masuk'][$i] }}
-                                            - {{ $data['pengalaman']['bulan_tahun_keluar'][$i] }}</span>
-
-                                        @if (!empty($data['pengalaman']['deskripsi_pekerjaan'][$i]))
-                                            <div style="margin-top: 5px">{!! $data['pengalaman']['deskripsi_pekerjaan'][$i] !!}</div>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endfor
-                        </table>
-                    @endisset
                 </td>
             </tr>
 
-            @isset($data['portofolio'])
+            {{-- @isset($data['pengalaman'])
+                <tr>
+                    <td colspan="3">
+                        
+                </tr>
+            @endisset --}}
+
+            {{-- @isset($data['portofolio'])
                 <tr style="page-break-before: auto">
                     <td colspan="3">
-                        <table style="margin-top: 30px">
-                            <tr>
-                                <td style="font-weight: bold;">
-                                    <div style="font-size: 15px">PORTOFOLIO</div>
-                                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
-                                </td>
-                            </tr>
-                            @for ($i = 0; $i < count($data['portofolio']['nama_portofolio']); $i++)
-                                <tr>
-                                    <td>
-                                        <span
-                                            style="font-weight: bold;">{{ $data['portofolio']['nama_portofolio'][$i] }}</span>
-                                        @if ($data['portofolio']['deskripsi_portofolio'][$i])
-                                            <br>
-                                            <span style="font-style: italic">
-                                                {!! $data['portofolio']['deskripsi_portofolio'][$i] !!}
-                                            </span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endfor
-                        </table>
+                        
 
                     </td>
                 </tr>
-            @endisset
+            @endisset --}}
         </table>
+        <table style="margin-top: 10px">
+            <tr>
+                <td style="font-weight: bold;">
+                    <div style="font-size: 15px">PORTOFOLIO</div>
+                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                </td>
+            </tr>
+            @for ($i = 0; $i < count($data['portofolio']['nama_portofolio']); $i++)
+                <tr>
+                    <td>
+                        <span
+                            style="font-weight: bold;">{{ $data['portofolio']['nama_portofolio'][$i] }}</span>
+                        @if ($data['portofolio']['deskripsi_portofolio'][$i])
+                            <br>
+                            <span style="font-style: italic">
+                                {!! $data['portofolio']['deskripsi_portofolio'][$i] !!}
+                            </span>
+                        @endif
+                    </td>
+                </tr>
+            @endfor
+        </table>
+
+        <table style="margin-top: 10px;">
+            <tr>
+                <td style="font-weight: bold;">
+                    <div style="font-size: 15px">PENGALAMAN</div>
+                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                </td>
+            </tr>
+            @for ($i = 0; $i < count($data['pengalaman']['posisi']); $i++)
+                <tr style="page-break-before: auto">
+                    <td>
+                        <span style="font-weight: bold;">{{ $data['pengalaman']['posisi'][$i] }}</span> -
+                        {{ $data['pengalaman']['kota'][$i] }}<br>
+                        <span>{{ $data['pengalaman']['perusahaan'][$i] }}</span> <br>
+                        <span style="font-style: italic">{{ $data['pengalaman']['bulan_tahun_masuk'][$i] }}
+                            - {{ $data['pengalaman']['bulan_tahun_keluar'][$i] }}</span>
+
+                        @if (!empty($data['pengalaman']['deskripsi_pekerjaan'][$i]))
+                            <div style="margin-top: 5px">{!! $data['pengalaman']['deskripsi_pekerjaan'][$i] !!}</div>
+                        @endif
+                    </td>
+                </tr>
+            @endfor
+        </table>
+    </td>
     </div>
 @endsection
