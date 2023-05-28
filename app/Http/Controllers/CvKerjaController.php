@@ -7,24 +7,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use App\Services\Midtrans\CreateSnapTokenService;
 use App\Order;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\SeedController;
 
 class CvKerjaController extends Controller
 {
+    protected $seeds;
+
+    public function __construct(SeedController $seeds)
+    {
+        $this->seeds = $seeds;    
+    }
+
     public function index()
     {
         $data['menu'] = 'home';
-        $data['templates'] = [
-            [
-                'id' => 1,
-                'image' => "assets/images/templates/template-1.jpg",
-                'nama' => 'Template 1'
-            ],
-            [
-                'id' => 2,
-                'image' => "assets/images/templates/template-2.jpg",
-                'nama' => 'Template 2'
-            ]
-        ];
+        $data['templates'] = $this->seeds->templates();
 
         return view('pages.cv-kerja', $data);
     }
@@ -32,7 +29,7 @@ class CvKerjaController extends Controller
     public function preview(Request $request)
     {
         if (config('app.seed_preview')) {
-            $data['data'] = app(HelperController::class)->seederEnvDevelopment();
+            $data['data'] = $this->seeds->seederEnvDevelopment();
         } else {
             $data['data'] = $request->all();
         }
@@ -98,11 +95,12 @@ class CvKerjaController extends Controller
         try {
             $latestIdOrder = Order::count() + 1;
             $dateNow = date('ymdhis');
+            $price = $this->seeds->templateHarga($request->template_use);
 
             $item_details = [
                 [
                     'id' => $latestIdOrder,
-                    'price' => $this->templateHarga($request->template_use),
+                    'price' => $price,
                     'quantity' => 1,
                     'name' => 'Order CV Kerja',
                 ],
@@ -115,7 +113,7 @@ class CvKerjaController extends Controller
 
             $order = new Order;
             $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
-            $order->total_price = $this->templateHarga($request->template_use);
+            $order->total_price = $price;
             $order->item_details = json_encode($item_details);
             $order->customer_details = json_encode($customer_details);
             $order->payload = json_encode($request->all());
@@ -146,13 +144,4 @@ class CvKerjaController extends Controller
         }
     }
 
-    public function templateHarga($template_id)
-    {
-        $templates = [
-            "1" => "15000",
-            "2" => "10000" 
-        ];
-
-        return $templates[$template_id] ?? "20000";
-    }
 }
