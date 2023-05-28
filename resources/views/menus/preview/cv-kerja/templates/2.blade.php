@@ -23,8 +23,8 @@
         }
 
         a {
-            /* color: #3f3d3de5; */
-            text-decoration: none
+            color: #3f3d3de5;
+            /* text-decoration: none */
         }
     </style>
 @endsection
@@ -77,7 +77,9 @@
                                 @endphp
                                 @for ($i = 0; $i < $length; $i++)
                                     <a href="{{ $data['sosial_media']['link'][$i] }}"
-                                        target="_blank">{{ $data['sosial_media']['nama'][$i] ?? '' }}</a>
+                                        target="_blank">{{ $data['sosial_media']['nama'][$i] ?? '' }}
+                                    </a>
+                                    {{ ($length - $i != 1) ? '|' : '' }}
                                 @endfor
                             </td>
                         </tr>
