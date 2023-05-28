@@ -203,7 +203,8 @@
         function addTinyMce()
         {
             tinymce.init({
-                selector: 'textarea.tiny'
+                selector: 'textarea.tiny',
+                forced_root_block : 'div'
             });
         }
 
