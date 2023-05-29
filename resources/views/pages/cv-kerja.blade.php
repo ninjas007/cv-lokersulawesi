@@ -51,6 +51,7 @@
             let konten = `@include('pages.parts.cv-kerja-pengalaman-konten')`;
 
             $('#cardBodyPengalaman').append(konten)
+            addTinyMce()
         }
 
         function removePengalaman(elem) {
@@ -107,6 +108,7 @@
             let konten = `@include('pages.parts.cv-kerja-portofolio-konten')`;
 
             $('#cardBodyPortofolio').append(konten);
+            addTinyMce()
         }
 
         function removePortofolio(elem) {
