@@ -11,11 +11,16 @@
                     <div class="col-md-12 text-center mb-5">
                         @include('pages.parts.info-login')
                     </div>
-                    <div class="col-md-12 text-center">
-                        <a href="{{ url('auth/redirect') }}" class="btn btn-primary text-white">
+                    <div class="col-md-12 text-center mb-3">
+                        <a href="{{ url('auth/google') }}" class="btn btn-success text-white">
                             Login Google
                         </a>
                     </div>
+                    {{-- <div class="col-md-12 text-center">
+                        <a href="{{ url('auth/facebook') }}" class="btn btn-primary text-white">
+                            Login Facebook
+                        </a>
+                    </div> --}}
                 </div>
             </div>
             <div class="modal-footer">

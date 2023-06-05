@@ -41,39 +41,43 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    //tambahkan script di bawah ini
-    public function redirectToProvider(Request $request)
+    /**
+     * @param $provider
+     * 
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function redirectToProvider($provider)
     {
-        $data['request'] = json_encode($request->all());
-
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
-  
-  
-    //tambahkan script di bawah ini 
-    public function handleProviderCallback(Request $request)
+
+    /**
+     * @param $provider
+     * 
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function handleProviderCallback($provider)
     {
         try {
-            $user_google    = Socialite::driver('google')->user();
-            $user           = User::where('email', $user_google->getEmail())->first();
+            $userSocialite = Socialite::driver($provider)->user();
+            $user = User::where('email', $userSocialite->getEmail())->first();
 
-            //jika user ada maka langsung di redirect
-            //jika user tidak ada maka simpan ke database
-            //$user_google menyimpan data google account seperti email, foto, dsb
-            if($user != null){
-                \auth()->login($user, true);
-                return redirect('cv-kerja')->with(['success' => 'Berhasil login']);
-            }else{
-                $create = User::create([
-                    'email'             => $user_google->getEmail(),
-                    'name'              => $user_google->getName(),
-                    'password'          => 0,
-                    'email_verified_at' => now()
-                ]);
-        
-                \auth()->login($create, true);
+            if($user){
+                auth()->login($user, true);
+
                 return redirect('cv-kerja')->with(['success' => 'Berhasil login']);
             }
+
+            $user = User::create([
+                'email'             => $userSocialite->getEmail(),
+                'name'              => $userSocialite->getName(),
+                'password'          => 0,
+                'email_verified_at' => now()
+            ]);
+    
+            auth()->login($user, true);
+
+            return redirect('cv-kerja')->with(['success' => 'Berhasil login']);
 
         } catch (\Exception $e) {
             return redirect('cv-kerja')->with(['error' => 'Gagal login']);

@@ -17,8 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/auth/redirect', 'Auth\LoginController@redirectToProvider');
-Route::get('/auth/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/auth/{provider}', 'Auth\LoginController@redirectToProvider');
+Route::get('/auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cv-kerja', 'CvKerjaController@index');
