@@ -12,6 +12,9 @@
                     <input type="text" style="display: none" value="1" id="templateUse" name="template_use">
                     <input type="hidden" id="snapToken" name="snap_token">
                     <input type="hidden" id="responseVal" name="responseVal">
+
+                    @include('pages.parts.info-login')
+
                     @include('pages.parts.cv-kerja-data-diri')
 
                     @include('pages.parts.cv-kerja-pendidikan')
@@ -36,7 +39,11 @@
 
             @include('pages.modals.modal-pilih-template')
 
-            {{-- @include('pages.modals.modal-preview') --}}
+            @include('pages.modals.modal-login')
+
+            @if (auth()->check())
+                @include('pages.modals.modal-akun')
+            @endif
         </div>
     </div>
 @endsection
@@ -160,7 +167,6 @@
 
             return is_valid;
         }
-
 
         function preview() {
             selectTemplate();

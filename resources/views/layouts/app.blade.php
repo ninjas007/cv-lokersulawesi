@@ -263,14 +263,6 @@
             });
         }
 
-        function saveData() {
-            swal({
-                title: 'Info',
-                text: 'Sedang dalam pengembangan',
-                icon: 'info',
-                button: 'Ok'
-            });
-        }
     </script>
 
     <script>

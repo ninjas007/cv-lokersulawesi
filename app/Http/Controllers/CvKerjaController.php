@@ -8,6 +8,7 @@ use App\Services\Midtrans\CreateSnapTokenService;
 use App\Order;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SeedController;
+use App\User;
 
 class CvKerjaController extends Controller
 {
@@ -129,6 +130,16 @@ class CvKerjaController extends Controller
                 $snapToken = 'd520fe0d-89d5-428d-a9e9-f58017d06fd7'; // dummy, untuk develop makanya pakai ini
                 $order->payment_status = 2;
             }
+
+            if (auth()->check()) {
+                $userId = auth()->user()->id;
+                $order->user_id = $userId;
+
+                $user = User::where('id', $userId)->first();
+                $user->raw_detail = json_encode($request->all());
+
+                $user->save();
+            }
             
             $order->snap_token = $snapToken;
             $order->save();
@@ -136,11 +147,11 @@ class CvKerjaController extends Controller
             DB::commit();
 
             return redirect('pembayaran?order_id='.$order->number.'&snap_token='.$snapToken.'');
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
 
             DB::rollBack();
 
-            return redirect()->back()->with(['error' => true]);
+            return redirect()->back()->with(['error' => 'Terjadi kesalahan server. coba lagi atau hubungi admin']);
         }
     }
 

@@ -17,16 +17,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/auth/redirect', 'Auth\LoginController@redirectToProvider');
+Route::get('/auth/callback', 'Auth\LoginController@handleProviderCallback');
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cv-kerja', 'CvKerjaController@index');
-Route::get('/akun', function() {
-    return 'Masih Proses Pengembangan';
-});
 Route::post('/preview', 'CvKerjaController@preview');
 Route::post('/download', 'CvKerjaController@download');
 Route::get('/pembayaran', 'PaymentController@pembayaran');
 Route::post('/payments/midtrans-notification', 'PaymentCallbackController@receive');
 Route::get('/download-pdf', 'CvKerjaController@downloadPdf');
+
+Route::get('/akun/transaksi', 'UserController@transaksi');
 
 Route::get('/test', function() {
     return view('menus.preview')->render();
