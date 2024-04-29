@@ -76,3 +76,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## To Do
+
+- [ ] Buat generate placeholder ke inputan secara otomatis - URGENT
+- [ ] Buat cek template berbayar atau tidak - normal
+- [x] Buat dummy data json untuk di environment dev - URGENT
+- [ ] Buat deskripsi pendidikan - URGENT
+- [ ] Buat drag drop sort kalau pendidikan dan lainnya salah posisi - normal
+- [x] Save inputan ke masing” user tau login user - URGENT
+- [x] Tambahkan tiny wiysiwig until setiap description - URGENT
+- [ ]  kalau tidak ketemu id_order tapi sudah isi data dan coba menghack maka update ke halaman belum bayar dan tampilkan status ordernya 
+- [x] Template 1 di perbaikin.. keahlian skill dipindahkan kebawah sama kayak portofolio
+- [ ] buatkan halaman edit cv nya.. maksimal 3 kali edit
+- [ ] Upload ulang gambar template yang tebaru
+- [ ] Buat tutorial bikin cv
+- [ ] Saat klik akun munch modal dan ada pemberitahuan mau pakai data sebelumnhya atau tidak
