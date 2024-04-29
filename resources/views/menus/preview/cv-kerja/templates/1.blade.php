@@ -37,32 +37,32 @@
                     <table style="margin-top: 15px; line-height: 1.5">
                         <tr>
                             <td colspan="3" style="font-weight: bold;">
-                                <div style="font-size: 15px">PROFIL</div>
+                                <div style="font-size: 15px">PROFILE</div>
                                 <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td width="38%">Nama</td>
+                            <td width="38%">Name</td>
                             <td width="2%">:</td>
                             <td> {{ $data['nama'] }}</td>
                         </tr>
                         <tr>
-                            <td>Jenis Kelamin</td>
+                            <td>Gender</td>
                             <td>:</td>
                             <td> {{ $data['jenis_kelamin'] }}</td>
                         </tr>
                         <tr>
-                            <td>Tempat Lahir</td>
+                            <td>Place Birth</td>
                             <td>:</td>
                             <td> {{ $data['tempat_lahir'] }}</td>
                         </tr>
                         <tr>
-                            <td>Tanggal Lahir</td>
+                            <td>Date of Birth</td>
                             <td>:</td>
                             <td> {{ \Carbon\Carbon::parse($data['tanggal_lahir'])->format('d M Y') }}</td>
                         </tr>
                         <tr>
-                            <td>No HP / Telp</td>
+                            <td>Phone</td>
                             <td>:</td>
                             <td> {{ $data['no_hp'] }}</td>
                         </tr>
@@ -76,7 +76,7 @@
                     <table style="margin-top: 10px; line-height: 1.5">
                         <tr>
                             <td style="font-weight: bold;">
-                                <div style="font-size: 15px">ALAMAT</div>
+                                <div style="font-size: 15px">ADDRESS</div>
                                 <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                             </td>
                         </tr>
@@ -91,7 +91,7 @@
                         <table style="margin-top: 10px">
                             <tr>
                                 <td style="font-weight: bold;">
-                                    <div style="font-size: 15px">SOSIAL MEDIA / KONTAK</div>
+                                    <div style="font-size: 15px">SOCIAL MEDIA</div>
                                     <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                                 </td>
                             </tr>
@@ -113,7 +113,7 @@
                         <table style="margin-top: 10px">
                             <tr>
                                 <td style="font-weight: bold;">
-                                    <div style="font-size: 15px">PENDIDIKAN</div>
+                                    <div style="font-size: 15px">EDUCATION</div>
                                     <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                                 </td>
                             </tr>
@@ -169,7 +169,7 @@
         <table style="margin-top: 10px; page-break-after: always">
             <tr style="page-break-inside: auto">
                 <td style="font-weight: bold;">
-                    <div style="font-size: 15px">PENGALAMAN</div>
+                    <div style="font-size: 15px">EXPERIENCE</div>
                     <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                 </td>
             </tr>

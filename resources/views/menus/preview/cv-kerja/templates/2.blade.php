@@ -46,23 +46,23 @@
             <td>
                 <table>
                     <tr>
-                        <td width="21%">Jenis Kelamin</td>
+                        <td width="21%">Gender</td>
                         <td width="40%">: {{ $data['jenis_kelamin'] ?? '-' }}</td>
                         <td rowspan="3">
                             <div style="padding-right: 10px">
-                                Alamat: <br>
+                                Address: <br>
                                 {{ $data['alamat_lengkap'] ?? '-' }}
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>Tempat, Tanggal Lahir</td>
+                        <td>Place, Day of Birth </td>
                         <td>: {{ $data['tempat_lahir'] ?? '-' }},
                             {{ $data['tanggal_lahir'] ? \Carbon\Carbon::parse($data['tanggal_lahir'])->format('d M Y') : '-' }}
                         </td>
                     </tr>
                     <tr>
-                        <td>No Telp / HP</td>
+                        <td>Phone</td>
                         <td>: {{ $data['no_hp'] ?? '-' }}</td>
                     </tr>
 
@@ -92,7 +92,7 @@
     <table style="margin-bottom: 10px">
         <tr>
             <td>
-                <div style="font-size: 16px; font-weight: bold">TENTANG SAYA</div>
+                <div style="font-size: 16px; font-weight: bold">ABOUT ME</div>
                 <div class="garis"></div>
             </td>
         </tr>
@@ -107,7 +107,7 @@
     <table style="margin-bottom: 10px">
         <tr>
             <td colspan="2">
-                <div style="font-size: 16px; font-weight: bold">PENDIDIKAN</div>
+                <div style="font-size: 16px; font-weight: bold">EDUCATION</div>
                 <div class="garis"></div>
             </td>
         </tr>
@@ -146,7 +146,7 @@
         <table style="margin-bottom: 10px">
             <tr>
                 <td>
-                    <div style="font-size: 16px; font-weight: bold;">KEAHLIAN</div>
+                    <div style="font-size: 16px; font-weight: bold;">SKILLS</div>
                     <div class="garis"></div>
                 </td>
             </tr>
@@ -172,7 +172,7 @@
         <table style="margin-bottom: 10px">
             <tr>
                 <td colspan="2">
-                    <div style="font-size: 16px; font-weight: bold;">PENGALAMAN KERJA</div>
+                    <div style="font-size: 16px; font-weight: bold;">EXPERIENCE</div>
                     <div class="garis"></div>
                 </td>
             </tr>

@@ -32,10 +32,10 @@ class SeedController extends Controller
     public function templateHarga($template_id)
     {
         $templates = [
-            "1" => "15000",
-            "2" => "10000" 
+            "1" => config('midtrans.templates_1'),
+            "2" => config('midtrans.templates_1') 
         ];
 
-        return $templates[$template_id] ?? "20000";
+        return $templates[$template_id] ?? "10000";
     }
 }

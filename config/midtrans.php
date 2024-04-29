@@ -10,4 +10,6 @@ return [
     'is_3ds' => false,
     'snap_url' => env('MIDTRANS_SNAP_URL'),
     'is_active' => env('MIDTRANS_ACTIVE', true),
+    'template_1' => env('MIDTRANS_TEMPLATE_1', 10000),
+    'template_2' => env('MIDTRANS_TEMPLATE_2', 10000),
 ];
