@@ -16,7 +16,7 @@ class CvKerjaController extends Controller
 
     public function __construct(SeedController $seeds)
     {
-        $this->seeds = $seeds;    
+        $this->seeds = $seeds;
     }
 
     public function index()
@@ -34,7 +34,7 @@ class CvKerjaController extends Controller
         } else {
             $data['data'] = $request->all();
         }
-        
+
         $data['preview'] = true;
 
         // return view('menus.preview.cv-kerja.templates.1');
@@ -51,10 +51,10 @@ class CvKerjaController extends Controller
             $data['data'] = json_decode($order->payload, true);
 
             $pdf = Pdf::loadView('menus.preview.cv-kerja.templates.'.$order->template_use.'', $data);
-            return $pdf->stream('Curicullum Vitae.pdf', ['Attachment' => false]);  
+            return $pdf->stream('Curicullum Vitae.pdf', ['Attachment' => false]);
         }
 
-        // TODO: update ke halaman belum bayar dan tampilkan status ordernya 
+        // TODO: update ke halaman belum bayar dan tampilkan status ordernya
         abort(404);
     }
 
@@ -85,7 +85,7 @@ class CvKerjaController extends Controller
             'email' => 'required',
             'no_hp' => 'required',
             'alamat_lengkap' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:512'
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024'
         ], $messages);
 
         $foto = app(\App\Http\Controllers\HelperController::class)->uploadFile($request);
@@ -140,7 +140,7 @@ class CvKerjaController extends Controller
 
                 $user->save();
             }
-            
+
             $order->snap_token = $snapToken;
             $order->save();
 
