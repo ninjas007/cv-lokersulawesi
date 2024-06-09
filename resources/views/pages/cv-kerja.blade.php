@@ -1,233 +1,206 @@
 @extends('layouts.app')
 
-@section('description', 'Buat CV Profesional dengan Mudah di Lokersulawesi.com | Tingkatkan Peluang Karirmu di Sulawesi. Lokersulawesi.com menyediakan CV Maker terpercaya yang memungkinkanmu membuat CV menarik dan profesional secara cepat. Dengan berbagai template modern dan pilihan kustomisasi yang luas, buat CV yang mencerminkan kepribadianmu dan sesuai dengan kebutuhan perekrut di Sulawesi. Tingkatkan peluangmu dalam mencari pekerjaan impian dengan CV yang menonjol dari CV Maker Lokersulawesi.com. Dapatkan keunggulan di pasar kerja Sulawesi dengan alat CV terbaik kami.')
-@section('keywords', 'CV maker, CV profesional, lowongan kerja, peluang karir, Sulawesi, pencari kerja, CV menarik, CV kreatif, CV online, template CV, alat CV, Lokersulawesi.com')
+@section('description',
+    'Buat CV Profesional dengan Mudah di Lokersulawesi.com | Tingkatkan Peluang Karirmu di Sulawesi.
+    Lokersulawesi.com menyediakan CV Maker terpercaya yang memungkinkanmu membuat CV menarik dan profesional secara cepat.
+    Dengan berbagai template modern dan pilihan kustomisasi yang luas, buat CV yang mencerminkan kepribadianmu dan sesuai
+    dengan kebutuhan perekrut di Sulawesi. Tingkatkan peluangmu dalam mencari pekerjaan impian dengan CV yang menonjol dari
+    CV Maker Lokersulawesi.com. Dapatkan keunggulan di pasar kerja Sulawesi dengan alat CV terbaik kami.')
+@section('keywords',
+    'CV maker, CV profesional, lowongan kerja, peluang karir, Sulawesi, pencari kerja, CV menarik, CV
+    kreatif, CV online, template CV, alat CV, Lokersulawesi.com')
+
+
+@section('css')
+    <style>
+        .wizard,
+        .wizard .nav-tabs,
+        .wizard .nav-tabs .nav-item {
+            position: relative;
+        }
+
+        /* .wizard .nav-tabs:after {
+                                content: "";
+                                width: 80%;
+                                border-bottom: solid 2px #54b4d3;
+                                position: absolute;
+                                margin-left: auto;
+                                margin-right: auto;
+                                top: 38%;
+                                z-index: -1;
+                            } */
+
+        .wizard .nav-tabs .nav-item .nav-link {
+            width: 10px !important;
+            height: 10px !important;
+            background: white;
+            border: 1px solid #ccc;
+            color: #ccc;
+            z-index: 10;
+        }
+
+        .nav-tabs .nav-link {
+            --mdb-nav-tabs-link-font-size: 11px;
+            --mdb-nav-tabs-link-color: rgba(0, 0, 0, 0.55);
+            --mdb-nav-tabs-link-padding-top: 15px !important;
+            --mdb-nav-tabs-link-padding-bottom: 15px !important;
+            --mdb-nav-tabs-link-padding-x: 17px !important;
+            --mdb-nav-tabs-link-hover-bgc: #f7f7f7;
+            --mdb-nav-tabs-link-border-bottom-width: 2px;
+            --mdb-nav-tabs-link-active-color: #333333;
+            --mdb-nav-tabs-link-active-border-color: #333333;
+            font-size: var(--mdb-nav-tabs-link-font-size);
+            color: var(--mdb-nav-tabs-link-color);
+            padding: var(--mdb-nav-tabs-link-padding-top) var(--mdb-nav-tabs-link-padding-x) var(--mdb-nav-tabs-link-padding-bottom) var(--mdb-nav-tabs-link-padding-x);
+        }
+
+        .wizard .nav-tabs .nav-item .nav-link:hover {
+            color: #54b4d3;
+            border: 2px solid #54b4d3;
+        }
+
+        .wizard .nav-tabs .nav-item .nav-link.active {
+            background: #fff;
+            border: 2px solid #54b4d3;
+            color: #54b4d3;
+        }
+
+        .card {
+            box-shadow: none !important;
+        }
+
+        .wizard .nav-tabs .nav-item .nav-link:after {
+            content: " ";
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+            opacity: 0;
+            margin: 0 auto;
+            bottom: 0px;
+            border: 5px solid transparent;
+            border-bottom-color: #333333;
+            transition: 0.1s ease-in-out;
+        }
+
+        .fixed-bottom-container {
+            position: fixed;
+            bottom: 55px;
+            padding: 10px;
+            width: var(--width-page);
+            z-index: 100;
+            background: white;
+            border-top: #e3e3e3 1px solid;
+        }
+
+        .fixed-top-container {
+            position: fixed;
+            top: 0px;
+            padding: 10px;
+            width: var(--width-page);
+            z-index: 100;
+            background: white;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        @media (max-width: 540px) {
+
+            .fixed-top-container,
+            .fixed-bottom-container {
+                width: 100% !important;
+            }
+
+            #myTabContent {
+                margin-top: 20px !important;
+            }
+        }
+    </style>
+@endsection
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center" style="margin-bottom: 70px">
-            <div class="col-12">
-                <form method="POST" action="{{ url('preview') }}" enctype="multipart/form-data" id="formCvKerja">
-                    @csrf
-                    <input type="text" style="display: none" value="1" id="templateUse" name="template_use">
-                    <input type="hidden" id="snapToken" name="snap_token">
-                    <input type="hidden" id="responseVal" name="responseVal">
+    <section class="mt-3">
+        <div class="container">
+            <div class="wizard fixed-top-container">
+                <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+                    @php
+                        $contents = [
+                            [
+                                'id' => 1,
+                                'icon' => 'fas fa-user',
+                                'title' => 'Data Diri',
+                                'blade' => 'data-diri',
+                            ],
+                            [
+                                'id' => 2,
+                                'icon' => 'fas fa-briefcase',
+                                'title' => 'Pendidikan',
+                                'blade' => 'pendidikan',
+                            ],
+                            [
+                                'id' => 3,
+                                'icon' => 'fas fa-share-alt',
+                                'title' => 'Sosial Media',
+                                'blade' => 'sosial',
+                            ],
+                            [
+                                'id' => 4,
+                                'icon' => 'fas fa-briefcase',
+                                'title' => 'Pengalaman Kerja',
+                                'blade' => 'pengalaman',
+                            ],
+                            [
+                                'id' => 5,
+                                'icon' => 'fas fa-lightbulb',
+                                'title' => 'Keahlian',
+                                'blade' => 'keahlian',
+                            ],
+                            [
+                                'id' => 6,
+                                'icon' => 'fas fa-star',
+                                'title' => 'Portofolio',
+                                'blade' => 'portofolio',
+                            ],
+                        ];
+                    @endphp
 
-                    @include('pages.parts.info-login')
-
-                    @include('pages.parts.cv-kerja-data-diri')
-
-                    @include('pages.parts.cv-kerja-pendidikan')
-
-                    @include('pages.parts.cv-kerja-sosial')
-
-                    @include('pages.parts.cv-kerja-pengalaman')
-
-                    @include('pages.parts.cv-kerja-keahlian')
-
-
-                    @include('pages.parts.cv-kerja-portofolio')
-                </form>
+                    @include('pages.parts.nav-tabs', ['steps' => $contents])
+                </ul>
             </div>
-            {{-- TODO: Add Custom Inputan --}}
-            {{-- <div class="col-12 text-center" style="margin-bottom: 75px; margin-top: 10px;">
-                <div class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#modalCustom">Tambah Custom Inputan
+            <form method="POST" action="{{ url('preview') }}" enctype="multipart/form-data" id="formCvKerja">
+                @csrf
+                <input type="hidden" id="snapToken" name="snap_token">
+                <input type="hidden" id="responseVal" name="responseVal">
+                <div class="wizard" style="padding-bottom: 50px;">
+                    <div class="tab-content mt-4 py-2" id="myTabContent">
+                        @foreach ($contents as $content)
+                            <div class="tab-pane fade {{ $content['id'] == 1 ? 'show active' : '' }}" role="tabpanel"
+                                id="step{{ $content['id'] }}" aria-labelledby="step{{ $content['id'] }}-tab">
+                                @include('pages.parts.cv-kerja.' . $content['blade'], $content)
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
-            </div> --}}
+            </form>
 
-            {{-- @include('pages.modals.modal-custom-inputan') --}}
-
-            @include('pages.modals.modal-pilih-template')
-
-            @include('pages.modals.modal-login')
-
-            @if (auth()->check())
-                @include('pages.modals.modal-akun')
-            @endif
         </div>
-    </div>
+    </section>
+
+    @include('pages.modals.modal-pilih-template')
+
+    @include('pages.modals.modal-login')
+
+    @if (auth()->check())
+        @include('pages.modals.modal-akun')
+    @endif
+
 @endsection
 
 @section('js')
-    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> --}}
-    <script src="https://cdn.tiny.cloud/1/fioab1f7iscuty6onrm6ezlq795cnlvwjy81btkvag3piuoj/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script type="text/javascript">
-        const data_custom = [];
 
-        function tambahPengalaman() {
-            let konten = `@include('pages.parts.cv-kerja-pengalaman-konten')`;
-
-            $('#cardBodyPengalaman').append(konten)
-            addTinyMce()
-        }
-
-        function removePengalaman(elem) {
-            elem.parentElement.remove();
-        }
-
-        function tambahPendidikan() {
-            let konten = `@include('pages.parts.cv-kerja-pendidikan-konten')`;
-
-            $('#cardBodyPendidikan').append(konten)
-        }
-
-        function removePendidikan(elem) {
-            let row_pendidikan = $('.remove_pendidikan').length;
-
-            elem.parentElement.remove();
-        }
-
-        function tambahSosialMedia() {
-            let konten = `@include('pages.parts.cv-kerja-sosial-konten')`;
-
-            $('#cardBodySosial').append(konten)
-        }
-
-        function removeSosialMedia(elem) {
-            elem.parentElement.parentElement.remove();
-        }
-
-        function changeTipeInputKeahlian(elem) {
-            let value = elem.value;
-
-            if (value == 'text') {
-                $('#tipeTextKeahlian').show();
-                $('#tipeListKeahlian').hide();
-                $('#tambahKeahlian').parent().hide();
-            } else {
-                $('#tipeTextKeahlian').hide();
-                $('#tipeListKeahlian').show();
-                $('#tambahKeahlian').parent().show();
-            }
-        }
-
-        function tambahKeahlian() {
-            let konten = `@include('pages.parts.cv-kerja-keahlian-konten-2')`;
-
-            $('#cardBodyKeahlian #tipeListKeahlian').append(konten);
-        }
-
-        function removeKeahlian(elem) {
-            elem.parentElement.parentElement.remove();
-        }
-
-        function tambahPortofolio() {
-            let konten = `@include('pages.parts.cv-kerja-portofolio-konten')`;
-
-            $('#cardBodyPortofolio').append(konten);
-            addTinyMce()
-        }
-
-        function removePortofolio(elem) {
-            elem.parentElement.remove();
-        }
-
-        function selectTemplate() {
-            template_use = $('input[name="template"]:checked').val();
-
-            $('#templateUse').val(template_use);
-        }
-
-        function download() {
-            selectTemplate();
-
-            if (validation() > 0) {
-                swal({
-                    title: 'Info',
-                    text: 'Terdapat data yang harus di isi',
-                    icon: 'info',
-                    button: true,
-                })
-                .then(() => {
-                    $('#modalPilihTemplate').modal('hide');
-                });
-
-                return
-            }
-
-            $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
-            $(`#formCvKerja`).submit();
-        }
-
-        function validation() {
-            let is_valid = 0;
-
-            $('.custom_validation').each(function() {
-                $(this).removeClass('is-invalid');
-                $(this).removeClass('custom_invalid');
-                if ($(this).val() == '') {
-                    const fieldText = $(this).prev('label').text();
-                    
-                    $(this).addClass('is-invalid');
-                    $(this).after(`<div class="invalid-feedback mt-1 custom_invalid">${fieldText} harus diisi.</div>`);
-                    
-                    is_valid++;
-                }
-            });
-
-            return is_valid;
-        }
-
-        function preview() {
-            selectTemplate();
-
-            $(`#formCvKerja`).attr('action', `{{ url('preview') }}`);
-            $(`#formCvKerja`).attr('target', '_blank');
-            $(`#formCvKerja`).submit();
-
-            // let data = $("#formCvKerja").serialize();
-            // $.ajax({
-            //     url: `{{ url('') }}/preview`,
-            //     method: 'POST',
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     },
-            //     data: data,
-            //     success: function(response) {
-            //         console.log(response);
-            //         // var element = response;
-
-            //         // html2canvas(element, {
-            //         //     background: '#ffffff',
-            //         //     onrendered: function(canvas){
-            //         //         console.log(canvas)
-            //         //         var imgData = canvas.toDataURL('image/jpeg');
-            //         //         $('#modalPreview .modal-body').html(response);
-            //         //         $('#modalPreview').modal('show');
-            //         //         alert('Success!');
-            //         //         console.log(imgData);
-            //         //     }
-            //         // });
-
-            //         // w = window.open(window.location.href,"_blank");
-            //         // w.document.open();
-            //         // w.document.write(response);
-            //         // w.document.close();
-            //         // w.window.print();
-            //     }
-            // })
-        }
-
-        function addTinyMce()
-        {
-            tinymce.init({
-                selector: 'textarea.tiny',
-                forced_root_block : 'div'
-            });
-        }
-
-        addTinyMce()
-
-        // TODO: add custom input
-        // function tambahCustom() {
-        //     let judul = $('#modalCustom #judul').val();
-        //     let tipe = $('#modalCustom #tipe').find(':selected').val();
-
-        //     data_custom.push({
-        //         judul: judul,
-        //         tipe: tipe
-        //     })
-        //     localStorage.setItem('data_custom', data_custom);
-        // }
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js'></script>
+    <script src="https://cdn.tiny.cloud/1/fioab1f7iscuty6onrm6ezlq795cnlvwjy81btkvag3piuoj/tinymce/6/tinymce.min.js">
     </script>
-@endsection
+
+    @include('js.tabs')
+
+    @include('js.cv-kerja')
+@endSection

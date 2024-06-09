@@ -1,9 +1,6 @@
-<div class="card mb-3">
-    <div class="card-header">
-        <h4 class="font-weight-bold">
-            <i class="fa fa-book"></i> Data Diri
-        </h4>
-    </div>
+<div class="card">
+    @include('pages.parts.cv-kerja.contents.card-title')
+
     <div class="card-body">
         <div class="form-group mb-3">
             <label for="ringkasan_profil" class="mb-1">Ringkasan Profil</label>
@@ -12,11 +9,11 @@
                 cols="30" rows="5">{{ old('ringkasan_profil') }}</textarea>
         </div>
         <div class="form-group mb-3">
-            <label for="foto" class="mb-1">Foto Profil</label> 
-            <span class="text-primary" style="font-size: 11px; font-style: italic"><i class="fa fa-info text-white bg-info" data-mdb-toggle="tooltip" title="Untuk mendapatkan hasil gambar yang bagus baiknya gambar berukuran 100x100 px" style="font-size: 11px; border-radius: 50%; padding: 2px 5px"></i> (Foto harus berupa: jpg, jpeg, png, gif, max size: 512KB) 
-                
+            <label for="foto" class="mb-1">Foto Profil</label>
+            <span class="text-primary" style="font-size: 11px; font-style: italic"><i class="fa fa-info text-white bg-info" data-mdb-toggle="tooltip" title="Untuk mendapatkan hasil gambar yang bagus baiknya gambar berukuran 100x100 px" style="font-size: 11px; border-radius: 50%; padding: 2px 5px"></i> (Foto harus berupa: jpg, jpeg, png, gif, max size: 512KB)
+
             </span>
-            <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto" id="foto">
+            <input type="file" class="form-control @error('foto') is-invalid @enderror" name="foto" accept="image/*" id="foto">
 
             @error('foto')
                 <div class="text-danger">{{ $message }}</div>
@@ -26,7 +23,7 @@
             <label for="nama" class="mb-1">Nama</label>
             <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama"
                 placeholder="Contoh: John Doe" value="{{ old('nama') }}">
-                
+
             @error('nama')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
@@ -89,6 +86,14 @@
             @error('alamat_lengkap')
                 <div class="text-danger">{{ $message }}</div>
             @enderror
+        </div>
+    </div>
+</div>
+
+<div class="fixed-bottom-container">
+    <div class="container">
+        <div class="form-group d-flex justify-content-center">
+            <a class="btn btn-info next">Continue <i class="fas fa-angle-right"></i></a>
         </div>
     </div>
 </div>

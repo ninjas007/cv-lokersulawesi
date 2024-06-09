@@ -1,5 +1,5 @@
 <div style="margin-bottom: 4rem">
-    <div class="btn btn-danger mb-3" onclick="removePengalaman(this)">
+    <div class="btn btn-danger mb-3" onclick="removeFormCard(this)">
         <i class="fa fa-times"></i>
     </div>
     <div class="form-group mb-3">

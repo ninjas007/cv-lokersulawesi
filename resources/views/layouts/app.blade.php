@@ -18,8 +18,6 @@
 
     <title>CV Maker - LOKER SULAWESI</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
@@ -34,10 +32,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.css" rel="stylesheet" />
     <!-- End MDBootstrap -->
 
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
     <style>
+
+        :root {
+            --width-page : 480px;
+        }
+
         * {
             padding: 0;
             margin: 0;
@@ -89,7 +89,7 @@
             max-width: 100%;
             --tw-bg-opacity: 1;
             background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
-            width: 480px;
+            width: var(--width-page);
             margin: 0rem auto;
             padding-left: 0.5rem;
             padding-right: 0.5rem;
@@ -103,7 +103,7 @@
             display: block;
             position: fixed;
             max-width: 100%;
-            width: 480px;
+            width: var(--width-page);
             margin-left: auto;
             margin-right: auto;
             left: 0px;
@@ -118,7 +118,7 @@
 
         .body-wrap {
             background: rgb(255, 255, 255);
-            width: 480px;
+            width: var(--width-page);
             max-width: 100%;
             margin: 0px auto;
             min-height: 100%;
@@ -134,7 +134,7 @@
             background: #333333;
             padding: 5px;
             position: relative;
-            width: 480px;
+            width: var(--width-page);
             max-width: 100%;
             z-index: 0;
         }
@@ -150,14 +150,16 @@
             -webkit-box-pack: center;
             justify-content: center;
             flex-direction: column;
-            /* padding: 0px 16px; */
-            padding-top: 15px
+            padding-top: 15px;
+            padding-bottom: 50px
         }
 
         body {
-            /* background-repeat: no-repeat; */
-            background-image: url('{{ asset('assets/images/background.jpg') }}');
+            background-image: url('{{ asset('assets/images/background2.jpg') }}');
             background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .container {
@@ -197,7 +199,7 @@
     <div id="wrapper">
         <div class="body-wrap">
             <div class="body">
-                @include('templates.header')
+                {{-- @include('templates.header') --}}
                 <div class="body-content">
                     @yield('content')
                 </div>
@@ -210,9 +212,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
 
     <!-- JQUERY -->
-    <script src="https://code.jquery.com/jquery-3.6.3.min.js"
-        integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    
+    <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     @yield('js')
     <script type="text/javascript">
@@ -263,12 +264,6 @@
             });
         }
 
-    </script>
-
-    <script>
-        tinymce.init({
-        selector: 'textarea.tiny'
-        });
     </script>
 </body>
 

@@ -18,7 +18,7 @@ class HelperController extends Controller
         $fileName = $dateTime . '.' . $file->getClientOriginalExtension();
 
         // Menyimpan file ke direktori public/images dengan nama baru
-        $path = $file->storeAs('public/assets/photos', $fileName);
+        $path = $file->storeAs('assets/photos', $fileName);
 
         return [
             'path_foto' => $path ?? '',

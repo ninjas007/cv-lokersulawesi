@@ -14,7 +14,7 @@
         </select>
     </div>
     <div class="col-md-2 mb-3">
-        <div class="btn btn-danger mt-4" onclick="removeKeahlian(this)">
+        <div class="btn btn-danger mt-4" onclick="removeFormInline(this)">
             <i class="fa fa-times"></i>
         </div>
     </div>

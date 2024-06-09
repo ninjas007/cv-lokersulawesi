@@ -8,7 +8,7 @@
         <input type="text" class="form-control custom_validation" name="sosial_media[link][]" placeholder="Contoh: www.github.com/username01">
     </div>
     <div class="col-md-2 mb-3">
-        <div class="btn btn-danger mt-4" onclick="removeSosialMedia(this)">
+        <div class="btn btn-danger mt-4" onclick="removeFormInline(this)">
             <i class="fa fa-times"></i>
         </div>
     </div>

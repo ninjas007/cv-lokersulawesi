@@ -23,6 +23,7 @@ Route::get('/auth/{provider}/callback', 'Auth\LoginController@handleProviderCall
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cv-kerja', 'CvKerjaController@index');
 Route::post('/preview', 'CvKerjaController@preview');
+Route::post('/preview-cv-kerje', 'CvKerjaController@previewCvKerja')->name('preview-cv-kerja');
 Route::post('/download', 'CvKerjaController@download');
 Route::get('/pembayaran', 'PaymentController@pembayaran');
 Route::post('/payments/midtrans-notification', 'PaymentCallbackController@receive');

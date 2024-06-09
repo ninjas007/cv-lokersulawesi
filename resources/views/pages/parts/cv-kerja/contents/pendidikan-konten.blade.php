@@ -1,7 +1,8 @@
 <div style="margin-bottom: 4rem">
-    <div class="btn btn-danger mb-4" onclick="removePendidikan(this)">
+    <div class="btn btn-danger mb-4" onclick="removeFormCard(this)">
         <i class="fa fa-times"></i>
     </div>
+
     <div class="form-group mb-4">
         <label for="sekolah" class="mb-1">Sekolah / Kampus</label>
         <input type="text" class="form-control custom_validation" name="pendidikan[sekolah][]"
@@ -25,7 +26,7 @@
     </div>
     <div class="form-group mb-4">
         <label for="jurusan" class="mb-1">Jurusan <span class="small text-info">(jika ada)</span></label>
-        <input type="text" class="form-control" name="pendidikan[jurusan][]" 
+        <input type="text" class="form-control" name="pendidikan[jurusan][]"
             placeholder="Contoh: Teknik Komputer dan Jaringan">
     </div>
 </div>

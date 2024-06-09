@@ -13,7 +13,7 @@ aria-hidden="true">
                     <div class="col-4 text-center">
                         <h4 class="mb-5">{{ $template['nama'] }}</h4>
                         <div class="form-check">
-                            <input class="form-check-input" name="template" type="radio" value="{{ $template['id'] }}" id="template{{ $key }}" 
+                            <input class="form-check-input" name="template" type="radio" value="{{ $template['id'] }}" id="template{{ $key }}"
                             @if ($template['id'] == 1)
                                 checked
                             @endif>
