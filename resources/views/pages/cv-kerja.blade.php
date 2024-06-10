@@ -188,20 +188,11 @@
 
     @include('pages.modals.modal-pilih-template')
 
-    @include('pages.modals.modal-login')
-
-    @if (auth()->check())
-        @include('pages.modals.modal-akun')
-    @endif
-
 @endsection
 
 @section('js')
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js'></script>
-    <script src="https://cdn.tiny.cloud/1/fioab1f7iscuty6onrm6ezlq795cnlvwjy81btkvag3piuoj/tinymce/6/tinymce.min.js">
-    </script>
-
     @include('js.tabs')
 
     @include('js.cv-kerja')

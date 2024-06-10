@@ -13,18 +13,18 @@
                 <span class="color-2" style="font-size: 10px">Tips</span>
             </button>
         </a>
-        <a href="javascript:void(0)">
+        {{-- <a href="javascript:void(0)">
             <button class="btn-menubar" data-mdb-toggle="modal" data-mdb-target="#modalPilihTemplate">
                 <i class="fa fa-pencil color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
                 <span class="color-2" style="font-size: 10px">Preview</span>
             </button>
-        </a>
-        {{-- <a href="javascript:void(0)">
-            <button class="btn-menubar">
+        </a> --}}
+        <a href="javascript:void(0)">
+            <button class="btn-menubar" data-mdb-toggle="modal" data-mdb-target="#modalLogin">
                 <i class="fa fa-pencil color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
                 <span class="color-2" style="font-size: 10px">History</span>
             </button>
-        </a> --}}
+        </a>
         @guest
             <a href="javascript:void(0)">
                 <button class="btn-menubar" data-mdb-toggle="modal" data-mdb-target="#modalLogin">

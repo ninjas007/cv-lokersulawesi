@@ -65,23 +65,23 @@
     }
 
     function download() {
-        if (validation() > 0) {
-            swal({
-                    title: 'Info',
-                    text: 'Terdapat data yang harus di isi',
-                    icon: 'info',
-                    button: true,
-                })
-                .then(() => {
-                    $('#modalPilihTemplate').modal('hide');
-                });
+        // if (validation() > 0) {
+        //     swal({
+        //             title: 'Info',
+        //             text: 'Terdapat data yang harus di isi',
+        //             icon: 'info',
+        //             button: true,
+        //         })
+        //         .then(() => {
+        //             $('#modalPilihTemplate').modal('hide');
+        //         });
 
-            return
-        }
+        //     return
+        // }
 
         selectTemplate();
 
-        $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
+        $(`#formCvKerja`).attr('action', `{{ route('order') }}`);
         $(`#formCvKerja`).submit();
     }
 
@@ -107,7 +107,7 @@
 
     function preview() {
         selectTemplate();
-        $(`#formCvKerja`).attr('action', `{{ url('preview') }}`);
+        $(`#formCvKerja`).attr('action', `{{ url('cv-kerja/preview') }}`);
         $(`#formCvKerja`).attr('target', '_blank');
         $(`#formCvKerja`).submit();
     }

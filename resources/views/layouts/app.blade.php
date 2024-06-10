@@ -208,6 +208,12 @@
         @include('templates.menubar-footer')
     </div>
 
+    @include('pages.modals.modal-login')
+
+    @if (auth()->check())
+        @include('pages.modals.modal-akun')
+    @endif
+
     <!-- MDB -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.1.0/mdb.min.js"></script>
 

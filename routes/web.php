@@ -21,16 +21,20 @@ Route::get('/auth/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('/auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/cv-kerja', 'CvKerjaController@index');
-Route::post('/preview', 'CvKerjaController@preview');
-Route::post('/preview-cv-kerje', 'CvKerjaController@previewCvKerja')->name('preview-cv-kerja');
-Route::post('/download', 'CvKerjaController@download');
-Route::get('/pembayaran', 'PaymentController@pembayaran');
-Route::post('/payments/midtrans-notification', 'PaymentCallbackController@receive');
-Route::get('/download-pdf', 'CvKerjaController@downloadPdf');
+
+// cv-kerja
+Route::prefix('cv-kerja')->group(function() {
+    Route::get('/', 'CvKerjaController@index');
+    Route::post('/preview', 'CvKerjaController@preview');
+});
+
+// order
+Route::prefix('order')->group(function() {
+    Route::post('/', 'OrderController@index')->name('order');
+    Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
+    Route::get('/download', 'OrderController@download')->name('order.download');
+    Route::get('/save', 'OrderController@saveData')->name('order.save');
+});
 
 Route::get('/akun/transaksi', 'UserController@transaksi');
-
-Route::get('/test', function() {
-    return view('menus.preview')->render();
-});
+Route::post('/payments/midtrans-notification', 'PaymentCallbackController@receive');

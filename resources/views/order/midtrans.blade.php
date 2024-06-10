@@ -5,15 +5,20 @@
         table tr td {
             padding: 8px 3px !important;
         }
+
+        .copy:hover {
+            cursor: pointer;
+        }
+
     </style>
 @endsection
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center bg-white" style="margin-bottom: 70px">
+        <div class="row justify-content-center bg-white mx-0" style="margin-bottom: 70px">
             <div class="col-12">
-                <div id="resultJson" class="p-3">
-                    @include('menus.order.component-detail')
+                <div id="resultJson">
+                    @include('order.component-detail')
                 </div>
             </div>
         </div>

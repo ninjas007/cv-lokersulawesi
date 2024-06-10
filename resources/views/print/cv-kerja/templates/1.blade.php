@@ -1,4 +1,4 @@
-@extends('menus.preview.index')
+@extends('print.cv-kerja.index')
 
 @section('css')
     <style>
@@ -43,7 +43,7 @@
                     <tr>
                         @php
                             $jenis_kelamin = '-';
-                            if ($lang == 'id') {
+                            if ($data['lang_use'] == 'id') {
                                 $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Laki-laki' : 'Perempuan';
                             } else {
                                 $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Male' : 'Female';
@@ -263,10 +263,18 @@
                     var dataURI = pdf.output('datauristring');
                     window.close();
 
-                    var newWindow = window.open();
-                    newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI + '"></iframe>');
-
+                    @if (isset($preview))
+                        var newWindow = window.open();
+                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
+                            '"></iframe>');
+                    @else
+                        // Download the PDF
+                        var link = document.createElement('a');
+                        link.href = dataURI;
+                        link.download = 'Curriculum Vitae.pdf';
+                        link.click();
+                    @endif
                 });
-        };
+        }
     </script>
 @endsection
