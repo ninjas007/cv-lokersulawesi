@@ -257,27 +257,9 @@
         };
 
 
-        @if (isset($preview))
-
-            window.onload = function() {
-                html2pdf().from(element)
-                    .set(opt)
-                    .toPdf()
-                    .get('pdf')
-                    .then(function(pdf) {
-                        var dataURI = pdf.output('datauristring');
-                        window.close();
-
-                        var newWindow = window.open();
-                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
-                            '"></iframe>');
-
-                    });
-            };
-        @else
-            html2pdf().from(element)
+        html2pdf().from(element)
                 .set(opt)
                 .save();
-        @endif
+
     </script>
 @endsection
