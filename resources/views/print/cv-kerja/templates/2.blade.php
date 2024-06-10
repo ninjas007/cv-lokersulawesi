@@ -227,19 +227,17 @@
         </table>
     </div>
 
-    {{-- fixed bottom print button --}}
-    <div style="position: fixed; bottom: 0px; right: 0px;">
-        <button id="downloadBtn" class="btn btn-primary btn-sm">@lang('biodata.print')</button>
-    </div>
-
+    {{-- fixed button bottom print --}}
+    <button type="button" id="printBtn" class="btn btn-primary" style="display: none"><i class="fa fa-print"></i></button>
+    <input type="hidden" id="preview" value="{{ $preview ?? '0' }}">
 @endsection
 
 
 @section('js')
     <script>
-        // download pdf
-        document.getElementById('downloadBtn').addEventListener('click', function() {
+        document.getElementById('printBtn').onclick = function() {
             var newWindow = window.open(`{{ url('print/cv-kerja') }}`, '_blank'); // Buka jendela baru terlebih dahulu
+            var preview = document.getElementById('preview');
 
             setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
                 var element = document.getElementById('content');
@@ -267,23 +265,35 @@
                     },
                 };
 
-                html2pdf().from(element)
-                    .set(opt)
-                    .toPdf()
-                    .get('pdf')
-                    .then(function(pdf) {
-                        var dataURI = pdf.output('datauristring');
+                if (preview.value == 0) {
+                    html2pdf().from(element)
+                        .set(opt)
+                        .toPdf()
+                        .save();
+                } else {
+                    html2pdf().from(element)
+                        .set(opt)
+                        .toPdf()
+                        .get('pdf')
+                        .then(function(pdf) {
+                            var dataURI = pdf.output('datauristring');
 
-                        // Tulis konten ke jendela baru
-                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
-                            '"></iframe>');
+                            // Tulis konten ke jendela baru
+                            newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
+                                '"></iframe>');
 
-                        // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
-                        setTimeout(function() {
-                            window.close();
-                        }, 500);
-                    });
+                            // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
+                            setTimeout(function() {
+                                window.close();
+                            }, 500);
+                        });
+                }
             }, 500);
-        });
+        };
+
+        // Simulasikan klik pada tombol setelah halaman dimuat
+        window.onload = function() {
+            document.getElementById('printBtn').click();
+        };
     </script>
 @endsection
