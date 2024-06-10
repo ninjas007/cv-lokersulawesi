@@ -35,8 +35,6 @@ class CvKerjaController extends Controller
             $content = $request->all();
         }
 
-        $content = $this->seeds->seederEnvDevelopment();
-
         $lang = $request->lang_use ?? 'id';
         app()->setLocale($lang);
         $data = [
