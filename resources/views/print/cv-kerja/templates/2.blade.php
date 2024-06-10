@@ -231,51 +231,52 @@
 
 @section('js')
     <script>
-        var element = document.getElementById('content');
-
-        var opt = {
-            margin: [10, 2, 13, 2],
-            filename: 'Curriculum Vitae.pdf',
-            image: {
-                type: 'jpeg',
-                quality: 0.98
-            },
-            html2canvas: {
-                scale: 2
-            },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait'
-            },
-            pagebreak: {
-                mode: 'avoid',
-                before: '.page-break',
-                after: '.page-break',
-                height: 295 - (20 / 25.4),
-            },
-        };
-
-
         window.onload = function() {
-            html2pdf().from(element)
-                .set(opt)
-                .toPdf()
-                .get('pdf')
-                .then(function(pdf) {
-                    var dataURI = pdf.output('datauristring');
+            var newWindow = window.open('', '_blank'); // Buka jendela baru terlebih dahulu
 
-                    // Buka jendela baru terlebih dahulu
-                    var newWindow = window.open();
+            setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
+                var element = document.getElementById('content');
 
-                    // Tulis konten ke jendela baru
-                    newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI + '"></iframe>');
+                var opt = {
+                    margin: [12, 15],
+                    filename: 'Curriculum Vitae.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    },
+                    pagebreak: {
+                        mode: 'avoid',
+                        before: '.page-break',
+                        after: '.page-break',
+                        height: 295 - (20 / 25.4),
+                    },
+                };
 
-                    // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
-                    setTimeout(function() {
-                        window.close();
-                    }, 500);
-                });
+                html2pdf().from(element)
+                    .set(opt)
+                    .toPdf()
+                    .get('pdf')
+                    .then(function(pdf) {
+                        var dataURI = pdf.output('datauristring');
+
+                        // Tulis konten ke jendela baru
+                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
+                            '"></iframe>');
+
+                        // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
+                        setTimeout(function() {
+                            window.close();
+                        }, 500);
+                    });
+            }, 500);
         };
     </script>
 @endsection
