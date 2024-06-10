@@ -6,6 +6,33 @@
         table tr td {
             page-break-inside: auto !important;
         }
+
+        .fixed-button-container {
+            position: fixed;
+            bottom: 20px;
+            right: 0;
+            left: 0;
+            z-index: 100;
+            font-size: 24px;
+            background-color: red;
+            text-align: center;
+            padding: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 24px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-primary i {
+            margin-right: 10px;
+        }
     </style>
 @endsection
 
@@ -228,7 +255,11 @@
     </div>
 
     {{-- fixed button bottom print --}}
-    <button type="button" id="printBtn" class="btn btn-primary" style="display: none"><i class="fa fa-print"></i></button>
+    <div class="fixed-button-container">
+        <button type="button" id="printBtn" class="btn btn-primary">
+            <i class="fa fa-print"></i> DOWNLOAD
+        </button>
+    </div>
     <input type="hidden" id="preview" value="{{ $preview ?? '0' }}">
 @endsection
 
@@ -236,7 +267,7 @@
 @section('js')
     <script>
         document.getElementById('printBtn').onclick = function() {
-            var newWindow = window.open(`{{ url('print/cv-kerja') }}`, '_blank'); // Buka jendela baru terlebih dahulu
+            var newWindow = window.open(``, '_blank'); // Buka jendela baru terlebih dahulu
             var preview = document.getElementById('preview');
 
             setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
@@ -289,11 +320,6 @@
                         });
                 }
             }, 500);
-        };
-
-        // Simulasikan klik pada tombol setelah halaman dimuat
-        window.onload = function() {
-            document.getElementById('printBtn').click();
         };
     </script>
 @endsection
