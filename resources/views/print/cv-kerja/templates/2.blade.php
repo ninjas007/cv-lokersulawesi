@@ -258,19 +258,24 @@
 
 
         window.onload = function() {
-                html2pdf().from(element)
-                    .set(opt)
-                    .toPdf()
-                    .get('pdf')
-                    .then(function(pdf) {
-                        var dataURI = pdf.output('datauristring');
+            html2pdf().from(element)
+                .set(opt)
+                .toPdf()
+                .get('pdf')
+                .then(function(pdf) {
+                    var dataURI = pdf.output('datauristring');
+
+                    // Buka jendela baru terlebih dahulu
+                    var newWindow = window.open();
+
+                    // Tulis konten ke jendela baru
+                    newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI + '"></iframe>');
+
+                    // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
+                    setTimeout(function() {
                         window.close();
-
-                        var newWindow = window.open();
-                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
-                            '"></iframe>');
-
-                    });
-            };
+                    }, 500);
+                });
+        };
     </script>
 @endsection
