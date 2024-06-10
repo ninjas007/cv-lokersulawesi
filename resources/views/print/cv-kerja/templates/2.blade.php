@@ -232,7 +232,7 @@
 @section('js')
     <script>
         window.onload = function() {
-            var newWindow = window.open('', '_blank'); // Buka jendela baru terlebih dahulu
+            var newWindow = window.open(`{{ url('print/cv-kerja') }}`, '_blank'); // Buka jendela baru terlebih dahulu
 
             setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
                 var element = document.getElementById('content');
