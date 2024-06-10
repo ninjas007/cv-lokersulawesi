@@ -17,7 +17,7 @@
         }
 
         table {
-            width: 101%;
+            width: 100%;
             border-collapse: none;
         }
 
@@ -25,12 +25,12 @@
             vertical-align: top;
         }
 
-        .page-break {
-            page-break-inside: always !important;
-        }
-
         .bold {
             font-weight: bold;
+        }
+
+        .uppercase {
+            text-transform: uppercase;
         }
 
         .center {
@@ -41,18 +41,26 @@
             border: .7px solid #3f3d3de5;
         }
 
+        .page-break {
+            page-break-before: always;
+        }
     </style>
-
     @yield('css')
 </head>
 
 <body>
-    @if(isset($preview))
-        <div style="position: absolute; top: 45%; bottom: 0; left: -140px; right: 0; transform: rotate(45deg); z-index: -1; font-size: 5rem; font-weight: bold; color: lightblue">
-            LOKERSULAWESI.COM
-        </div>
-    @endif
-    @yield('content')
+    <div id="content">
+        @if (isset($preview))
+            <div
+                style="position: absolute; top: 5%; left: 55%; transform-origin: 0 0; width: 100%; transform:rotate(90deg); z-index: -1; font-size: 5rem; font-weight: bold; color: lightblue">
+                LOKERSULAWESI.COM
+            </div>
+        @endif
+        @yield('content')
+    </div>
+
+    <script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
+    @yield('js')
 </body>
 
 </html>

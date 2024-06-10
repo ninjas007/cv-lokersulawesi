@@ -2,221 +2,274 @@
 
 @section('css')
     <style>
-        @page {
-            margin: 20px 30px !important;
-            color: #3f3d3de5;
-            line-height: 1.6;
-        }
-
-        tr {
-            page-break-before: auto;
-            page-break-after: auto;
-        }
-
-        table {
-            page-break-before: auto;
-            page-break-after: auto;
-        }
-
+        table tr,
         table tr td {
-            padding: 0px
-        }
-
-        a {
-            color: #3f3d3de5;
-            /* text-decoration: none */
+            page-break-inside: auto !important;
         }
     </style>
 @endsection
 
 @section('content')
-    <table style="margin-bottom: 10px">
-        <tr>
-            <td width="90%">
-                <div style="font-size: 26px; font-weight: bold;">{{ $data['nama'] ?? '-' }}</div>
-            </td>
-            @php
-                $photo = $data['name_foto'] ?? 'default.jpg';
-            @endphp
-            <td rowspan="2">
-                <img src="{{ public_path('storage/assets/photos/' . $photo . '') }}" alt="image" width="100px" height="100px" style="border-radius: 50%">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <table>
-                    <tr>
-                        <td width="21%">Gender</td>
-                        <td width="40%">: {{ $data['jenis_kelamin'] ?? '-' }}</td>
-                        <td rowspan="3">
-                            <div style="padding-right: 10px">
-                                Address: <br>
-                                {{ $data['alamat_lengkap'] ?? '-' }}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Place, Day of Birth </td>
-                        <td>: {{ $data['tempat_lahir'] ?? '-' }},
-                            {{ $data['tanggal_lahir'] ? \Carbon\Carbon::parse($data['tanggal_lahir'])->format('d M Y') : '-' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Phone</td>
-                        <td>: {{ $data['no_hp'] ?? '-' }}</td>
-                    </tr>
-
-                    @isset($data['sosial_media'])
-                        <tr>
-                            <td colspan="3">
-                                @php
-                                    $length = count($data['sosial_media']['nama']);
-                                    if ($length > 0 && $data['sosial_media']['nama'] == '') {
-                                        $length = 0;
-                                    }
-                                @endphp
-                                @for ($i = 0; $i < $length; $i++)
-                                    <a href="{{ $data['sosial_media']['link'][$i] }}"
-                                        target="_blank">{{ $data['sosial_media']['nama'][$i] ?? '' }}
-                                    </a>
-                                    {{ ($length - $i != 1) ? '|' : '' }}
-                                @endfor
-                            </td>
-                        </tr>
-                    @endisset
-                </table>
-            </td>
-        </tr>
-    </table>
-
-    <table style="margin-bottom: 10px">
-        <tr>
-            <td>
-                <div style="font-size: 16px; font-weight: bold">ABOUT ME</div>
-                <div class="garis"></div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {!! !empty($data['ringkasan_profil']) ? $data['ringkasan_profil'] : '<div style="height: 20px;">&nbsp;</div>' !!}
-            </td>
-        </tr>
-    </table>
-
-    @isset($data['pendidikan'])
-    <table style="margin-bottom: 10px">
-        <tr>
-            <td colspan="2">
-                <div style="font-size: 16px; font-weight: bold">EDUCATION</div>
-                <div class="garis"></div>
-            </td>
-        </tr>
-
-        @for ($i = 0; $i < count($data['pendidikan']['sekolah']); $i++)
+    <div class="profile-section" style="padding: 20px 25px; line-height: 1.3; margin-top: -20px">
+        <table>
             <tr>
-                <td>
-                    <div class="bold">{{ $data['pendidikan']['sekolah'][$i] }}</div>
+                <td width="15%" style="vertical-alignt: middle !important">
+                    @php
+                        $photo = $data['name_foto'] ?? 'default.jpg';
+                    @endphp
+                    <img src="{{ asset('assets/photos/' . $photo . '') }}" alt="image" width="100%" height="110px"
+                        style="border-radius: 5%; object-fit: cover">
                 </td>
-                <td align="right">
-                    <div class="bold">{{ $data['pendidikan']['kota'][$i] }}</div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @if (!empty($data['pendidikan']['jurusan'][$i]))
-                        <div style="margin-bottom: 5px">{{ $data['pendidikan']['jurusan'][$i] }}</div>
-                    @endif
-                    
-                    {{-- TODO: add riwayat pendidikan maybe deskripsi --}}
-                    {{-- <div>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                </div> --}}
-                </td>
-                <td align="right">
-                    {{ $data['pendidikan']['tahun_masuk'][$i] }} - {{ $data['pendidikan']['tahun_keluar'][$i] }}
-                </td>
-            </tr>
-        @endfor
-    </table>
-    @endisset
-
-    @if (
-        !empty($data['deskripsi_keahlian']) ||
-            (count($data['keahlian']) > 0 && !empty($data['keahlian']['nama_keahlian'][0])))
-        <table style="margin-bottom: 10px">
-            <tr>
-                <td>
-                    <div style="font-size: 16px; font-weight: bold;">SKILLS</div>
-                    <div class="garis"></div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @if (count($data['keahlian']) > 0 && !empty($data['keahlian']['nama_keahlian'][0]))
-                        <ol>
-                            @for ($i = 0; $i < count($data['keahlian']); $i++)
-                                <li>{{ $data['keahlian']['nama_keahlian'][$i] }} :
-                                    {{ $data['keahlian']['level_keahlian'][$i] }}</li>
-                            @endfor
-                        </ol>
-                    @else
-                        {!! $data['deskripsi_keahlian'] ?? '-' !!}
-                    @endif
-
+                <td width="3%">&nbsp;</td>
+                <td width="85%">
+                    <div style="font-weight: bold; font-size: 24px">{{ $data['nama'] ?? '' }}</div>
+                    <hr>
+                    {!! !empty($data['ringkasan_profil']) ? $data['ringkasan_profil'] : '<div style="height: 30px;">&nbsp;</div>' !!}
                 </td>
             </tr>
         </table>
-    @endif
-
-    @isset($data['pengalaman'])
-        <table style="margin-bottom: 10px">
+    </div>
+    <div style="padding: 25px; padding-top: 0px; line-height: 2">
+        <table>
             <tr>
-                <td colspan="2">
-                    <div style="font-size: 16px; font-weight: bold;">EXPERIENCE</div>
-                    <div class="garis"></div>
+                <td width="35%">
+                    <table style="margin-top: 15px; line-height: 1.5">
+                        <tr>
+                            <td colspan="3" class="bold">
+                                <div style="font-size: 15px" class="uppercase">@lang('biodata.profile')</div>
+                                <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="38%">@lang('biodata.name')</td>
+                            <td width="2%">:</td>
+                            <td> {{ $data['nama'] }}</td>
+                        </tr>
+                        @php
+                            $jenis_kelamin = '-';
+                            if ($lang == 'id') {
+                                $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Laki-laki' : 'Perempuan';
+                            } else {
+                                $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Male' : 'Female';
+                            }
+                        @endphp
+                        <tr>
+                            <td>@lang('biodata.gender')</td>
+                            <td>:</td>
+                            <td> {{ $jenis_kelamin }}</td>
+                        </tr>
+                        <tr>
+                            <td>@lang('biodata.place')</td>
+                            <td>:</td>
+                            <td> {{ $data['tempat_lahir'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>@lang('biodata.birthday')</td>
+                            <td>:</td>
+                            <td> {{ \Carbon\Carbon::parse($data['tanggal_lahir'])->format('d M Y') }}</td>
+                        </tr>
+                        <tr>
+                            <td>@lang('biodata.phone')</td>
+                            <td>:</td>
+                            <td> {{ $data['no_hp'] }}</td>
+                        </tr>
+                        <tr>
+                            <td>@lang('biodata.email')</td>
+                            <td>:</td>
+                            <td> {{ $data['email'] ?? '' }}</td>
+                        </tr>
+                    </table>
+
+                    <table style="margin-top: 10px; line-height: 1.5">
+                        <tr>
+                            <td class="bold">
+                                <div style="font-size: 15px;" class="uppercase">@lang('biodata.address')</div>
+                                <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ $data['alamat_lengkap'] }}
+                            </td>
+                        </tr>
+                    </table>
+
+                    @isset($data['sosial_media'])
+                        <table style="margin-top: 10px">
+                            <tr>
+                                <td class="bold">
+                                    <div style="font-size: 15px" class="uppercase">@lang('biodata.social_media')</div>
+                                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                                </td>
+                            </tr>
+                            @for ($i = 0; $i < count($data['sosial_media']['nama']); $i++)
+                                <tr>
+                                    <td>
+                                        <a href="{{ $data['sosial_media']['link'][$i] }}" style="color: #000;" target="_blank">
+                                            {{ $data['sosial_media']['link'][$i] }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endfor
+                        </table>
+                    @endisset
+                </td>
+                <td width="10%">&nbsp;</td>
+                <td width="60%">
+                    @isset($data['pendidikan'])
+                        <table style="margin-top: 10px">
+                            <tr>
+                                <td class="bold">
+                                    <div style="font-size: 15px" class="uppercase">@lang('biodata.education')</div>
+                                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                                </td>
+                            </tr>
+
+                            @for ($i = 0; $i < count($data['pendidikan']['sekolah']); $i++)
+                                <tr>
+                                    <td>
+                                        <span class="bold">{{ $data['pendidikan']['sekolah'][$i] }}</span> -
+                                        {{ $data['pendidikan']['kota'][$i] }} <br>
+                                        <span style="font-style: italic">{{ $data['pendidikan']['tahun_masuk'][$i] }} -
+                                            {{ $data['pendidikan']['tahun_keluar'][$i] }}</span>
+
+                                        @if (!empty($data['pendidikan']['jurusan'][$i]))
+                                            <br>
+                                            <span>{{ $data['pendidikan']['jurusan'][$i] }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endfor
+
+                        </table>
+                    @endisset
+
+                    @if (
+                        !empty($data['deskripsi_keahlian']) ||
+                            (count($data['keahlian']) > 0 && !empty($data['keahlian']['nama_keahlian'][0])))
+                        <table style="margin-top: 10px">
+                            <tr>
+                                <td class="bold">
+                                    <div style="font-size: 15px" class="uppercase">@lang('biodata.skills')</div>
+                                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                @if ($data['tipe_input_keahlian'] == 'text')
+                                    <td>
+                                        {!! $data['deskripsi_keahlian'] !!}
+                                    </td>
+                                @else
+                                    <td>
+                                        <div style="margin-bottom: 5px">{{ $data['keahlian']['nama_keahlian'][$i] }} :
+                                            {{ $data['keahlian']['level_keahlian'][$i] }}</div>
+                                    </td>
+                                @endif
+                            </tr>
+                        </table>
+                    @endif
+
+                </td>
+            </tr>
+
+        </table>
+
+        <table style="margin-top: 10px;">
+            <tr style="page-break-inside: auto">
+                <td class="bold">
+                    <div style="font-size: 15px" class="uppercase">@lang('biodata.experience')</div>
+                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                 </td>
             </tr>
             @for ($i = 0; $i < count($data['pengalaman']['posisi']); $i++)
-                <tr>
+                <tr style="page-break-inside: auto">
                     <td>
-                        <div class="bold">{{ $data['pengalaman']['posisi'][$i] ?? 'Web Programmer'}}</div>
-                    </td>
-                    <td align="right" class="bold">
-                        {{ $data['pengalaman']['bulan_tahun_masuk'][$i] }} - {{ $data['pengalaman']['bulan_tahun_keluar'][$i] }}
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div style="font-style: italic; margin-top: -5px">{{ $data['pengalaman']['perusahaan'][$i] }}</div>
-                        <div style="margin-top: 3px; padding-bottom: 8px;">
-                            {!! $data['pengalaman']['deskripsi_pekerjaan'][$i] !!}
+                        <div style="page-break-inside: auto">
+                            <span class="bold">{{ $data['pengalaman']['perusahaan'][$i] }}</span>
+                            <span>{{ $data['pengalaman']['kota'][$i] }}</span>
                         </div>
+                        <div style="page-break-inside: auto">
+                            <span>{{ $data['pengalaman']['posisi'][$i] }}</span>
+                        </div>
+                        <div style="page-break-inside: auto">
+                            <span>{{ $data['pengalaman']['bulan_tahun_masuk'][$i] }} -
+                                {{ $data['pengalaman']['bulan_tahun_keluar'][$i] }}</span>
+                        </div>
+
+                        @if (!empty($data['pengalaman']['deskripsi_pekerjaan'][$i]))
+                            <div style="margin-top: 5px; page-break-inside: auto">{!! $data['pengalaman']['deskripsi_pekerjaan'][$i] !!}</div>
+                        @endif
                     </td>
                 </tr>
             @endfor
         </table>
-    @endisset
 
-
-    @isset($data['portofolio'])
-        <table style="margin-bottom: 10px;">
-            <tr>
-                <td>
-                    <div style="font-size: 16px; font-weight: bold;">PORTOFOLIO</div>
-                    <div class="garis"></div>
+        <table style="margin-top: 10px;">
+            <tr style="page-break-before: always">
+                <td class="bold">
+                    <div style="font-size: 15px" class="uppercase">@lang('biodata.portofolio')</div>
+                    <div style="border: 1px solid #333333; margin: 5px 0px;"></div>
                 </td>
             </tr>
-
             @for ($i = 0; $i < count($data['portofolio']['nama_portofolio']); $i++)
-                <tr>
+                <tr style="page-break-inside: auto">
                     <td>
-                        <div style="margin-bottom: 5px">
-                            <div class="bold">{{ $data['portofolio']['nama_portofolio'][$i] }}</div>
-                            {!! $data['portofolio']['deskripsi_portofolio'][$i] !!}
-                        </div>
+                        <span class="bold">{{ $data['portofolio']['nama_portofolio'][$i] }}</span>
+                        @if ($data['portofolio']['deskripsi_portofolio'][$i])
+                            <br>
+                            <span style="font-style: italic">
+                                {!! $data['portofolio']['deskripsi_portofolio'][$i] !!}
+                            </span>
+                        @endif
                     </td>
                 </tr>
             @endfor
         </table>
-    @endisset
+    </div>
+@endsection
+
+
+@section('js')
+    <script>
+        var element = document.getElementById('content');
+
+        var opt = {
+            margin: [10, 2, 13, 2],
+            filename: 'Curriculum Vitae.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+            },
+            pagebreak: {
+                mode: 'avoid',
+                before: '.page-break',
+                after: '.page-break',
+                height: 295 - (20 / 25.4),
+            },
+        };
+
+
+        window.onload = function() {
+            html2pdf().from(element)
+                .set(opt)
+                .toPdf()
+                .get('pdf')
+                .then(function(pdf) {
+                    var dataURI = pdf.output('datauristring');
+                    window.close();
+
+                    var newWindow = window.open();
+                    newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI + '"></iframe>');
+
+                });
+        };
+    </script>
 @endsection

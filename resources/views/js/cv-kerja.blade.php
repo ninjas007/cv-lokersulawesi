@@ -79,6 +79,8 @@
             return
         }
 
+        selectTemplate();
+
         $(`#formCvKerja`).attr('action', `{{ url('download') }}`);
         $(`#formCvKerja`).submit();
     }
@@ -104,6 +106,7 @@
     }
 
     function preview() {
+        selectTemplate();
         $(`#formCvKerja`).attr('action', `{{ url('preview') }}`);
         $(`#formCvKerja`).attr('target', '_blank');
         $(`#formCvKerja`).submit();
@@ -120,7 +123,9 @@
         });
     }
 
-    // addTinyMce()
+    function setLang(lang) {
+        $('#langUse').val(lang);
+    }
 
     function saveDataToLocalStorage() {
         const form = document.getElementById('formCvKerja');
@@ -148,7 +153,6 @@
 
         // Handle image file
         const imageFile = formData.get('foto');
-        console.log(imageFile);
         if (imageFile) {
             const reader = new FileReader();
             reader.onloadend = function() {

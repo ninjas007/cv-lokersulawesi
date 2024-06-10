@@ -11,7 +11,6 @@ aria-hidden="true">
             <div class="row mb-5">
                 @foreach ($templates as $key => $template)
                     <div class="col-4 text-center">
-                        <h4 class="mb-5">{{ $template['nama'] }}</h4>
                         <div class="form-check">
                             <input class="form-check-input" name="template" type="radio" value="{{ $template['id'] }}" id="template{{ $key }}"
                             @if ($template['id'] == 1)
@@ -23,6 +22,15 @@ aria-hidden="true">
                         </div>
                     </div>
                 @endforeach
+                <div class="col-4">
+                    <div class="form-group">
+                        <label for="lang">Bahasa</label>
+                        <select name="lang" id="lang" class="form-control" onclick="setLang(this.value)">
+                            <option value="id">Bahasa Indonesia</option>
+                            <option value="en">English</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="modal-footer">

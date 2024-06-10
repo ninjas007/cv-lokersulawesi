@@ -169,6 +169,8 @@
                 @csrf
                 <input type="hidden" id="snapToken" name="snap_token">
                 <input type="hidden" id="responseVal" name="responseVal">
+                <input type="hidden" id="templateUse" name="template_use" value="1">
+                <input type="hidden" id="langUse" name="lang_use" value="id">
                 <div class="wizard" style="padding-bottom: 50px;">
                     <div class="tab-content mt-4 py-2" id="myTabContent">
                         @foreach ($contents as $content)

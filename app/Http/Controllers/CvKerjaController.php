@@ -30,17 +30,25 @@ class CvKerjaController extends Controller
     public function preview(Request $request)
     {
         if (config('app.seed_preview')) {
-            $data['data'] = $this->seeds->seederEnvDevelopment();
+            $content = $this->seeds->seederEnvDevelopment();
         } else {
-            $data['data'] = $request->all();
+            $content = $request->all();
         }
 
-        $data['preview'] = true;
+        $content = $this->seeds->seederEnvDevelopment();
 
-        // return view('menus.preview.cv-kerja.templates.1');
-        // return view('menus.preview.cv-kerja.templates.'.$request->template_use.'', $data)->render();
-        $pdf = Pdf::loadView('menus.preview.cv-kerja.templates.'.$request->template_use.'', $data);
-        return $pdf->stream('Preview.pdf', ['Attachment' => false]);
+        $lang = $request->lang_use ?? 'id';
+        app()->setLocale($lang);
+        $data = [
+            'lang' => $lang,
+            'preview' => true,
+            'data' => $content
+        ];
+
+        // return view('menus.preview.cv-kerja.templates.1', $data);
+        return view('menus.preview.cv-kerja.templates.'.$request->template_use.'', $data);
+        // $pdf = Pdf::loadView('menus.preview.cv-kerja.templates.'.$request->template_use.'', $data);
+        // return $pdf->stream('Preview.pdf', ['Attachment' => false]);
     }
 
     public function downloadPdf(Request $request)
