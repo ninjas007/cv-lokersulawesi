@@ -226,12 +226,19 @@
             @endfor
         </table>
     </div>
+
+    {{-- fixed bottom print button --}}
+    <div style="position: fixed; bottom: 0px; right: 0px;">
+        <button id="downloadBtn" class="btn btn-primary btn-sm">@lang('biodata.print')</button>
+    </div>
+
 @endsection
 
 
 @section('js')
     <script>
-        window.onload = function() {
+        // download pdf
+        document.getElementById('downloadBtn').addEventListener('click', function() {
             var newWindow = window.open(`{{ url('print/cv-kerja') }}`, '_blank'); // Buka jendela baru terlebih dahulu
 
             setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
@@ -277,6 +284,6 @@
                         }, 500);
                     });
             }, 500);
-        };
+        });
     </script>
 @endsection
