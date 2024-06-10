@@ -224,57 +224,74 @@
             @endfor
         </table>
     @endisset
+
+    {{-- fixed button bottom print --}}
+    <div class="fixed-button-container">
+        <button type="button" id="printBtn" class="btn btn-primary">
+            <i class="fa fa-print"></i> PRINT
+        </button>
+    </div>
 @endsection
 
 @section('js')
     <script>
-        var element = document.getElementById('content');
+        document.getElementById('printBtn').onclick = function() {
+            var newWindow = window.open(``, '_blank'); // Buka jendela baru terlebih dahulu
 
-        var opt = {
-            margin: [12, 12, 12, 12],
-            filename: 'Curriculum Vitae.pdf',
-            image: {
-                type: 'jpeg',
-                quality: 0.98
-            },
-            html2canvas: {
-                scale: 2
-            },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait'
-            },
-            pagebreak: {
-                mode: 'avoid',
-                before: '.page-break',
-                after: '.page-break',
-                height: 295 - (20 / 25.4),
-            },
+            // remove fixed button container using javascript vanila
+            document.getElementsByClassName('fixed-button-container')[0].style.display = 'none';
+
+            setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
+                var element = document.getElementById('content');
+
+                var opt = {
+                    margin: [12, 12, 12, 12],
+                    filename: 'Curriculum Vitae.pdf',
+                    image: {
+                        type: 'jpeg',
+                        quality: 0.98
+                    },
+                    html2canvas: {
+                        scale: 2
+                    },
+                    jsPDF: {
+                        unit: 'mm',
+                        format: 'a4',
+                        orientation: 'portrait'
+                    },
+                    pagebreak: {
+                        mode: 'avoid',
+                        before: '.page-break',
+                        after: '.page-break',
+                        height: 295 - (20 / 25.4),
+                    },
+                };
+
+                @if (isset($preview))
+                    html2pdf().from(element)
+                        .set(opt)
+                        .toPdf()
+                        .get('pdf')
+                        .then(function(pdf) {
+                            var dataURI = pdf.output('datauristring');
+
+                            // Tulis konten ke jendela baru
+                            newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
+                                '"></iframe>');
+
+                            // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
+                            setTimeout(function() {
+                                window.close();
+                            }, 500);
+                        });
+                @else
+                    html2pdf().from(element)
+                        .set(opt)
+                        .toPdf()
+                        .save();
+                @endif
+
+            }, 500);
         };
-
-
-        window.onload = function() {
-            html2pdf().from(element)
-                .set(opt)
-                .toPdf()
-                .get('pdf')
-                .then(function(pdf) {
-                    var dataURI = pdf.output('datauristring');
-                    window.close();
-
-                    @if (isset($preview))
-                        var newWindow = window.open();
-                        newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
-                            '"></iframe>');
-                    @else
-                        // Download the PDF
-                        var link = document.createElement('a');
-                        link.href = dataURI;
-                        link.download = 'Curriculum Vitae.pdf';
-                        link.click();
-                    @endif
-                });
-        }
     </script>
 @endsection

@@ -44,6 +44,33 @@
         .page-break {
             page-break-before: always;
         }
+
+        .fixed-button-container {
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 100;
+            font-size: 20;
+            background-color: lightblue;
+            text-align: center;
+            padding: 10px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 20;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .btn-primary i {
+            margin-right: 10px;
+        }
     </style>
     @yield('css')
 </head>

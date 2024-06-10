@@ -6,33 +6,6 @@
         table tr td {
             page-break-inside: auto !important;
         }
-
-        .fixed-button-container {
-            position: fixed;
-            bottom: 20px;
-            right: 0;
-            left: 0;
-            z-index: 100;
-            font-size: 24px;
-            background-color: red;
-            text-align: center;
-            padding: 10px;
-        }
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            font-size: 24px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-        }
-        .btn-primary i {
-            margin-right: 10px;
-        }
     </style>
 @endsection
 
@@ -257,10 +230,9 @@
     {{-- fixed button bottom print --}}
     <div class="fixed-button-container">
         <button type="button" id="printBtn" class="btn btn-primary">
-            <i class="fa fa-print"></i> DOWNLOAD
+            <i class="fa fa-print"></i> PRINT
         </button>
     </div>
-    <input type="hidden" id="preview" value="{{ $preview ?? '0' }}">
 @endsection
 
 
@@ -268,13 +240,15 @@
     <script>
         document.getElementById('printBtn').onclick = function() {
             var newWindow = window.open(``, '_blank'); // Buka jendela baru terlebih dahulu
-            var preview = document.getElementById('preview');
+
+            // remove fixed button container using javascript vanila
+            document.getElementsByClassName('fixed-button-container')[0].style.display = 'none';
 
             setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
                 var element = document.getElementById('content');
 
                 var opt = {
-                    margin: [12, 15],
+                    margin: [12, 5],
                     filename: 'Curriculum Vitae.pdf',
                     image: {
                         type: 'jpeg',
@@ -296,12 +270,7 @@
                     },
                 };
 
-                if (preview.value == 0) {
-                    html2pdf().from(element)
-                        .set(opt)
-                        .toPdf()
-                        .save();
-                } else {
+                @if (isset($preview))
                     html2pdf().from(element)
                         .set(opt)
                         .toPdf()
@@ -318,7 +287,13 @@
                                 window.close();
                             }, 500);
                         });
-                }
+                @else
+                    html2pdf().from(element)
+                        .set(opt)
+                        .toPdf()
+                        .save();
+                @endif
+
             }, 500);
         };
     </script>
