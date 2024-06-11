@@ -7,7 +7,7 @@
                 <img id="displayImage" style="border-radius: 5%; object-fit: cover; display: none; height: 110px; width: 100px"/>
             </div>
             <label for="foto" class="mb-1">Foto Profil</label>
-            <span class="text-primary" style="font-size: 11px; font-style: italic"><i class="fa fa-info text-white bg-info" data-mdb-toggle="tooltip" title="Untuk mendapatkan hasil gambar yang bagus baiknya gambar berukuran 100x100 px" style="font-size: 11px; border-radius: 50%; padding: 2px 5px"></i> (Foto harus berupa: jpg, jpeg, png, gif, max size: 512KB)
+            <span class="text-primary" style="font-size: 11px; font-style: italic"><i class="fa fa-info text-white bg-info" data-mdb-toggle="tooltip" title="Disarankan gambar berukuran height: 110px dan width: 100px" style="font-size: 11px; border-radius: 50%; padding: 2px 5px"></i> (Foto harus berupa: jpg, jpeg, png, max size: 1024KB)
 
             </span>
             <input type="file" class="form-control validasi-datadiri @error('foto') is-invalid @enderror" name="foto" accept="image/*" id="foto">

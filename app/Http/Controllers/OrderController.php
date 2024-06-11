@@ -36,7 +36,7 @@ class OrderController extends Controller
             'email' => 'required',
             'no_hp' => 'required',
             'alamat_lengkap' => 'required',
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024'
+            'foto' => 'required|image|mimes:jpeg,png,jpg|max:1024'
         ], $messages);
 
         $foto = app(\App\Http\Controllers\HelperController::class)->uploadFile($request);

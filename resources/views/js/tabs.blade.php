@@ -34,5 +34,15 @@
             const prevTab = new bootstrap.Tab(prevTabLinkEl);
             prevTab.show();
         });
+
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            const error = errorDataDiri();
+            if (error > 0) {
+                $('a[href="#step1"]').tab('show');
+            } else {
+                saveDataToLocalStorage();
+            }
+        });
+
     });
 </script>

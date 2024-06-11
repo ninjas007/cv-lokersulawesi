@@ -65,45 +65,11 @@
     }
 
     function download() {
-        // if (validation() > 0) {
-        //     swal({
-        //             title: 'Info',
-        //             text: 'Terdapat data yang harus di isi',
-        //             icon: 'info',
-        //             button: true,
-        //         })
-        //         .then(() => {
-        //             $('#modalPilihTemplate').modal('hide');
-        //         });
-
-        //     return
-        // }
-
         selectTemplate();
 
         $(`#formCvKerja`).attr('action', `{{ route('order') }}`);
         $(`#formCvKerja`).submit();
     }
-
-    // function validation() {
-    //     let is_valid = 0;
-
-    //     $('.custom_validation').each(function() {
-    //         $(this).removeClass('is-invalid');
-    //         $(this).removeClass('custom_invalid');
-    //         if ($(this).val() == '') {
-    //             const fieldText = $(this).prev('label').text();
-
-    //             $(this).addClass('is-invalid');
-    //             $(this).after(
-    //                 `<div class="invalid-feedback mt-1 custom_invalid">${fieldText} harus diisi.</div>`);
-
-    //             is_valid++;
-    //         }
-    //     });
-
-    //     return is_valid;
-    // }
 
     function preview() {
         selectTemplate();
