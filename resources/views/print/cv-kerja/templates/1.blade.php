@@ -226,72 +226,100 @@
     @endisset
 
     {{-- fixed button bottom print --}}
-    <div class="fixed-button-container">
+    {{-- <div class="fixed-button-container">
         <button type="button" id="printBtn" class="btn btn-primary">
             <i class="fa fa-print"></i> PRINT
         </button>
-    </div>
+    </div> --}}
 @endsection
 
 @section('js')
     <script>
-        document.getElementById('printBtn').onclick = function() {
-            var newWindow = window.open(``, '_blank'); // Buka jendela baru terlebih dahulu
+        function printAndKeepOpen() {
+            window.print();
+        }
 
-            // remove fixed button container using javascript vanila
-            document.getElementsByClassName('fixed-button-container')[0].style.display = 'none';
+        window.onload = function() {
+            printAndKeepOpen();
 
-            setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
-                var element = document.getElementById('content');
+            // Menangani event saat jendela pencetakan ditutup
+            window.onafterprint = function() {
+                // Memberikan jeda sebelum menutup halaman agar jendela pencetakan dapat menyelesaikan prosesnya
+                setTimeout(function() {
+                    // Menutup jendela pencetakan
+                    window.close();
+                }, 100);
+            };
 
-                var opt = {
-                    margin: [12, 12, 12, 12],
-                    filename: 'Curriculum Vitae.pdf',
-                    image: {
-                        type: 'jpeg',
-                        quality: 0.98
-                    },
-                    html2canvas: {
-                        scale: 2
-                    },
-                    jsPDF: {
-                        unit: 'mm',
-                        format: 'a4',
-                        orientation: 'portrait'
-                    },
-                    pagebreak: {
-                        mode: 'avoid',
-                        before: '.page-break',
-                        after: '.page-break',
-                        height: 295 - (20 / 25.4),
-                    },
-                };
-
-                @if (isset($preview))
-                    html2pdf().from(element)
-                        .set(opt)
-                        .toPdf()
-                        .get('pdf')
-                        .then(function(pdf) {
-                            var dataURI = pdf.output('datauristring');
-
-                            // Tulis konten ke jendela baru
-                            newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
-                                '"></iframe>');
-
-                            // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
-                            setTimeout(function() {
-                                window.close();
-                            }, 500);
-                        });
-                @else
-                    html2pdf().from(element)
-                        .set(opt)
-                        .toPdf()
-                        .save();
-                @endif
-
-            }, 500);
+            // Menangani event saat pencetakan dibatalkan atau disimpan
+            window.onbeforeprint = function() {
+                // Memberikan jeda sebelum menutup halaman agar pengguna memiliki kesempatan untuk membatalkan pencetakan
+                setTimeout(function() {
+                    // Menutup jendela pencetakan
+                    window.close();
+                }, 100);
+            };
         };
+
+
+
+        // document.getElementById('printBtn').onclick = function() {
+        //     var newWindow = window.open(``, '_blank'); // Buka jendela baru terlebih dahulu
+
+        //     // remove fixed button container using javascript vanila
+        //     document.getElementsByClassName('fixed-button-container')[0].style.display = 'none';
+
+        //     setTimeout(function() { // Berikan waktu singkat untuk memastikan jendela baru tidak diblokir
+        //         var element = document.getElementById('content');
+
+        //         var opt = {
+        //             margin: [12, 12, 12, 12],
+        //             filename: 'Curriculum Vitae.pdf',
+        //             image: {
+        //                 type: 'jpeg',
+        //                 quality: 0.98
+        //             },
+        //             html2canvas: {
+        //                 scale: 2
+        //             },
+        //             jsPDF: {
+        //                 unit: 'mm',
+        //                 format: 'a4',
+        //                 orientation: 'portrait'
+        //             },
+        //             pagebreak: {
+        //                 mode: 'avoid',
+        //                 before: '.page-break',
+        //                 after: '.page-break',
+        //                 height: 295 - (20 / 25.4),
+        //             },
+        //         };
+
+        //         @if (isset($preview))
+        //             html2pdf().from(element)
+        //                 .set(opt)
+        //                 .toPdf()
+        //                 .get('pdf')
+        //                 .then(function(pdf) {
+        //                     var dataURI = pdf.output('datauristring');
+
+        //                     // Tulis konten ke jendela baru
+        //                     newWindow.document.write('<iframe width="100%" height="100%" src="' + dataURI +
+        //                         '"></iframe>');
+
+        //                     // Tutup jendela saat ini setelah jeda singkat untuk memastikan dokumen ditulis
+        //                     setTimeout(function() {
+        //                         window.close();
+        //                     }, 500);
+        //                 });
+        //         @else
+        //             html2pdf().from(element)
+        //                 .set(opt)
+        //                 .toPdf()
+        //                 .save();
+        //         @endif
+
+        //     }, 500);
+        // };
     </script>
 @endsection
