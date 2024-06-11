@@ -2,7 +2,7 @@
     @include('pages.parts.cv-kerja.contents.card-title')
 
     <div class="card-body" id="cardBodyPengalaman">
-        @include('pages.parts.cv-kerja.contents.pengalaman-konten')
+        {{-- @include('pages.parts.cv-kerja.contents.pengalaman-konten') --}}
     </div>
     <div class="card-footer">
         @include('pages.parts.cv-kerja.btn-add', ['name' => 'Pengalaman', 'id' => 'tambahPengalaman'])

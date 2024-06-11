@@ -12,6 +12,7 @@
 
 
 @section('css')
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     <style>
         .wizard,
         .wizard .nav-tabs,
@@ -20,15 +21,15 @@
         }
 
         /* .wizard .nav-tabs:after {
-                                content: "";
-                                width: 80%;
-                                border-bottom: solid 2px #54b4d3;
-                                position: absolute;
-                                margin-left: auto;
-                                margin-right: auto;
-                                top: 38%;
-                                z-index: -1;
-                            } */
+                                            content: "";
+                                            width: 80%;
+                                            border-bottom: solid 2px #54b4d3;
+                                            position: absolute;
+                                            margin-left: auto;
+                                            margin-right: auto;
+                                            top: 38%;
+                                            z-index: -1;
+                                        } */
 
         .wizard .nav-tabs .nav-item .nav-link {
             width: 10px !important;
@@ -120,48 +121,47 @@
     <section class="mt-3">
         <div class="container">
             <div class="wizard fixed-top-container">
+                @php
+                    $contents = [
+                        [
+                            'id' => 1,
+                            'icon' => 'fas fa-user',
+                            'title' => 'Data Diri',
+                            'blade' => 'data-diri',
+                        ],
+                        [
+                            'id' => 2,
+                            'icon' => 'fas fa-briefcase',
+                            'title' => 'Pendidikan',
+                            'blade' => 'pendidikan',
+                        ],
+                        [
+                            'id' => 3,
+                            'icon' => 'fas fa-share-alt',
+                            'title' => 'Sosial Media',
+                            'blade' => 'sosial',
+                        ],
+                        [
+                            'id' => 4,
+                            'icon' => 'fas fa-briefcase',
+                            'title' => 'Pengalaman Kerja',
+                            'blade' => 'pengalaman',
+                        ],
+                        [
+                            'id' => 5,
+                            'icon' => 'fas fa-lightbulb',
+                            'title' => 'Keahlian',
+                            'blade' => 'keahlian',
+                        ],
+                        [
+                            'id' => 6,
+                            'icon' => 'fas fa-star',
+                            'title' => 'Portofolio',
+                            'blade' => 'portofolio',
+                        ],
+                    ];
+                @endphp
                 <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
-                    @php
-                        $contents = [
-                            [
-                                'id' => 1,
-                                'icon' => 'fas fa-user',
-                                'title' => 'Data Diri',
-                                'blade' => 'data-diri',
-                            ],
-                            [
-                                'id' => 2,
-                                'icon' => 'fas fa-briefcase',
-                                'title' => 'Pendidikan',
-                                'blade' => 'pendidikan',
-                            ],
-                            [
-                                'id' => 3,
-                                'icon' => 'fas fa-share-alt',
-                                'title' => 'Sosial Media',
-                                'blade' => 'sosial',
-                            ],
-                            [
-                                'id' => 4,
-                                'icon' => 'fas fa-briefcase',
-                                'title' => 'Pengalaman Kerja',
-                                'blade' => 'pengalaman',
-                            ],
-                            [
-                                'id' => 5,
-                                'icon' => 'fas fa-lightbulb',
-                                'title' => 'Keahlian',
-                                'blade' => 'keahlian',
-                            ],
-                            [
-                                'id' => 6,
-                                'icon' => 'fas fa-star',
-                                'title' => 'Portofolio',
-                                'blade' => 'portofolio',
-                            ],
-                        ];
-                    @endphp
-
                     @include('pages.parts.nav-tabs', ['steps' => $contents])
                 </ul>
             </div>
@@ -192,7 +192,10 @@
 
 @section('js')
 
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.min.js'></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
     @include('js.tabs')
 
     @include('js.cv-kerja')

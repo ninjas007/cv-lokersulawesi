@@ -33,14 +33,14 @@
         let konten = `@include('pages.parts.cv-kerja.contents.pengalaman-konten')`;
 
         $('#cardBodyPengalaman').append(konten)
-        // addTinyMce()
+        addNote()
     })
 
     $('#tambahPortofolio').on('click', function() {
         let konten = `@include('pages.parts.cv-kerja.contents.portofolio-konten')`;
 
         $('#cardBodyPortofolio').append(konten);
-        // addTinyMce()
+        addNote()
     })
 
 
@@ -116,12 +116,21 @@
         $('#modalChooseLanguage').modal('show');
     }
 
-    function addTinyMce() {
-        tinymce.init({
-            selector: 'textarea.tiny',
-            forced_root_block: 'div'
+    function addNote() {
+        $('textarea.tiny').summernote({
+            tabsize: 0,
+            height: 200,
+            focus: true,
+            popattribution: false,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['para', ['ul', 'ol', 'paragraph']],
+            ]
         });
     }
+
+    addNote()
 
     function setLang(lang) {
         $('#langUse').val(lang);
