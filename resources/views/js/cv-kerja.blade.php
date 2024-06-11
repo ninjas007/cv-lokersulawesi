@@ -85,25 +85,25 @@
         $(`#formCvKerja`).submit();
     }
 
-    function validation() {
-        let is_valid = 0;
+    // function validation() {
+    //     let is_valid = 0;
 
-        $('.custom_validation').each(function() {
-            $(this).removeClass('is-invalid');
-            $(this).removeClass('custom_invalid');
-            if ($(this).val() == '') {
-                const fieldText = $(this).prev('label').text();
+    //     $('.custom_validation').each(function() {
+    //         $(this).removeClass('is-invalid');
+    //         $(this).removeClass('custom_invalid');
+    //         if ($(this).val() == '') {
+    //             const fieldText = $(this).prev('label').text();
 
-                $(this).addClass('is-invalid');
-                $(this).after(
-                    `<div class="invalid-feedback mt-1 custom_invalid">${fieldText} harus diisi.</div>`);
+    //             $(this).addClass('is-invalid');
+    //             $(this).after(
+    //                 `<div class="invalid-feedback mt-1 custom_invalid">${fieldText} harus diisi.</div>`);
 
-                is_valid++;
-            }
-        });
+    //             is_valid++;
+    //         }
+    //     });
 
-        return is_valid;
-    }
+    //     return is_valid;
+    // }
 
     function preview() {
         selectTemplate();
@@ -134,6 +134,28 @@
 
     function setLang(lang) {
         $('#langUse').val(lang);
+    }
+
+    function errorDataDiri() {
+        let error = 0;
+
+        $('.text-validasi').remove();
+
+        $('.validasi-datadiri').each(function() {
+            $(this).removeClass('is-invalid');
+            // $(this).after('text-validasi');
+            if ($(this).val() == '') {
+                const fieldText = $(this).prev('label').text();
+
+                $(this).addClass('is-invalid');
+                $(this).after(
+                    `<div class="text-danger text-validasi">${fieldText} harus diisi.</div>`);
+
+                error += 1;
+            }
+        });
+
+        return error;
     }
 
     function saveDataToLocalStorage() {
@@ -182,11 +204,32 @@
         if (data) {
             const formObject = JSON.parse(data);
             Object.keys(formObject).forEach(key => {
-                if (key === 'image') {
-                    // Display the image
-                    const imgElement = document.getElementById('displayImage');
-                    imgElement.src = formObject[key];
-                    imgElement.style.display = 'block';
+                if (key === 'foto') {
+                    // Isi input file dengan URL dari LocalStorage
+                    const base64Image = localStorage.getItem('foto');
+                    if (base64Image) {
+                        const imgElement = document.getElementById('displayImage');
+                        imgElement.src = base64Image;
+                        imgElement.style.display = 'block';
+
+                        // Buat objek File dari base64 URL dan tambahkan ke input file
+                        const byteString = atob(base64Image.split(',')[1]);
+                        const mimeString = base64Image.split(',')[0].split(':')[1].split(';')[0];
+                        const ab = new ArrayBuffer(byteString.length);
+                        const ia = new Uint8Array(ab);
+                        for (let i = 0; i < byteString.length; i++) {
+                            ia[i] = byteString.charCodeAt(i);
+                        }
+                        const blob = new Blob([ab], {
+                            type: mimeString
+                        });
+                        const file = new File([blob], "photo-profile.jpg");
+
+                        // Membuat DataTransfer untuk mengisi input file
+                        const dataTransfer = new DataTransfer();
+                        dataTransfer.items.add(file);
+                        document.getElementById('foto').files = dataTransfer.files;
+                    }
                 } else if (typeof formObject[key] === 'object') {
                     Object.keys(formObject[key]).forEach(subKey => {
                         formObject[key][subKey].forEach((value, index) => {
@@ -207,5 +250,24 @@
         }
     }
 
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = function() {
+                const base64Image = reader.result;
+                // Simpan URL base64 ke LocalStorage
+                localStorage.setItem('foto', base64Image);
+
+                // Perbarui displayImage
+                const imgElement = document.getElementById('displayImage');
+                imgElement.src = base64Image;
+                imgElement.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    document.getElementById('foto').addEventListener('change', handleFileUpload);
     document.addEventListener('DOMContentLoaded', getDataFromLocalStorage);
 </script>

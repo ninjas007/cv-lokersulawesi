@@ -10,6 +10,11 @@
 
         //Advance Tabs
         $(".next").click(function() {
+            let part = $(this).data("part");
+            if (part == "datadiri" && errorDataDiri() > 0) {
+                return false;
+            }
+
             const nextTabLinkEl = $(".nav-tabs .active")
                 .closest("li")
                 .next("li")
