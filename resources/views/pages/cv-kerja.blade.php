@@ -124,6 +124,10 @@
         .template-image {
             transition: filter 0.3s ease;
         }
+
+        .badge:hover {
+            cursor: pointer;
+        }
     </style>
 @endsection
 
