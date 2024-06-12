@@ -131,10 +131,27 @@
         }
         .card-content-form {
             margin-bottom: 4rem;
-            border: 1px solid #d5d5d5;
+            border: 1px solid #e5e5e5;
             padding: 8px;
             border-radius: 3px;
             margin-bottom: 1em;
+            background-color: #f5f5f5;
+        }
+
+        .form-control {
+            border: 1px solid #e5e5e5;
+            border-radius: 3px;
+            padding: 0.21rem 0.75rem;
+        }
+
+        .form-control:focus {
+            border: 1px solid #54b4d3;
+            box-shadow: none;
+        }
+
+        .btn {
+            border-radius: 3px;
+            padding: 0.5rem 0.8rem;
         }
     </style>
 @endsection
