@@ -4,11 +4,41 @@
     // remove pendidikan, pengalaman, portofolio
     function removeFormCard(elem) {
         elem.parentElement.remove();
+        saveDataForm();
     }
 
     // remove sosial, keahlian
     function removeFormInline(elem) {
         elem.parentElement.parentElement.remove();
+        saveDataForm();
+    }
+
+    function moveUpFormCard(elem) {
+        let parent = elem.parentElement;
+        parent.parentElement.insertBefore(parent, parent.previousElementSibling);
+        saveDataForm();
+    }
+
+    function moveDownFormCard(elem) {
+        let parent = elem.parentElement;
+        parent.parentElement.insertBefore(parent, parent.nextElementSibling.nextElementSibling);
+        saveDataForm();
+    }
+
+    function moveUpFormInline(elem) {
+        let parent = elem.closest('.row');
+        if (parent.previousElementSibling && parent.previousElementSibling.classList.contains('row')) {
+            parent.parentElement.insertBefore(parent, parent.previousElementSibling);
+            saveDataForm();
+        }
+    }
+
+    function moveDownFormInline(elem) {
+        let parent = elem.closest('.row');
+        if (parent.nextElementSibling && parent.nextElementSibling.classList.contains('row')) {
+            parent.parentElement.insertBefore(parent.nextElementSibling, parent);
+            saveDataForm();
+        }
     }
 
     $('#tambahPendidikan').on('click', function() {
@@ -342,22 +372,22 @@
 
     function resetForm() {
         swal({
-            title: 'Yakin untuk mereset form?',
-            text: 'Semua data yang telah di inputkan akan direset.',
-            icon: 'warning',
-            buttons: true,
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                // clear localstorage key data
-                localStorage.removeItem('data');
-                localStorage.removeItem('foto');
+                title: 'Yakin untuk mereset form?',
+                text: 'Semua data yang telah di inputkan akan direset.',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    // clear localstorage key data
+                    localStorage.removeItem('data');
+                    localStorage.removeItem('foto');
 
-                // reload page
-                window.location.reload();
-            }
-        });
+                    // reload page
+                    window.location.reload();
+                }
+            });
     }
 
     document.getElementById('foto').addEventListener('change', handleFileUpload);

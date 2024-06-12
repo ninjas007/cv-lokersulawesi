@@ -1,7 +1,7 @@
 <div style="margin-bottom: 4rem">
-    <div class="btn btn-danger mb-3" onclick="removeFormCard(this)">
-        <i class="fa fa-times"></i>
-    </div>
+
+    @include('pages.parts.cv-kerja.components.btn-form-card')
+
     <div class="form-group mb-3">
         <label for="posisi" class="mb-1">Posisi / Jabatan</label>
         <input type="text" class="form-control" name="pengalaman[posisi][]"

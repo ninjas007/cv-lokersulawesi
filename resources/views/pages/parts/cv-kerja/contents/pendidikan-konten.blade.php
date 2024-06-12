@@ -1,7 +1,6 @@
 <div style="margin-bottom: 4rem">
-    <div class="btn btn-danger mb-4" onclick="removeFormCard(this)">
-        <i class="fa fa-times"></i>
-    </div>
+
+    @include('pages.parts.cv-kerja.components.btn-form-card')
 
     <div class="form-group">
         <div class="row">
