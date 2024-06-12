@@ -121,7 +121,75 @@
             }
         });
 
+        // Validasi ukuran file gambar
+        const imageFile = $('#foto')[0].files[0]; // Ganti '#foto' dengan id input file gambar Anda
+        if (imageFile) {
+            const fileSizeKB = imageFile.size / 1024; // Ukuran dalam KB
+            if (fileSizeKB > 1024) { // Batas ukuran 1024 KB (1 MB)
+                const fieldText = $('#foto').prev('label').text(); // Ganti '#foto' dengan id input file gambar Anda
+
+                $('#foto').addClass('is-invalid'); // Ganti '#foto' dengan id input file gambar Anda
+                $('#foto').after(
+                    `<div class="text-danger text-validasi">${fieldText} harus kurang dari 1024 KB.</div>`
+                );
+
+                error += 1;
+            }
+        }
+
         return error;
+    }
+
+    function addRowBySection(formObject, key) {
+        switch (key) {
+            case 'pendidikan':
+                // empty cardBodyPendidikan
+                $('#cardBodyPendidikan').empty();
+
+                // count row from formObject
+                for (let i = 0; i < formObject[key].sekolah.length; i++) {
+                    $('#tambahPendidikan').trigger('click');
+                }
+
+                break;
+
+            case 'pengalaman':
+                // empty cardBodyPendidikan
+                $('#cardBodyPengalaman').empty();
+
+                // count row from formObject
+                for (let i = 0; i < formObject[key].posisi.length; i++) {
+                    $('#tambahPengalaman').trigger('click');
+                }
+
+                break;
+
+            case 'portofolio':
+                // empty cardBodyPendidikan
+                $('#cardBodyPortofolio').empty();
+
+                // count row from formObject
+                for (let i = 0; i < formObject[key].nama_portofolio.length; i++) {
+                    $('#tambahPortofolio').trigger('click');
+                }
+
+                break;
+
+            case 'keahlian':
+                $('#tambahKeahlian').trigger('click');
+                break;
+
+            case 'sosial_media':
+                // empty cardBodyPendidikan
+                $('#cardBodySosial').empty();
+
+                // count row from formObject
+                for (let i = 0; i < formObject[key].nama.length; i++) {
+                    $('#tambahSosialMedia').trigger('click');
+                }
+
+                break;
+        }
     }
 
     function saveDataToLocalStorage() {
@@ -197,15 +265,34 @@
                         document.getElementById('foto').files = dataTransfer.files;
                     }
                 } else if (typeof formObject[key] === 'object') {
-                    Object.keys(formObject[key]).forEach(subKey => {
-                        formObject[key][subKey].forEach((value, index) => {
-                            const input = document.querySelector(
-                                `[name="${key}[${subKey}][]"]:nth-of-type(${index + 1})`);
-                            if (input) {
-                                input.value = value;
-                            }
+
+                    // tambahkan row untuk setiap bagian
+                    // contoh pendidikan, pengalaman, sosial media, dll
+                    addRowBySection(formObject, key);
+
+                    // input value
+                    setTimeout(() => {
+                        // Setelah semua konten ditambahkan, isi nilai input
+                        Object.keys(formObject[key]).forEach((subKey) => {
+                            formObject[key][subKey].forEach((value, index) => {
+                                // Looping lagi untuk memastikan elemen input ditemukan
+                                const inputs = document.querySelectorAll(
+                                    `[name="${key}[${subKey}][]"]`);
+
+                                // check inputs text area class tiny
+                                if (inputs[index] && inputs[index].classList.contains(
+                                        'tiny')) {
+                                    // input by name tag
+                                    $(inputs[index]).summernote('code', value);
+                                    // $('textarea.tiny').summernote('code', value);
+                                }
+
+                                if (inputs[index]) {
+                                    inputs[index].value = value;
+                                }
+                            });
                         });
-                    });
+                    }, 100);
                 } else {
                     const input = document.querySelector(`[name="${key}"]`);
                     if (input) {
@@ -219,6 +306,20 @@
     function handleFileUpload(event) {
         const file = event.target.files[0];
         if (file) {
+            // Validasi ukuran file
+            const fileSizeKB = file.size / 1024; // Ukuran dalam KB
+            if (fileSizeKB > 1024) { // Batas ukuran 1024 KB (1 MB)
+                swal({
+                    title: 'Ukuran file terlalu besar',
+                    text: 'Ukuran file harus kurang dari 1024 KB.',
+                    icon: 'error',
+                })
+                event.target.value = null; // Kosongkan nilai input file
+                imgElement.src = '';
+                imgElement.style.display = 'none';
+                return; // Batalkan pemrosesan file
+            }
+
             const reader = new FileReader();
             reader.onloadend = function() {
                 const base64Image = reader.result;
@@ -231,7 +332,32 @@
                 imgElement.style.display = 'block';
             };
             reader.readAsDataURL(file);
+        } else {
+            // Kosongkan displayImage jika tidak ada file yang dipilih
+            const imgElement = document.getElementById('displayImage');
+            imgElement.src = '';
+            imgElement.style.display = 'none';
         }
+    }
+
+    function resetForm() {
+        swal({
+            title: 'Yakin untuk mereset form?',
+            text: 'Semua data yang telah di inputkan akan direset.',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // clear localstorage key data
+                localStorage.removeItem('data');
+                localStorage.removeItem('foto');
+
+                // reload page
+                window.location.reload();
+            }
+        });
     }
 
     document.getElementById('foto').addEventListener('change', handleFileUpload);

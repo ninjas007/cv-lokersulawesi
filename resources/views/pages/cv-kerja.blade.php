@@ -21,15 +21,15 @@
         }
 
         /* .wizard .nav-tabs:after {
-                                            content: "";
-                                            width: 80%;
-                                            border-bottom: solid 2px #54b4d3;
-                                            position: absolute;
-                                            margin-left: auto;
-                                            margin-right: auto;
-                                            top: 38%;
-                                            z-index: -1;
-                                        } */
+                                                                content: "";
+                                                                width: 80%;
+                                                                border-bottom: solid 2px #54b4d3;
+                                                                position: absolute;
+                                                                margin-left: auto;
+                                                                margin-right: auto;
+                                                                top: 38%;
+                                                                z-index: -1;
+                                                            } */
 
         .wizard .nav-tabs .nav-item .nav-link {
             width: 10px !important;
@@ -103,8 +103,8 @@
             border-bottom: 2px solid #f5f5f5;
         }
 
-        @media (max-width: 540px) {
 
+        @media (max-width: 540px) {
             .fixed-top-container,
             .fixed-bottom-container {
                 width: 100% !important;
@@ -113,6 +113,16 @@
             #myTabContent {
                 margin-top: 20px !important;
             }
+        }
+
+
+        /* untuk template saat dipilih */
+        .form-check-input[name="template"]:checked+.form-check .form-check-label img {
+            filter: grayscale(5%) brightness(.9);
+        }
+
+        .template-image {
+            transition: filter 0.3s ease;
         }
     </style>
 @endsection

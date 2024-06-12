@@ -96,6 +96,7 @@
 <div class="fixed-bottom-container">
     <div class="container">
         <div class="form-group d-flex justify-content-center">
+            <a href="javascript:void(0)" class="btn btn-danger me-2" onclick="resetForm()"><i class="fa fa-undo"></i> Reset Form</a>
             <a class="btn btn-info next" data-part="datadiri">Continue <i class="fas fa-angle-right"></i></a>
         </div>
     </div>
