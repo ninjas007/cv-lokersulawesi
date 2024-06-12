@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group mb-4">
+    <div class="form-group">
         <label for="jurusan" class="mb-1">Jurusan <span class="small text-info">(jika ada)</span></label>
         <input type="text" class="form-control" name="pendidikan[jurusan][]"
             placeholder="Contoh: Teknik Komputer dan Jaringan">
