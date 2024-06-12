@@ -21,15 +21,15 @@
         }
 
         /* .wizard .nav-tabs:after {
-                                                                content: "";
-                                                                width: 80%;
-                                                                border-bottom: solid 2px #54b4d3;
-                                                                position: absolute;
-                                                                margin-left: auto;
-                                                                margin-right: auto;
-                                                                top: 38%;
-                                                                z-index: -1;
-                                                            } */
+            content: "";
+            width: 80%;
+            border-bottom: solid 2px #54b4d3;
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            top: 38%;
+            z-index: -1;
+        } */
 
         .wizard .nav-tabs .nav-item .nav-link {
             width: 10px !important;
@@ -105,6 +105,7 @@
 
 
         @media (max-width: 540px) {
+
             .fixed-top-container,
             .fixed-bottom-container {
                 width: 100% !important;
@@ -127,6 +128,13 @@
 
         .badge:hover {
             cursor: pointer;
+        }
+        .card-content-form {
+            margin-bottom: 4rem;
+            border: 1px solid #d5d5d5;
+            padding: 8px;
+            border-radius: 3px;
+            margin-bottom: 1em;
         }
     </style>
 @endsection

@@ -1,4 +1,4 @@
-<div style="margin-bottom: 4rem">
+<div class="card-content-form">
 
     @include('pages.parts.cv-kerja.components.btn-form-card')
 
@@ -33,7 +33,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group mb-3">
+    <div class="form-group">
         <label for="deksiripsPekerjaan" class="mb-1">Deskripsi Pekerjaan <span class="small text-info">(jika
                 ada)</span></label>
         <textarea class="tiny form-control" name="pengalaman[deskripsi_pekerjaan][]" cols="30" rows="5"

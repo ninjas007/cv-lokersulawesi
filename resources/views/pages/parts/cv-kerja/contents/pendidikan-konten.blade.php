@@ -1,4 +1,4 @@
-<div style="margin-bottom: 4rem">
+<div class="card-content-form">
 
     @include('pages.parts.cv-kerja.components.btn-form-card')
 
