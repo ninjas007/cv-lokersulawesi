@@ -18,7 +18,7 @@
             }
 
             // save from to local storage
-            saveDataToLocalStorage();
+            saveDataForm();
 
             // next section
             const nextTabLinkEl = $(".nav-tabs .active")
@@ -33,7 +33,7 @@
         $(".previous").click(function() {
 
             // save from to local storage
-            saveDataToLocalStorage();
+            saveDataForm();
 
             // previous section
             const prevTabLinkEl = $(".nav-tabs .active")
@@ -55,7 +55,7 @@
                 // add active step1 tabs
                 $('a[href="#step1"]').addClass("active");
             } else {
-                saveDataToLocalStorage();
+                saveDataForm();
             }
         });
 

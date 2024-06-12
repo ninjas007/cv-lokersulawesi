@@ -192,7 +192,7 @@
         }
     }
 
-    function saveDataToLocalStorage() {
+    function saveDataForm() {
         const form = document.getElementById('formCvKerja');
         const formData = new FormData(form);
         const formObject = {};
