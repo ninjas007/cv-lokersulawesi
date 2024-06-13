@@ -71,6 +71,13 @@
         .btn-primary i {
             margin-right: 10px;
         }
+
+        .subheading {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: .7px solid #3f3d3de5;
+        }
     </style>
     @yield('css')
 </head>

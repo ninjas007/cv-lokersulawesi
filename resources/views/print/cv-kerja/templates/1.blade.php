@@ -74,7 +74,7 @@
                             <td colspan="3">
                                 @php
                                     $length = count($data['sosial_media']['nama']);
-                                    if ($length > 0 && $data['sosial_media']['nama'] == '') {
+                                    if ($length > 0 && $data['sosial_media']['nama'][0] == '') {
                                         $length = 0;
                                     }
                                 @endphp
@@ -95,9 +95,7 @@
     <table style="margin-bottom: 10px">
         <tr>
             <td>
-                <div
-                    style="font-size: 16px; font-weight: bold; text-transform: uppercase; border-bottom: .7px solid #3f3d3de5;">
-                    @lang('biodata.about')</div>
+                <div class="subheading">@lang('biodata.about')</div>
             </td>
         </tr>
         <tr>
@@ -111,9 +109,7 @@
         <table style="margin-bottom: 10px">
             <tr>
                 <td colspan="2">
-                    <div
-                        style="font-size: 16px; font-weight: bold; text-transform: uppercase; border-bottom: .7px solid #3f3d3de5;">
-                        @lang('biodata.education')</div>
+                    <div class="subheading">@lang('biodata.education')</div>
                 </td>
             </tr>
 
@@ -146,23 +142,21 @@
         <table style="margin-bottom: 10px">
             <tr>
                 <td>
-                    <div class="suheading">@lang('biodata.skills')</div>
-
+                    <div class="subheading">@lang('biodata.skills')</div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    @if (count($data['keahlian']) > 0 && !empty($data['keahlian']['nama_keahlian'][0]))
-                        <ol>
+                    @if ($data['tipe_input_keahlian'] == 'text')
+                        {!! $data['deskripsi_keahlian'] ?? '-' !!}
+                    @else
+                        <ol style="padding-left: 20px; margin-top: 5px">
                             @for ($i = 0; $i < count($data['keahlian']); $i++)
                                 <li>{{ $data['keahlian']['nama_keahlian'][$i] }} :
                                     {{ $data['keahlian']['level_keahlian'][$i] }}</li>
                             @endfor
                         </ol>
-                    @else
-                        {!! $data['deskripsi_keahlian'] ?? '-' !!}
                     @endif
-
                 </td>
             </tr>
         </table>
@@ -172,10 +166,7 @@
         <table style="margin-bottom: 10px;">
             <tr>
                 <td colspan="2">
-                    <div
-                        style="font-size: 16px; font-weight: bold; text-transform: uppercase; border-bottom: .7px solid #3f3d3de5;">
-                        @lang('biodata.experience')</div>
-
+                    <div class="subheading">@lang('biodata.experience')</div>
                 </td>
             </tr>
             @for ($i = 0; $i < count($data['pengalaman']['posisi']); $i++)
@@ -201,14 +192,11 @@
     @endisset
 
 
-    @isset($data['portofolio'])
+    @if(isset($data['portofolio']) && count($data['portofolio']['nama_portofolio']) > 0 && $data['portofolio']['nama_portofolio'][0] != '')
         <table style="margin-bottom: 10px;">
             <tr>
                 <td>
-                    <div
-                        style="font-size: 16px; font-weight: bold; text-transform: uppercase; border-bottom: .7px solid #3f3d3de5;">
-                        @lang('biodata.portofolio')</div>
-
+                    <div class="subheading">@lang('biodata.portofolio')</div>
                 </td>
             </tr>
 
@@ -223,7 +211,7 @@
                 </tr>
             @endfor
         </table>
-    @endisset
+    @endif
 
 @endsection
 
