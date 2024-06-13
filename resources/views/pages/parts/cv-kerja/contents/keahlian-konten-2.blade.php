@@ -13,7 +13,7 @@
             <option value="Profesional">Profesional</option>
         </select>
     </div>
-    <div class="col-md-4 d-flex align-items-center justify-content-between mb-3">
+    <div class="col-md-4 d-flex align-items-center justify-content-start mb-3">
         @include('pages.parts.cv-kerja.components.btn-form-inline')
     </div>
 </div>
