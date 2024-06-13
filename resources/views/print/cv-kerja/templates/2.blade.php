@@ -161,8 +161,10 @@
                                     </td>
                                 @else
                                     <td>
-                                        <div style="margin-bottom: 5px">{{ $data['keahlian']['nama_keahlian'][$i] }} :
-                                            {{ $data['keahlian']['level_keahlian'][$i] }}</div>
+                                        @for ($i = 0; $i < count($data['keahlian']['nama_keahlian']); $i++)
+                                            <div style="margin-bottom: 1px">{{ $data['keahlian']['nama_keahlian'][$i] }} : @lang('keahlian.' . $data['keahlian']['level_keahlian'][$i])
+                                            </div>
+                                        @endfor
                                     </td>
                                 @endif
                             </tr>

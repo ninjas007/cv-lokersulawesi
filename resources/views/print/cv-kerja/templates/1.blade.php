@@ -153,7 +153,7 @@
                         <ol style="padding-left: 20px; margin-top: 5px">
                             @for ($i = 0; $i < count($data['keahlian']); $i++)
                                 <li>{{ $data['keahlian']['nama_keahlian'][$i] }} :
-                                    {{ $data['keahlian']['level_keahlian'][$i] }}</li>
+                                    @lang('keahlian.'.$data['keahlian']['level_keahlian'][$i])</li>
                             @endfor
                         </ol>
                     @endif
