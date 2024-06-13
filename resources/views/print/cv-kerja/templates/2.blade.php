@@ -17,7 +17,7 @@
                     @php
                         $photo = $data['name_foto'] ?? 'default.jpg';
                     @endphp
-                    <img src="{{ asset('assets/photos/' . $photo . '') }}" alt="image" width="100%" height="110px"
+                    <img src="{{ asset('storage/assets/photos/' . $photo . '') }}" alt="image" width="100%" height="110px"
                         style="border-radius: 5%; object-fit: cover">
                 </td>
                 <td width="3%">&nbsp;</td>
