@@ -30,7 +30,7 @@
                 <div style="font-size: 26px; font-weight: bold;">{{ $data['nama'] ?? '-' }}</div>
             </td>
             @php
-                $photo = $data['name_foto'] ? asset($data['path_foto']) : asset('assets/photos/default.jpg');
+                $photo = isset($data['name_foto']) ? asset($data['path_foto']) : asset('assets/photos/default.jpg');
             @endphp
             <td rowspan="2">
                 <img src="{{ $photo }}" alt="image" width="100px" height="110px"
