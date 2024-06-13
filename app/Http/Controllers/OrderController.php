@@ -101,6 +101,10 @@ class OrderController extends Controller
 
             DB::rollBack();
 
+            if (config('app.debug')) {
+                dd($e->getMessage());
+            }
+
             return redirect()->back()->with(['error' => 'Terjadi kesalahan server. coba lagi atau hubungi admin']);
         }
     }
