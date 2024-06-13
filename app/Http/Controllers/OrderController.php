@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\Services\Midtrans\CreateSnapTokenService;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 
 class OrderController extends Controller
 {

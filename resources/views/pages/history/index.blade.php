@@ -12,16 +12,16 @@
 
 
 @section('css')
-<style>
-    /* make wrapper height dfeault */
-    #wrapper {
-        height: auto !important;
-    }
+    <style>
+        /* make wrapper height dfeault */
+        #wrapper {
+            height: auto !important;
+        }
 
-    .body-wrap {
-        min-height: 100vh !important;
-    }
-</style>
+        .body-wrap {
+            min-height: 100vh !important;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -88,29 +88,37 @@
 
 @section('js')
     @include('js.copy')
+
+    @if ($order)
+        @include('js.midtrans', [
+            'snapToken' => $order->snap_token ?? '',
+            'order' => $order ?? '',
+        ])
+    @endif
+
     <script>
         function loadDataForm(orderId) {
             let data = `{!! $payload !!}`;
             swal({
-                title: 'Yakin untuk mereload form?',
-                text: `Data form yang sekarang akan digantikan oleh data dengan order id ${orderId}`,
-                icon: 'warning',
-                buttons: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    // clear localstorage key data
-                    localStorage.removeItem('data');
+                    title: 'Yakin untuk mereload form?',
+                    text: `Data form yang sekarang akan digantikan oleh data dengan order id ${orderId}`,
+                    icon: 'warning',
+                    buttons: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        // clear localstorage key data
+                        localStorage.removeItem('data');
 
-                    // set localstorage key data
-                    localStorage.setItem('data', data);
+                        // set localstorage key data
+                        localStorage.setItem('data', data);
 
-                    // back to cv-kerja url
-                    setTimeout(() => {
-                        window.location.href = "{{ url('cv-kerja') }}";
-                    }, 500);
-                }
-            });
+                        // back to cv-kerja url
+                        setTimeout(() => {
+                            window.location.href = "{{ url('cv-kerja') }}";
+                        }, 500);
+                    }
+                });
         }
 
         function copyId(orderId) {
