@@ -14,10 +14,10 @@
         <table>
             <tr>
                 <td width="15%" style="vertical-alignt: middle !important">
-                    @php
-                        $photo = $data['name_foto'] ?? 'default.jpg';
-                    @endphp
-                    <img src="{{ asset('storage/assets/photos/' . $photo . '') }}" alt="image" width="100%" height="110px"
+                @php
+                    $photo = $data['name_foto'] ? asset($data['path_foto']) : asset('assets/photos/default.jpg');
+                @endphp
+                     <img src="/storage/assets/photos/20240614013051.jpeg" alt="image" width="100%" height="110px"
                         style="border-radius: 5%; object-fit: cover">
                 </td>
                 <td width="3%">&nbsp;</td>
