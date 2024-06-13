@@ -115,7 +115,7 @@
 
                         // back to cv-kerja url
                         setTimeout(() => {
-                            window.location.href = "{{ url('cv-kerja') }}";
+                            window.location.href = "{{ url('cv-kerja') }}?order_id=" + orderId;
                         }, 500);
                     }
                 });

@@ -3,12 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Barryvdh\DomPDF\Facade\Pdf;
-use App\Services\Midtrans\CreateSnapTokenService;
-use App\Order;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\SeedController;
-use App\User;
 
 class CvKerjaController extends Controller
 {
