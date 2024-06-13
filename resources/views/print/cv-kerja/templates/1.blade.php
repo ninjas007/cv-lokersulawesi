@@ -43,7 +43,7 @@
                     <tr>
                         @php
                             $jenis_kelamin = '-';
-                            if ($data['lang_use'] == 'id') {
+                            if ($data['lang_use'] ?? 'id' == 'id') {
                                 $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Laki-laki' : 'Perempuan';
                             } else {
                                 $jenis_kelamin = $data['jenis_kelamin'] == 'Pria' ? 'Male' : 'Female';
