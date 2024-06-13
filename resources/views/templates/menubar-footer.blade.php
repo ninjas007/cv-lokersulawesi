@@ -13,13 +13,13 @@
                 <span class="color-2" style="font-size: 10px">Tips</span>
             </button>
         </a>
+        <a href="{{ url('history') }}">
+            <button class="btn-menubar">
+                <i class="fa fa-pencil color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
+                <span class="color-2" style="font-size: 10px">History</span>
+            </button>
+        </a>
         @guest
-            <a href="{{ url('history') }}">
-                <button class="btn-menubar">
-                    <i class="fa fa-pencil color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
-                    <span class="color-2" style="font-size: 10px">History</span>
-                </button>
-            </a>
             <a href="javascript:void(0)">
                 <button class="btn-menubar" data-mdb-toggle="modal" data-mdb-target="#modalLogin">
                     <i class="fa fa-sign-in color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
