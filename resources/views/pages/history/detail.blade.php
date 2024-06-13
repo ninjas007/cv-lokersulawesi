@@ -2,21 +2,19 @@
     $customer = json_decode($order->customer_details, true);
     $payload = json_decode($order->payload);
 @endphp
-<table style="width: 100%; margin-top: 20px; margin-bottom: 30px" id="tableDetail">
+<table style="width: 100%;" id="tableDetail">
     <tr>
         <td colspan="3">
             <div class="d-flex justify-content-between">
-                <h4>Invoice Pembayaran</h4>
-                <a href="{{ url('cv-kerja') }}" title="Kembali" class="btn btn-danger">
-                    Kembali
-                </a>
+                <h4>History Order</h4>
             </div>
         </td>
     </tr>
     <tr>
-        <td width="35%">Order ID &nbsp;<span onclick="copyId()" class="copy text-info"><i class="fa fa-pencil"></i>
-                Copy</span></td>
-        <td width="1%">:</td>
+        <td width="30%">
+            Order ID &nbsp;<span onclick="copyId(`{{ $order->number }}`)" class="copy text-info"><i class="fa fa-pencil"></i> Copy</span>
+        </td>
+        <td width="3%">:</td>
         <td>
             <span id="orderId">{{ $order->number }}</span>
         </td>
@@ -53,13 +51,15 @@
     </tr>
     <tr>
         <td colspan="3" align="right">
+            <a href="javascript:void(0)" class="btn btn-info" onclick="loadDataForm(`{{ $order->number }}`)">
+                <i class="fa fa-pencil"></i> Edit Form
+            </a>
             @include('pages.parts.cv-kerja.btn-checkout', ['order' => $order])
         </td>
     </tr>
     <tr>
         <td colspan="3">&nbsp;</td>
     </tr>
-
     <tr>
         <td colspan="3">
             <div class="border p-4">

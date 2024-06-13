@@ -24,7 +24,7 @@ class CvKerjaController extends Controller
         $data['menu'] = 'home';
         $data['templates'] = $this->seeds->templates();
 
-        return view('pages.cv-kerja', $data);
+        return view('pages.cv-kerja.index', $data);
     }
 
     public function preview(Request $request)

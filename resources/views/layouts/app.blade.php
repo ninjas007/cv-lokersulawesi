@@ -190,6 +190,10 @@
         .is-invalid {
             margin-bottom: 0px !important;
         }
+
+        .copy {
+            cursor: pointer
+        }
     </style>
 
     @yield('css')

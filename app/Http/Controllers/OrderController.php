@@ -7,6 +7,7 @@ use App\Services\Midtrans\CreateSnapTokenService;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class OrderController extends Controller
 {
@@ -19,7 +20,6 @@ class OrderController extends Controller
             'tanggal_lahir.required' => 'Tanggal lahir harus diisi.',
             'jenis_kelamin.required' => 'Jenis kelamin harus diisi.',
             'email.required' => 'Email harus diisi.',
-            'email.email' => 'Email harus valid.',
             'no_hp.required' => 'Nomor HP harus diisi.',
             'alamat_lengkap.required' => 'Alamat lengkap harus diisi.',
             'foto.required' => 'Gambar harus diunggah.',
@@ -29,7 +29,7 @@ class OrderController extends Controller
 
         $request->validate([
             'ringkasan_profil' => 'required',
-            'nama' => 'required:email',
+            'nama' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'jenis_kelamin' => 'required',
@@ -63,8 +63,10 @@ class OrderController extends Controller
                 'phone' => $request->no_hp,
             ];
 
+            $number = 'KRJ-'.$dateNow.substr(md5(rand(1000, 9999)), 0, 5).sprintf('%04d', $latestIdOrder);
+
             $order = new Order;
-            $order->number = 'KRJ-'.$dateNow.sprintf('%04d', $latestIdOrder);
+            $order->number = $number;
             $order->total_price = $price;
             $order->item_details = json_encode($item_details);
             $order->customer_details = json_encode($customer_details);
@@ -86,10 +88,9 @@ class OrderController extends Controller
                 $userId = auth()->user()->id;
                 $order->user_id = $userId;
 
-                $user = User::where('id', $userId)->first();
-                $user->raw_detail = json_encode($request->all());
-
-                $user->save();
+                // $user = User::where('id', $userId)->first();
+                // $user->raw_detail = json_encode($request->all());
+                // $user->save();
             }
 
             $order->snap_token = $snapToken;

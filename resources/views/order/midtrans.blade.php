@@ -30,33 +30,12 @@
 @section('js')
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="{{ config('midtrans.snap_url') }}" data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+    @include('js.copy')
+
     <script type="text/javascript">
         const orderId = `{{ $order->number }}`;
         const snapToken = `{{ $snapToken }}`;
-
-        function copyToClipboard(text) {
-            // Buat elemen sementara untuk menyalin teks
-            var $temp = $("<input>");
-
-            // Tambahkan elemen sementara ke dalam dokumen
-            $("body").append($temp);
-
-            // Salin teks ke elemen sementara
-            $temp.val(text).select();
-
-            // Salin teks ke clipboard
-            document.execCommand("copy");
-
-            // Hapus elemen sementara dari dokumen
-            $temp.remove();
-
-            swal({
-                title: "Sukses",
-                text: `Text berhasil di copy: ${text}`,
-                icon: "success",
-                button: "Ok",
-            });
-        }
 
         function copyId() {
             copyToClipboard(orderId)
