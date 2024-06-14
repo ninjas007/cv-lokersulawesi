@@ -17,7 +17,7 @@
                 @php
                     $photo = isset($data['name_foto']) ? asset($data['path_foto']) : asset('assets/photos/default.jpg');
                 @endphp
-                     <img src="/storage/assets/photos/20240614013051.jpeg" alt="image" width="100%" height="110px"
+                     <img src="{{ $photo }}" alt="image" width="100%" height="110px"
                         style="border-radius: 5%; object-fit: cover">
                 </td>
                 <td width="3%">&nbsp;</td>
@@ -233,12 +233,6 @@
         </table>
     </div>
 
-    {{-- fixed button bottom print --}}
-    {{-- <div class="fixed-button-container">
-        <button type="button" id="printBtn" class="btn btn-primary">
-            <i class="fa fa-print"></i> PRINT
-        </button>
-    </div> --}}
 @endsection
 
 
