@@ -53,11 +53,15 @@ class OrderController extends Controller
             if ($order) {
                 $snapToken = $order->snap_token;
                 $order->limit_edit -= 1;
+
+                $redirect = 'history?order_id='.$request->order_id;
             } else {
                 $resultCreate = $this->createNewOrder($request);
                 $resMidtrans = $this->createTrxMidtrans($resultCreate);
                 $order = $resMidtrans['order'];
                 $snapToken = $resMidtrans['snap_token'];
+
+                $redirect = 'order/checkout?order_id='.$order->number.'&snap_token='.$snapToken.'';
             }
 
             // save payload if new or update
@@ -75,7 +79,7 @@ class OrderController extends Controller
 
             DB::commit();
 
-            return redirect('order/checkout?order_id='.$order->number.'&snap_token='.$snapToken.'');
+            return redirect($redirect);
         } catch (\Exception $e) {
 
             DB::rollBack();
