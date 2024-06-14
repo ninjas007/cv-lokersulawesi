@@ -39,16 +39,29 @@
         }
 
         body {
-            background-image: url('{{ asset('assets/images/background2.jpg') }}');
+            position: relative;
+            background-image: url('{{ asset('assets/images/background-welcome.jpg') }}');
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
             background-repeat: no-repeat;
-            background-color: #0000;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(8, 213, 134, 0.208); /* Adjust the opacity as needed */
+            z-index: -1;
         }
 
         .full-height {
             height: 100vh;
+            position: relative;
+            z-index: 2;
         }
 
         .flex-center {
@@ -65,10 +78,13 @@
             position: absolute;
             right: 10px;
             top: 18px;
+            z-index: 3;
         }
 
         .content {
             text-align: center;
+            z-index: 3;
+            position: relative;
         }
 
     </style>
@@ -84,12 +100,12 @@
                 <div class="col-12">
                     <div class="row mb-3">
                         <div class="col text-center">
-                            <div class="h1 font-weight-bold">Buat Surat</div>
+                            <div class="font-weight-bold" style="font-size: 40px">Buat Surat</div>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col mb-3">
-                            <a href="{{ url('cv-kerja') }}" target="_blank" class="btn btn-success p-3 text-white">
+                            <a href="{{ url('cv-kerja') }}" target="_blank" class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
                                     <img src="{{ asset('assets/images/icons/cv.png') }}">
                                 </div>
@@ -99,7 +115,7 @@
                             </a>
                         </div>
                         <div class="col mb-3">
-                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-success p-3 text-white">
+                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
                                     <img src="{{ asset('assets/images/icons/kerja.png') }}">
                                 </div>
@@ -109,7 +125,7 @@
                             </a>
                         </div>
                         <div class="col mb-3">
-                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-success p-3 text-white">
+                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
                                     <img src="{{ asset('assets/images/icons/sakit.png') }}">
                                 </div>
@@ -119,7 +135,7 @@
                             </a>
                         </div>
                         <div class="col mb-3">
-                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-success p-3 text-white">
+                            <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')" target="_blank" class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
                                     <img src="{{ asset('assets/images/icons/taaruf.png') }}">
                                 </div>
@@ -131,7 +147,7 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <a href="{{ url('auth/google') }}" target="_blank" class="btn btn-success text-white">
+                            <a href="{{ url('auth/google') }}" target="_blank" class="btn btn-info text-white">
                                 <i class="fa fa-sign-in"></i> Login Google
                             </a>
                         </div>
