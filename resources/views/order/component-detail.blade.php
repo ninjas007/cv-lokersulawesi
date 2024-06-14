@@ -66,7 +66,7 @@
                 Note: <br> <br>
                 <ul style="padding-left: 4px">
                     <li class="mb-3">
-                        Simpan order id diatas untuk melakukan edit pada data yang di inputkan agar tidak
+                        Simpan order id diatas untuk melakukan edit (limit 3x) pada data yang di inputkan agar tidak
                         dikenakan pembayaran lagi
                     </li>
                     <li class="mb-3">File hanya bisa di download saat sudah berstatus <span class="text-success">Sudah

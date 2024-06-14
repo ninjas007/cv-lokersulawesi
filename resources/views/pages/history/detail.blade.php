@@ -47,6 +47,11 @@
         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d-m-Y H:i:s') }}</td>
     </tr>
     <tr>
+        <td>Limit Edit</td>
+        <td>:</td>
+        <td>{{ $order->limit_edit }}</td>
+    </tr>
+    <tr>
         <td colspan="3">&nbsp;</td>
     </tr>
     <tr>

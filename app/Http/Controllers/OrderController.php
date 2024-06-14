@@ -44,11 +44,15 @@ class OrderController extends Controller
         DB::beginTransaction();
         try {
             // have orderId request
-            $order = Order::where('number', $request->order_id)->first();
+            $order = Order::where('number', $request->order_id)
+                    ->where('payment_status', 2)
+                    ->where('limit_edit', '>', 0)
+                    ->first();
 
             // new order
-            if ($order && $order->payment_status == 2) {
+            if ($order) {
                 $snapToken = $order->snap_token;
+                $order->limit_edit -= 1;
             } else {
                 $resultCreate = $this->createNewOrder($request);
                 $resMidtrans = $this->createTrxMidtrans($resultCreate);

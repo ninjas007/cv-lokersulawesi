@@ -12,7 +12,7 @@ class HistoryController extends Controller
         $orderId = $request->order_id;
         $order = null;
         if ($orderId) {
-            $order = Order::where('number', $orderId)->first();
+            $order = Order::where('number', $orderId)->where('payment_status', 2)->first();
         }
 
         return view('pages.history.index', compact('order'));
