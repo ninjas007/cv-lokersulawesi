@@ -114,6 +114,10 @@
             #myTabContent {
                 margin-top: 20px !important;
             }
+
+            .wrap-template {
+                margin-bottom: 4.5rem !important;
+            }
         }
 
 

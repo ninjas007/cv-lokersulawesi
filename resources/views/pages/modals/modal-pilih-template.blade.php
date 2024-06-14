@@ -19,11 +19,11 @@ aria-hidden="true">
                     </div>
                 </div>
                 @foreach ($templates as $key => $template)
-                    <div class="col-md-6 text-center" @if($key == 0) style="margin-bottom: 4.5em" @endif>
+                    <div class="col-md-6 text-center wrap-template">
                         <input class="form-check-input" name="template" type="radio" value="{{ $template['id'] }}" id="template{{ $key }}"
                         @if ($template['id'] == 1)
                             checked
-                        @endif style="margin-top: -25px">
+                        @endif style="margin-top: -25px; display: none">
                         <div class="form-check" style="padding-left: 0px">
                             <label class="form-check-label" for="template{{ $key }}">
                                 <img src="{{ asset(''.$template['image'].'') }}" alt="{{ $template['nama'] }}" class="mb-2 img-fluid border template-image" style="margin-top: -20px">
