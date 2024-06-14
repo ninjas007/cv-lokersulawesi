@@ -109,6 +109,7 @@
                     if (willDelete) {
                         // clear localstorage key data
                         localStorage.removeItem('data');
+                        localStorage.removeItem('foto');
 
                         // set localstorage key data
                         localStorage.setItem('data', data);
