@@ -7,11 +7,11 @@
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
 
-    <meta property="og:title" content="Cv Maker - Loker Sulawesi">
+    <meta property="og:title" content="Cv Generator - Loker Sulawesi">
     <meta property="og:description" content="@yield('description')">
     <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi.jpeg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="https://cv.lokersulawesi.com/cv-maker">
+    <meta property="og:site_name" content="https://cv.lokersulawesi.com">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
