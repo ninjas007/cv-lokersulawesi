@@ -43,52 +43,27 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
-            $latestIdOrder = Order::count() + 1;
-            $dateNow = date('ymdhis');
-            $price = app(SeedController::class)->templateHarga($request->template_use);
+            // have orderId request
+            $order = Order::where('number', $request->order_id)->first();
 
-            $item_details = [
-                [
-                    'id' => $latestIdOrder,
-                    'price' => $price,
-                    'quantity' => 1,
-                    'name' => 'Order CV Kerja',
-                ],
-            ];
-            $customer_details = [
-                'first_name' => $request->nama,
-                'email' => $request->email,
-                'phone' => $request->no_hp,
-            ];
+            // new order
+            if ($order && $order->payment_status == 2) {
+                $snapToken = $order->snap_token;
+            } else {
+                $resultCreate = $this->createNewOrder($request);
+                $resMidtrans = $this->createTrxMidtrans($resultCreate);
+                $order = $resMidtrans['order'];
+                $snapToken = $resMidtrans['snap_token'];
+            }
 
-            $number = 'KRJ-'.$dateNow.substr(md5(rand(1000, 9999)), 0, 5).sprintf('%04d', $latestIdOrder);
-
-            $order = new Order;
-            $order->number = $number;
-            $order->total_price = $price;
-            $order->item_details = json_encode($item_details);
-            $order->customer_details = json_encode($customer_details);
+            // save payload if new or update
             $order->payload = json_encode($request->all());
             $order->template_use = $request->template_use;
 
-            // TODO: check template use berbayar atau tidak
-            // kalau berbayar tambah biayanya
-            if (config('midtrans.is_active')) {
-                $midtrans = new CreateSnapTokenService($order);
-                $snapToken = $midtrans->getSnapToken($item_details, $customer_details);
-                $order->payment_status = 1;
-            } else {
-                $snapToken = 'd520fe0d-89d5-428d-a9e9-f58017d06fd7'; // dummy, untuk develop makanya pakai ini
-                $order->payment_status = 2;
-            }
-
+            // update user id in table order if login
             if (auth()->check()) {
                 $userId = auth()->user()->id;
                 $order->user_id = $userId;
-
-                // $user = User::where('id', $userId)->first();
-                // $user->raw_detail = json_encode($request->all());
-                // $user->save();
             }
 
             $order->snap_token = $snapToken;
@@ -107,6 +82,79 @@ class OrderController extends Controller
 
             return redirect()->back()->with(['error' => 'Terjadi kesalahan server. coba lagi atau hubungi admin']);
         }
+    }
+
+    private function createTrxMidtrans(array $result): array
+    {
+        $order = $result['order'];
+
+        // dummy, untuk develop makanya pakai ini
+        $snapToken = 'd520fe0d-89d5-428d-a9e9-f58017d06fd7';
+        $order->payment_status = 2;
+
+        if (config('midtrans.is_active')) {
+            $midtrans = new CreateSnapTokenService($order);
+            $snapToken = $midtrans->getSnapToken($result['item_details'	], $result['customer_details']);
+            $order->payment_status = 1;
+        }
+
+        return [
+            'order' => $order,
+            'snap_token' => $snapToken
+        ];
+    }
+
+    private function requestBodyMidtrans($request): array
+    {
+        $latestIdOrder = Order::count() + 1;
+        $price = app(SeedController::class)->templateHarga($request->template_use);
+
+        // midtrans
+        $itemDetails = [
+            [
+                'id' => $latestIdOrder,
+                'price' => $price,
+                'quantity' => 1,
+                'name' => 'Order CV Kerja',
+            ],
+        ];
+
+        $customerDetails = [
+            'first_name' => $request->nama,
+            'email' => $request->email,
+            'phone' => $request->no_hp,
+        ];
+
+        return [
+            'item_details' => $itemDetails,
+            'customer_details' => $customerDetails,
+            'price' => $price,
+            'latest_order_id' => $latestIdOrder
+        ];
+    }
+
+    private function createNewOrder($request): array
+    {
+        $requestBodyMidtrans = $this->requestBodyMidtrans($request);
+        $itemDetails = $requestBodyMidtrans['item_details'];
+        $customerDetails = $requestBodyMidtrans['customer_details'];
+        $price = $requestBodyMidtrans['price'];
+        $latestIdOrder = $requestBodyMidtrans['latest_order_id'];
+
+        $dateNow = date('ymdhis');
+        $number = 'KRJ-'.$dateNow.substr(md5(rand(1000, 9999)), 0, 5).sprintf('%04d', $latestIdOrder);
+
+        $order = new Order;
+        $order->number = $number;
+        $order->total_price = $price;
+        $order->item_details = json_encode($itemDetails);
+        $order->customer_details = json_encode($customerDetails);
+
+        return [
+            'order' => $order,
+            'item_details' => $itemDetails,
+            'customer_details' => $customerDetails
+        ];
     }
 
     public function checkout(Request $request)

@@ -1,7 +1,7 @@
-<div class="card mb-3">
+<div class="card px-3 mb-3">
     @include('pages.parts.cv-kerja.contents.card-title')
 
-    <div class="card-body" id="cardBodyKeahlian">
+    <div class="card-body card-content-form" id="cardBodyKeahlian">
         <div class="row">
             <div class="col-12">
                 <div class="form-group mb-3">

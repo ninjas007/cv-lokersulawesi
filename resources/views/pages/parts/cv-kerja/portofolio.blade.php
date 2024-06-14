@@ -2,7 +2,7 @@
 
     @include('pages.parts.cv-kerja.contents.card-title')
 
-    <div class="card-body" id="cardBodyPortofolio">
+    <div class="card-body px-3" id="cardBodyPortofolio">
         {{-- @include('pages.parts.cv-kerja.contents.portofolio-konten') --}}
     </div>
     <div class="card-footer">

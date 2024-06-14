@@ -1,7 +1,7 @@
 <div class="card mb-3">
     @include('pages.parts.cv-kerja.contents.card-title')
 
-    <div class="card-body" id="cardBodySosial">
+    <div class="card-body px-4" id="cardBodySosial">
         @include('pages.parts.cv-kerja.contents.sosial-konten')
     </div>
     <div class="card-footer">

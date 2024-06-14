@@ -1,7 +1,7 @@
-<div class="card">
+<div class="card px-3">
     @include('pages.parts.cv-kerja.contents.card-title')
 
-    <div class="card-body">
+    <div class="card-body card-content-form">
         <div class="form-group mb-3">
             <div class="mb-3 d-flex justify-content-center">
                 <img id="displayImage" style="border-radius: 5%; object-fit: cover; display: none; height: 110px; width: 100px"/>
@@ -80,7 +80,7 @@
                 <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-group mb-3">
+        <div class="form-group">
             <label for="alamat_lengkap" class="mb-1">Alamat Lengkap</label>
             <textarea class="form-control validasi-datadiri @error('alamat_lengkap') is-invalid @enderror" name="alamat_lengkap" id="alamat_lengkap"
                 placeholder="Contoh: Jln. MT. Haryono, Lr. Beringin, Kel. Bende, Kec. Mandonga, Sulawesi Tenggara 93231"

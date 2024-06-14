@@ -153,6 +153,17 @@
             border-radius: 3px;
             padding: 0.5rem 0.8rem;
         }
+
+        .card-header {
+            border-width: 0px !important;
+        }
+
+        #cardBodyPendidikan,
+        #cardBodyPengalaman,
+        #cardBodySosial,
+        #cardBodyPortofolio {
+            padding-top: 0px;
+        }
     </style>
 @endsection
 
