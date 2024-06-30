@@ -4,27 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@yield('description')">
-    <meta name="keywords" content="@yield('keywords')">
-
-    <meta property="og:title" content="Cv Generator - Loker Sulawesi">
-    <meta property="og:description" content="@yield('description')">
+    <meta property="og:description">
     <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi.jpeg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="https://cv.lokersulawesi.com">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>CV Maker - LOKER SULAWESI</title>
-
-
+    <meta property="og:site_name" content="https://lokersulawesi.com">
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
     <link rel="apple-touch-icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="180x180" />
+
+
+    @yield('meta')
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Start MDBootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -33,7 +28,7 @@
 
     <style>
         :root {
-            --width-page : 480px;
+            --width-page: 480px;
         }
 
         * {
@@ -41,7 +36,7 @@
             margin: 0;
             font-size: 12px;
             letter-spacing: 0.03em;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Nunito, sans-serif;
         }
 
         html,
@@ -192,6 +187,10 @@
         .copy {
             cursor: pointer
         }
+
+        .bold {
+            font-weight: bold;
+        }
     </style>
 
     @yield('css')
@@ -201,20 +200,17 @@
     <div id="wrapper">
         <div class="body-wrap">
             <div class="body">
-                {{-- @include('templates.header') --}}
                 <div class="body-content">
                     @yield('content')
                 </div>
             </div>
         </div>
-        @include('templates.menubar-footer')
+        @include('templates.menubar-footer-loker')
+
+        @include('jobs.modal-filter')
+
     </div>
 
-    @include('pages.modals.modal-login')
-
-    @if (auth()->check())
-        @include('pages.modals.modal-akun')
-    @endif
 
     <!-- MDB -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
@@ -222,57 +218,9 @@
     <!-- JQUERY -->
     <script src='{{ asset('js/jquery-3.4.1.min.js') }}'></script>
 
-    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap4.min.js') }}"></script>
+
     @yield('js')
-    <script type="text/javascript">
-        var template_use = 1;
-        var storage = [];
-
-        @if (Session::has('success'))
-            swal({
-                title: "Berhasil!",
-                text: "{{ Session::get('success') }}",
-                icon: "success",
-                button: "Ok",
-            });
-        @endif
-
-        @if (Session::has('error'))
-            swal({
-                title: "Gagal!",
-                text: "{{ Session::get('error') }}",
-                icon: "warning",
-                button: "Ok",
-            });
-        @endif
-
-        $('.show_pass').click(function() {
-            const name = $(this).data('name'); // name element should be data-name
-            const type = $(`input[name="${name}"]`).attr('type');
-
-            if (type == 'text') {
-                $(`input[name="${name}"]`).attr('type', 'password') // class name should be data-name
-            } else {
-                $(`input[name="${name}"]`).attr('type', 'text')
-            }
-        });
-
-        function pakaiTemplate() {
-            template_use = $('input[name="template"]:checked').val();
-
-            $('#templateUse').val(template_use);
-
-            swal({
-                title: "Berhasil!",
-                text: "Berhasil pilih template",
-                icon: "success",
-                button: "Ok",
-            }).then(() => {
-                $('#modalPilihTemplate').modal('hide');
-            });
-        }
-
-    </script>
 </body>
 
 </html>

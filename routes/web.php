@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/lowongan', 'JobController@index');
+Route::get('/lowongan/{slug}', 'JobController@show');
+Route::get('/about', function() {
+    return view('jobs.about');
+});
 
 Auth::routes();
 

@@ -100,11 +100,11 @@
                 <div class="col-12">
                     <div class="row mb-3">
                         <div class="col text-center">
-                            <div class="font-weight-bold" style="font-size: 40px">Buat Surat</div>
+                            <div class="font-weight-bold text-white" style="font-size: 40px">Buat Surat</div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <div class="col mb-3">
+                        <div class="col me-1 mb-3">
                             <a href="{{ url('cv-kerja') }}" target="_blank" class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
                                     <img src="{{ asset('assets/images/icons/cv.png') }}">
@@ -114,7 +114,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col mb-3">
+                        <div class="col me-1 mb-3">
                             <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')"
                                 class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
@@ -125,7 +125,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col mb-3">
+                        <div class="col me-1 mb-3">
                             <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')"
                                 class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
@@ -136,7 +136,7 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col mb-3">
+                        <div class="col me-1 mb-3">
                             <a href="javascript:void(0)" onclick="return alert('Sedang dalam pengembangan')"
                                 class="btn btn-info p-3 text-white">
                                 <div class="mb-2">
