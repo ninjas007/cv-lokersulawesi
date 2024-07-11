@@ -136,9 +136,9 @@
                         }
                     }
 
-                    if ($('.list-job').length >= data.countJobs) {
-                        $('#loadMore').remove();
-                    }
+                    // if ($('.list-job').length >= data.countJobs) {
+                    //     $('#loadMore').remove();
+                    // }
 
                 }
             });
