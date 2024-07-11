@@ -16,8 +16,12 @@ Route::get('/', function () {
 });
 Route::get('/lowongan', 'JobController@index');
 Route::get('/lowongan/{slug}', 'JobController@show');
+Route::get('/pasang-lowongan', 'JobController@pasangLowongan');
+Route::post('/pasang-lowongan/store', 'JobController@postLoker');
 Route::get('/about', function() {
-    return view('jobs.about');
+    return view('jobs.about', [
+        'about' => true
+    ]);
 });
 
 Auth::routes();

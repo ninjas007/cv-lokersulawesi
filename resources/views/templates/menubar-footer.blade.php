@@ -1,9 +1,9 @@
 <nav class="navbar-wrap">
     <div class="menubar-footer">
-        <a href="{{ url('/') }}">
+        <a href="{{ url('https://lokersulawesi.com') }}">
             <button class="btn-menubar">
                 <i class="fa fa-home color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
-                <span class="color-2" style="font-size: 10px">Home</span>
+                <span class="color-2" style="font-size: 10px">Loker</span>
             </button>
         </a>
         {{-- TODO: nanti muncul modal tips untuk nulis cv yang baik --}}

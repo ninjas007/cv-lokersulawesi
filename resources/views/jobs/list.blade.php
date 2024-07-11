@@ -2,13 +2,13 @@
     <div class="card p-2 mb-3">
         <div class="row g-0  list-job" style="border-radius: 5px">
             <div class="col-2 px-2">
-                <a href="{{ url('lowongan') }}/{{ $job['slug'] }}" target="_blank">
+                <a href="{{ url('lowongan') }}/{{ $job['slug'] }}">
                     <img src="{{ $job['image'] }}" alt="Image" class="img-fluid w-100"
                         style="width: 100%; height: 100px; object-fit: contain">
                 </a>
             </div>
             <div class="col-10 d-flex flex-column">
-                <a href="{{ url('lowongan') }}/{{ $job['slug'] }}" target="_blank">
+                <a href="{{ url('lowongan') }}/{{ $job['slug'] }}">
                     <div class="d-flex justify-content-between">
                         <div class="text-muted mb-3 bold h5">
                             {!! $job['title'] !!}
@@ -22,13 +22,22 @@
                     <div class="mb-2">
                         <div class="text-muted ">
                             <i class="fa fa-building"></i>
-                            {{ $job['company'] == '' ? 'Tidak Diketahui' : $job['company'] }}
+                            {{ $job['company'] }}
                         </div>
                     </div>
-                    <div class="text-muted">
-                        <i class="fa fa-map-marker"></i>
-                        {{ $job['location'] == '' ? 'Tidak Diketahui' : $job['location'] }}
+                    <div class="mb-2">
+                        <div class="text-muted">
+                            <i class="fa fa-map-marker"></i>
+                            {{ $job['location'] }}
+                        </div>
                     </div>
+                    @if ($job['gaji'] != '')
+                        <div class="mb-2">
+                            <div class="text-muted">
+                                <i class="fas fa-money-bill"></i> Gaji: {{ $job['gaji'] }}
+                            </div>
+                        </div>
+                    @endif
                 </a>
 
                 <div class="mt-auto">

@@ -26,7 +26,7 @@
                         <img src="https://awsimages.detik.net.id/community/media/visual/2022/11/20/rijsttafel-indonesia-2.jpeg?w=1200"
                             class="d-block w-100" alt="Image 1" style="max-height: 150px; object-fit: cover">
                         <div class="carousel-caption">
-                            <div class="text-info title-banner">LOKER SULAWESI</div> <br>
+                            <div class="text-info title-banner mb-md-1">LOKER SULAWESI</div>
                             <p>Website informasi pekerjaan dan peluang kerja untuk Wilayah Indonesia Timur</p>
                         </div>
                     </div>
@@ -62,23 +62,17 @@
         </div>
     </div>
     <div class="row my-3">
+        {{-- <div class="col-12 px-4">
+            <a href="{{ url('pasang-lowongan') }}" class="btn btn-info text-white form-control">
+                <i class="fa fa-plus"></i> Pasang Lowongan</a>
+        </div> --}}
         <div class="col-12 px-4">
-            <button class="btn btn-info text-white form-control" data-mdb-toggle="modal" data-mdb-target="#addProduct">
-                <i class="fa fa-plus"></i> Post Loker</button>
+            <a href="javascript:void(0)" data-toggle="modal" data-target="#filter"
+                class="btn btn-info text-white form-control">
+                <i class="fa fa-search"></i> Cari Loker</a>
         </div>
     </div>
-    {{-- <div class="row mb-3">
-        <div class="col-12 px-4">
-            <div class="input-group rounded">
-                <input type="search" class="form-control rounded" placeholder="Search foods or drinks from indonesia"
-                    aria-label="Search" id="search-value" aria-describedby="search-addon" value="" onkeyup="filter()">
-                <span class="input-group-text border-0" id="search-addon">
-                    <i class="fas fa-search"></i>
-                </span>
-            </div>
-        </div>
-    </div> --}}
-    <div class="row" style="margin-bottom: 20px">
+    <div class="row pb-5">
         <div class="col-12 px-4" id="jobs">
             {{-- load content jobs --}}
         </div>
@@ -93,14 +87,18 @@
 
 @section('js')
     <script>
+        const search = `{{ request()->get('search') ?? '' }}`;
+
         function loadMore() {
             let offset = $('.list-job').length;
             getJobs(offset, true);
         }
 
         function getJobs(offset = 0, loadMore = false) {
+            let keyword = $('#keyword').val() || '';
+
             $.ajax({
-                url: "{{ url('lowongan') }}?offset=" + offset,
+                url: "{{ url('lowongan') }}?offset=" + offset + "&keyword=" + keyword,
                 type: "GET",
                 beforeSend: function() {
                     if (!loadMore) {
@@ -111,7 +109,15 @@
                     }
                 },
                 success: function(data) {
-                    if (data == "") {
+                    // if totalJobs <= lenghtJobs
+                    // remove button load more
+
+                    // console.log($('.list-job').length, data.countJobs);
+                    // if (($('.list-job').length || offset) == data.countJobs) {
+                    //     $('#loadMore').remove();
+                    // }
+
+                    if (data.jobs == "") {
                         $('#loadMore').remove();
                     } else {
                         if (!loadMore) {
@@ -119,13 +125,37 @@
                         } else {
                             $('#loadMore').html('<i class="fa fa-repeat"></i> LIHAT LAINNYA');
                             $('#loadMore').removeAttr('disabled');
+
                         }
 
-                        $('#jobs').append(data);
+                        // jika masih baru maka ganti datanya
+                        if (offset == 0) {
+                            $('#jobs').html(data.jobs);
+                        } else {
+                            $('#jobs').append(data.jobs);
+                        }
+                    }
+
+                    if ($('.list-job').length >= data.countJobs) {
+                        $('#loadMore').remove();
                     }
 
                 }
             });
+        }
+
+        function filterJobs() {
+            getJobs(0, false);
+        }
+
+        if (search) {
+            $('#filter').modal('show');
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                filterJobs();
+            }
         }
 
         function showModal(url) {

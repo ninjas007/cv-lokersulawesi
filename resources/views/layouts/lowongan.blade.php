@@ -212,6 +212,7 @@
     </div>
 
 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <!-- MDB -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
 

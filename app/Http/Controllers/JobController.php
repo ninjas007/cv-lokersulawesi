@@ -25,11 +25,13 @@ class JobController extends Controller
             try {
                 $client = new Client();
                 $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?per_page='.$this->perPage;
-                $response = $client->request('GET', $endpoint);
-                $res = $response->getBody()->getContents();
 
                 if ($request->has('offset')) {
                     $endpoint .= '&offset='.$request->input('offset');
+                }
+
+                if ($request->keyword != '') {
+                    $endpoint .= '&search='.$request->input('keyword');
                 }
 
                 $response = $client->request('GET', $endpoint);
@@ -41,10 +43,11 @@ class JobController extends Controller
                         // 'id' => $item['id'],
                         'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
                         'title' => $item['title']['rendered'] ?? '',
-                        'company' => $item['meta']['_company_name']  ?? 'Tidak Diketahui',
-                        'location' => $item['meta']['_job_location']  ?? 'Seluruh Sulawesi',
+                        'company' => $item['meta']['_company_name']  ?? 'Tidak diketahui',
+                        'location' => $item['meta']['_job_location'] != '' ? $item['meta']['_job_location'] : 'Tidak diketahui',
                         'slug' => $item['slug'] ?? '',
                         'job_types' => $jobTypes,
+                        'gaji' => $item['meta']['_job_salary'] != ''  ? 'Rp. '. $this->formatHuruf($item['meta']['_job_salary']) : '',
                         'status' => $item['status'],
                         'created_at' => $item['date'],
                         'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
@@ -57,7 +60,10 @@ class JobController extends Controller
                         'jobs' => $result,
                     ])->render();
 
-                    return response()->json($viewHtml);
+                    return response()->json([
+                        'jobs' => $viewHtml,
+                        'countJobs' => count($result),
+                    ], 200);
                 }
 
                 return view('jobs.index');
@@ -68,7 +74,7 @@ class JobController extends Controller
                         return $e->getMessage();
                     }
 
-                    return abort(404);
+                    return abort(500);
                 }
             }
         }
@@ -110,8 +116,81 @@ class JobController extends Controller
                         return $e->getMessage();
                     }
 
-                    return abort(404);
+                    return '<div class="alert alert-danger">Server Error</div>';
                 }
+            }
+        }
+    }
+
+    public function pasangLowongan(Request $request)
+    {
+        try {
+            // $client = new Client();
+            // $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/pages/7';
+            // $response = $client->request('GET', $endpoint);
+            // $res = $response->getBody()->getContents();
+
+
+            // $content = collect(json_decode($res));
+            // return view('jobs.test', [
+            //     'content' => $content['content']->rendered
+            // ]);
+            return view('jobs.pasang-lowongan', [
+                'jobTypes' => $this->jobTypes(),
+                'action' => 'https://lokersulawesi.com/wp-json/wp/v2/pages/7',
+            ]);
+        } catch (\Exception $e) {
+            if (config('app.debug')) {
+                return $e->getMessage();
+            }
+
+            return abort(500);
+        }
+    }
+
+    public function postLoker(Request $request)
+    {
+        $request->validate([
+            'nama_pekerjaan' => 'required',
+            'lokasi_pekerjaan' => 'required',
+            'tipe_pekerjaan' => 'required|in:2,3,4,5,6',
+            'deskripsi_pekerjaan' => 'required',
+            'gaji' => 'nullable|numeric',
+            'nama_perusahaan' => 'required',
+            // 'logo_perusahaan' => 'sometimes|image|mimes:jpeg,png,jpg|max:512',
+        ], [
+            'logo_perusahaan.max' => 'Ukuran gambar melebihi batas',
+            'nama_pekerjaan.required' => 'Tidak boleh kosong',
+            'lokasi_pekerjaan.required' => 'Tidak boleh kosong',
+            'gaji.numeric' => 'Gaji harus berupa angka',
+            'tipe_pekerjaan.required' => 'Tidak boleh kosong',
+            'deskripsi_pekerjaan.required' => 'Tidak boleh kosong',
+            'nama_perusahaan.required' => 'Tidak boleh kosong',
+            // 'logo_perusahaan.image' => 'File harus berupa gambar',
+            // 'logo_perusahaan.mimes' => 'File harus berupa jpeg, png, jpg',
+            'tipe_pekerjaan.in' => 'Tipe pekerjaan tidak valid',
+        ]);
+
+        $this->attempt = 0;
+
+        $username = 'tiliztiadi@gmail.com';
+        $password = 'Pa55w0rd1993!@#';
+        while ($this->attempt < $this->maxRetries) {
+           try {
+                $client = new Client();
+                $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/pages/7';
+                $response = $client->request('POST', $endpoint, [
+                    'password' => $password,
+                    'username' => $username,
+                ]);
+                $res = $response->getBody()->getContents();
+                // Proses $res sesuai kebutuhan
+            } catch (\GuzzleHttp\Exception\RequestException $e) {
+                // Penanganan kesalahan request
+                echo $e->getMessage();
+            } catch (\Exception $e) {
+                // Penanganan kesalahan umum
+                echo $e->getMessage();
             }
         }
     }
@@ -157,10 +236,35 @@ class JobController extends Controller
 
         return $jobTypes;
     }
+
+    private function formatHuruf($gaji)
+    {
+        $satuan = ['', 'Ribu', 'Juta', 'Miliar'];
+        $angka = floor($gaji ?? 0);
+
+        if ($angka == 0) {
+            return '0';
+        }
+
+        $hasil = '';
+        $i = 0;
+
+        while ($angka > 0) {
+            $mod = $angka % 1000;
+            if ($mod != 0) {
+                $hasil = $mod . ' ' . $satuan[$i] . ' ' . $hasil;
+            }
+            $angka = floor($angka / 1000);
+            $i++;
+        }
+
+        return trim($hasil);
+    }
 }
 
 // List API
 
+// https://lokersulawesi.com/wp-json/wp/v2/pages - pages
 // https://lokersulawesi.com/wp-json/wp/v2/job-listings - List Job
 // https://lokersulawesi.com/wp-json/wp/v2/job-types - List Job Types
 // https://lokersulawesi.com/wp-json/wp/v2/media/8310 - Gambar berdasarkan ID

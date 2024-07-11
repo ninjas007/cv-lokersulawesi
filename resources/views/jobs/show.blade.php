@@ -92,7 +92,13 @@
         </div>
     </div>
 
-    <div style="margin-bottom: 20px"></div>
+    <div class="row pb-2">
+        <div class="col-12 px-4 py-4">
+            <a href="{{ url('/lowongan') }}" class="btn btn-info btn-lg form-control">
+               <i class="fa fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+    </div>
 @endsection
 
 @section('js')
