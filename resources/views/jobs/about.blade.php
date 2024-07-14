@@ -55,11 +55,11 @@
                             pencari kerja.
                             <br>
                             Apabila ada saran atau kritik silahkan menghubungi <a
-                                href="https://wa.me/6282389097065">Whatsapp</a>
+                                href="https://wa.me/6282389097065" target="_blank">Whatsapp</a>
 
                             <br>
                             <br>
-                            <div>Copyright @ {{ date('Y') }} Developed by <a href="https://ninjas007.github.io">Tilis
+                            <div>Copyright @ {{ date('Y') }} Developed by <a href="https://ninjas007.github.io" target="_blank">Tilis
                                     Tiadi</a></div>
                         </div>
                     </div>
