@@ -76,13 +76,13 @@
                         </small>
                         <div class="d-flex justify-content-between align-items-end">
                             <div class="bold me-2 text-muted">Share:</div>
-                            <a href="https://api.whatsapp.com/send?text={{ url()->current() }}">
+                            <a href="https://api.whatsapp.com/send?text=https://cv.lokersulawesi.com/lowongan/{{ $job['slug'] }}" target="_blank">
                                 <i class="text-success fa-brands fa-whatsapp" style="font-size: 20px"></i>
                             </a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" class="mx-2">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://cv.lokersulawesi.com/lowongan/{{ $job['slug'] }}" class="mx-2" target="_blank">
                                 <i class="text-info fa-brands fa-facebook" style="font-size: 20px"></i>
                             </a>
-                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ url()->current() }}">
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://cv.lokersulawesi.com/lowongan/{{ $job['slug'] }}" target="_blank">
                                 <i class="fa-brands fa-linkedin" style="font-size: 20px"></i>
                             </a>
                         </div>
