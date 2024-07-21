@@ -3,7 +3,7 @@
 
     // remove pendidikan, pengalaman, portofolio
     function removeFormCard(elem) {
-        elem.parentElement.remove();
+        elem.parentElement.parentElement.remove();
         saveDataForm();
     }
 
