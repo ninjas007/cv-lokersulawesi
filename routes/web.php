@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'JobController@index');
+
 Route::get('/lowongan', 'JobController@index');
 Route::get('/lowongan/{slug}', 'JobController@show');
 Route::get('/pasang-lowongan', 'JobController@pasangLowongan');
