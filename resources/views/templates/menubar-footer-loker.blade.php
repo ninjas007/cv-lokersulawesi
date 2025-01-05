@@ -11,7 +11,7 @@
                     <span class="color-2" style="font-size: 10px">Home</span>
                 </button>
             </a>
-            <a href="https://cv.lokersulawesi.com/cv-kerja" target="_blank">
+            <a href="{{ url('/cv-kerja') }}" target="_blank">
                 <button class="btn-menubar">
                     <i class="fa fa-pencil color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
                     <span class="color-2" style="font-size: 10px">Buat CV</span>
