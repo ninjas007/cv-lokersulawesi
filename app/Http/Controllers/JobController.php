@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use App\Job;
 
 class JobController extends Controller
 {
@@ -21,106 +22,143 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        while ($this->attempt < $this->maxRetries) {
-            try {
-                $client = new Client();
-                $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?per_page='.$this->perPage;
+        $jobs = Job::orderBy('publish_on')->limit($this->perPage)->offset($request->offset);
 
-                if ($request->has('offset')) {
-                    $endpoint .= '&offset='.$request->input('offset');
-                }
-
-                if ($request->keyword != '') {
-                    $endpoint .= '&search='.$request->input('keyword');
-                }
-
-                $response = $client->request('GET', $endpoint);
-                $res = $response->getBody()->getContents();
-
-                $result = collect(json_decode($res, true))->map(function ($item) {
-                    $jobTypes = $this->jobTypes($item['job-types']);
-                    return [
-                        // 'id' => $item['id'],
-                        'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
-                        'title' => $item['title']['rendered'] ?? '',
-                        'company' => $item['meta']['_company_name']  ?? 'Tidak diketahui',
-                        'location' => $item['meta']['_job_location'] != '' ? $item['meta']['_job_location'] : 'Tidak diketahui',
-                        'slug' => $item['slug'] ?? '',
-                        'job_types' => $jobTypes,
-                        'gaji' => $item['meta']['_job_salary'] != ''  ? 'Rp. '. $this->formatHuruf($item['meta']['_job_salary']) : '',
-                        'status' => $item['status'],
-                        'created_at' => $item['date'],
-                        'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
-                    ];
-                })
-                ->toArray();
-
-                if ($request->ajax()) {
-                    $viewHtml = view('jobs.list', [
-                        'jobs' => $result,
-                    ])->render();
-
-                    return response()->json([
-                        'jobs' => $viewHtml,
-                        'countJobs' => count($result),
-                    ], 200);
-                }
-
-                return view('jobs.index');
-            } catch (\Exception $e) {
-                $this->attempt++;
-                if ($this->attempt >= $this->maxRetries) {
-                    if (config('app.debug')) {
-                        return $e->getMessage();
-                    }
-
-                    return abort(500);
-                }
-            }
+        if ($request->keyword != '') {
+            $jobs = $jobs->where('title', 'like', '%'.$request->keyword.'%');
         }
+
+        $jobs = $jobs->get();
+
+        if ($request->ajax()) {
+            $viewHtml = view('jobs.list2', [
+                'jobs' => $jobs,
+            ])->render();
+
+            return response()->json([
+                'jobs' => $viewHtml,
+                'countJobs' => count($jobs),
+            ], 200);
+        }
+
+        return view('jobs.index2', [
+            'jobs' => $jobs
+        ]);
     }
 
     public function show(Request $request, $slug)
     {
-        while ($this->attempt < $this->maxRetries) {
-            try {
-                $client = new Client();
-                $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?slug='.$slug;
-                $response = $client->request('GET', $endpoint);
-                $res = $response->getBody()->getContents();
+        $job = Job::where('slug', $slug)->first();
 
-                $result = collect(json_decode($res, true))->transform(function ($item) {
-                    $jobTypes = $this->jobTypes($item['job-types']);
-                    return [
-                        'id' => $item['id'],
-                        'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
-                        'title' => $item['title']['rendered'] ?? '',
-                        'company' => $item['meta']['_company_name']  ?? 'Tidak Diketahui',
-                        'content' => $item['content']['rendered'] ?? '',
-                        'location' => $item['meta']['_job_location']  ?? 'Seluruh Sulawesi',
-                        'yoast_head' => $item['yoast_head'] ?? '',
-                        'slug' => $item['slug'] ?? '',
-                        'job_types' => $jobTypes,
-                        'status' => $item['status'],
-                        'created_at' => $item['date'],
-                        'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
-                    ];
-                })
-                ->first();
-
-                return view('jobs.show', ['job' => $result]);
-            } catch (\Exception $e) {
-                $this->attempt++;
-                if ($this->attempt >= $this->maxRetries) {
-                    if (config('app.debug')) {
-                        return $e->getMessage();
-                    }
-
-                    return '<div class="alert alert-danger">Server Error</div>';
-                }
-            }
+        if (!$job) {
+            abort(404);
         }
+
+        return view('jobs.show', ['job' => $job]);
     }
+
+    // public function index(Request $request)
+    // {
+    //     while ($this->attempt < $this->maxRetries) {
+    //         try {
+    //             $client = new Client();
+    //             $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?per_page='.$this->perPage;
+
+    //             if ($request->has('offset')) {
+    //                 $endpoint .= '&offset='.$request->input('offset');
+    //             }
+
+    //             if ($request->keyword != '') {
+    //                 $endpoint .= '&search='.$request->input('keyword');
+    //             }
+
+    //             $response = $client->request('GET', $endpoint);
+    //             $res = $response->getBody()->getContents();
+
+    //             $result = collect(json_decode($res, true))->map(function ($item) {
+    //                 $jobTypes = $this->jobTypes($item['job-types']);
+    //                 return [
+    //                     // 'id' => $item['id'],
+    //                     'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
+    //                     'title' => $item['title']['rendered'] ?? '',
+    //                     'company' => $item['meta']['_company_name']  ?? 'Tidak diketahui',
+    //                     'location' => $item['meta']['_job_location'] != '' ? $item['meta']['_job_location'] : 'Tidak diketahui',
+    //                     'slug' => $item['slug'] ?? '',
+    //                     'job_types' => $jobTypes,
+    //                     'gaji' => $item['meta']['_job_salary'] != ''  ? 'Rp. '. $this->formatHuruf($item['meta']['_job_salary']) : '',
+    //                     'status' => $item['status'],
+    //                     'created_at' => $item['date'],
+    //                     'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
+    //                 ];
+    //             })
+    //             ->toArray();
+
+    //             if ($request->ajax()) {
+    //                 $viewHtml = view('jobs.list', [
+    //                     'jobs' => $result,
+    //                 ])->render();
+
+    //                 return response()->json([
+    //                     'jobs' => $viewHtml,
+    //                     'countJobs' => count($result),
+    //                 ], 200);
+    //             }
+
+    //             return view('jobs.index');
+    //         } catch (\Exception $e) {
+    //             $this->attempt++;
+    //             if ($this->attempt >= $this->maxRetries) {
+    //                 if (config('app.debug')) {
+    //                     return $e->getMessage();
+    //                 }
+
+    //                 return abort(500);
+    //             }
+    //         }
+    //     }
+    // }
+
+    // public function show(Request $request, $slug)
+    // {
+    //     while ($this->attempt < $this->maxRetries) {
+    //         try {
+    //             $client = new Client();
+    //             $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?slug='.$slug;
+    //             $response = $client->request('GET', $endpoint);
+    //             $res = $response->getBody()->getContents();
+
+    //             $result = collect(json_decode($res, true))->transform(function ($item) {
+    //                 $jobTypes = $this->jobTypes($item['job-types']);
+    //                 return [
+    //                     'id' => $item['id'],
+    //                     'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
+    //                     'title' => $item['title']['rendered'] ?? '',
+    //                     'company' => $item['meta']['_company_name']  ?? 'Tidak Diketahui',
+    //                     'content' => $item['content']['rendered'] ?? '',
+    //                     'location' => $item['meta']['_job_location']  ?? 'Seluruh Sulawesi',
+    //                     'yoast_head' => $item['yoast_head'] ?? '',
+    //                     'slug' => $item['slug'] ?? '',
+    //                     'job_types' => $jobTypes,
+    //                     'status' => $item['status'],
+    //                     'created_at' => $item['date'],
+    //                     'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
+    //                 ];
+    //             })
+    //             ->first();
+
+    //             return view('jobs.show', ['job' => $result]);
+    //         } catch (\Exception $e) {
+    //             $this->attempt++;
+    //             if ($this->attempt >= $this->maxRetries) {
+    //                 if (config('app.debug')) {
+    //                     return $e->getMessage();
+    //                 }
+
+    //                 return '<div class="alert alert-danger">Server Error</div>';
+    //             }
+    //         }
+    //     }
+    // }
 
     public function pasangLowongan(Request $request)
     {

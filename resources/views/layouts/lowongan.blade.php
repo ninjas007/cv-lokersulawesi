@@ -4,22 +4,24 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:description">
-    <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi.jpeg') }}">
+    <meta property="og:description" content="@yield('description')">
+    {{-- keywords --}}
+    <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:site_name" content="https://lokersulawesi.com">
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
     <link rel="apple-touch-icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="180x180" />
 
+    <title>@yield('title', 'LOKER SULAWESI')</title>
 
     @yield('meta')
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Start MDBootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -212,7 +214,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
     <!-- MDB -->
     <script type="text/javascript" src="{{ asset('js/mdb.min.js') }}"></script>
 

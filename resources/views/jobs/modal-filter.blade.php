@@ -8,7 +8,7 @@
                 <div class="py-4">
                     <div class="form-group mb-3">
                         <label for="keyword">Kata Kunci</label>
-                        <input type="text" class="form-control" id="keyword" name="keyword" onkeypress="return handleKeyPress(event)" autofocus>
+                        <input type="text" class="form-control" id="keyword" name="keyword" onkeypress="return handleKeyPress(event)" autofocus="autofocus">
                     </div>
                     {{-- <div class="form-group">
                         <label for="type">Tipe</label>
