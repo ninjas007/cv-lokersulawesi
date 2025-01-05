@@ -20,7 +20,7 @@
             <a href="https://lokersulawesi.com/surat" target="_blank">
                 <button class="btn-menubar">
                     <i class="fa fa-list color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
-                    <span class="color-2" style="font-size: 10px">Surat Lainnya</span>
+                    <span class="color-2" style="font-size: 10px">Surat</span>
                 </button>
             </a>
             <a href="{{ url('about') }}">
