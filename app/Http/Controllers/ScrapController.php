@@ -83,7 +83,7 @@ class ScrapController extends Controller
 
     }
 
-    private function jobstreet()
+    public function jobstreet()
     {
         // Membuat instance browser
         $browser = new HttpBrowser(HttpClient::create());
