@@ -50,4 +50,4 @@ Route::prefix('order')->group(function() {
 Route::get('/akun/transaksi', 'UserController@transaksi');
 Route::post('/payments/midtrans-notification', 'PaymentCallbackController@receive');
 
-Route::get('/scrap', 'ScrapController@index');
+// Route::get('/scrap', 'ScrapController@index');
