@@ -13,6 +13,9 @@
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
     <link rel="apple-touch-icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="180x180" />
 
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543298433003530"
+     crossorigin="anonymous"></script>
+
     <title>@yield('title', 'LOKER SULAWESI')</title>
 
     @yield('meta')
