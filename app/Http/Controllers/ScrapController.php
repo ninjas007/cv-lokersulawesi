@@ -83,13 +83,13 @@ class ScrapController extends Controller
 
     }
 
-    public function jobstreet()
+    public function jobstreet($url = 'https://id.jobstreet.com/id/jobs/in-Sulawesi-Selatan?daterange=7')
     {
         // Membuat instance browser
         $browser = new HttpBrowser(HttpClient::create());
 
         // Mengunduh dan mem-parsing HTML dari halaman target
-        $crawler = $browser->request('GET', 'https://id.jobstreet.com/id/jobs/in-Sulawesi-Selatan?daterange=7');
+        $crawler = $browser->request('GET', $url);
 
         $jobs = [];
 

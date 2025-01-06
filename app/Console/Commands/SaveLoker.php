@@ -40,7 +40,16 @@ class SaveLoker extends Command
     public function handle()
     {
         try {
-            app(\App\Http\Controllers\ScrapController::class)->jobstreet();
+            $urls = [
+                'https://id.jobstreet.com/id/jobs/in-Sulawesi-Selatan?daterange=7',
+                'https://id.jobstreet.com/id/jobs/in-sulawesi-tenggara?daterange=7',
+                'https://id.jobstreet.com/id/jobs/in-sulawesi-tengah?daterange=7',
+                'https://id.jobstreet.com/id/jobs/in-manado?daterange=7'
+            ];
+
+            foreach ($urls as $url) {
+                app(\App\Http\Controllers\ScrapController::class)->jobstreet($url);
+            }
             // app(\App\Http\Controllers\ScrapController::class)->glints();
         } catch (\Exception $e) {
             if (config('app.debug')) {
