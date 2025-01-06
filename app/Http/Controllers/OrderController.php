@@ -121,7 +121,7 @@ class OrderController extends Controller
         $itemDetails = [
             [
                 'id' => $latestIdOrder,
-                'price' => $price,
+                'price' => 10000,
                 'quantity' => 1,
                 'name' => 'Order CV Kerja',
             ],
@@ -136,7 +136,7 @@ class OrderController extends Controller
         return [
             'item_details' => $itemDetails,
             'customer_details' => $customerDetails,
-            'price' => $price,
+            'price' => 10000,
             'latest_order_id' => $latestIdOrder
         ];
     }
