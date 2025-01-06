@@ -10,7 +10,7 @@
             <div class="col-9 d-flex flex-column">
                 <a href="{{ url('lowongan') }}/{{ $job->slug }}">
                     <div class="d-flex justify-content-between">
-                        <div class="text-muted mb-3 bold h5">
+                        <div class="text-muted mb-3 bold h5" style="word-break: break-all">
                             {!! ucfirst($job->title) !!}
                         </div>
                         {{-- <div>
