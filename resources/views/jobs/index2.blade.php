@@ -23,7 +23,7 @@
                 <div class="carousel-inner">
                     <!-- Single item -->
                     <div class="carousel-item">
-                        <img src="https://awsimages.detik.net.id/community/media/visual/2022/11/20/rijsttafel-indonesia-2.jpeg?w=1200"
+                        <img src="banner1.jpg"
                             class="d-block w-100" alt="Image 1" style="max-height: 150px; object-fit: cover">
                         <div class="carousel-caption">
                             <div class="text-info title-banner mb-md-1">LOKER SULAWESI</div>
@@ -33,7 +33,7 @@
 
                     <!-- Single item -->
                     <div class="carousel-item active">
-                        <img src="https://e1.pxfuel.com/desktop-wallpaper/758/101/desktop-wallpaper-medicadventurer%E2%84%A2-on-wonderful-indonesia-wonderful-indonesia.jpg"
+                        <img src="banner2.jpeg"
                             class="d-block w-100" alt="Image 2" style="max-height: 150px; object-fit: cover">
                         <div class="carousel-caption caption-2">
                             <p>Buat CV impianmu secara profesional di Loker Sulawesi dengan lebih mudah
