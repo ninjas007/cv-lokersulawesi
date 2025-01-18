@@ -23,7 +23,7 @@
                 <div class="carousel-inner">
                     <!-- Single item -->
                     <div class="carousel-item">
-                        <img src="{{ asset('assets/images') }}/banner1.jpg"
+                        <img src="{{ asset('assets/images') }}/test.jpg"
                             class="d-block w-100" alt="Image 1" style="max-height: 150px; object-fit: cover">
                         <div class="carousel-caption">
                             <div class="text-info title-banner mb-md-1">LOKER SULAWESI</div>
@@ -33,12 +33,12 @@
 
                     <!-- Single item -->
                     <div class="carousel-item active">
-                        <img src="{{ asset('assets/images') }}/banner2.jpeg"
+                        <img src="{{ asset('assets/images') }}/test.jpg"
                             class="d-block w-100" alt="Image 2" style="max-height: 150px; object-fit: cover">
                         <div class="carousel-caption caption-2">
                             <p>Buat CV impianmu secara profesional di Loker Sulawesi dengan lebih mudah
                             </p>
-                            <a href="https://cv.lokersulawesi.com/cv-kerja" target="_blank" class="btn btn-info btn-sm">
+                            <a href="https://lokersulawesi.com/cv-kerja" target="_blank" class="btn btn-info btn-sm">
                                 CV Loker Sulawesi
                             </a>
                         </div>
