@@ -144,7 +144,6 @@ class ScrapController extends Controller
                 return;
             }
 
-
             $jobs[] = [
                 'slug' => $slug,
                 'title' => $jobTitle ?? '',
@@ -158,6 +157,7 @@ class ScrapController extends Controller
                 'created_at' => now(),
                 'description' => $deskripsiJob ?? '',
                 'link_url' => $linkUrl ?? '',
+                'publish_on_date' => $this->dateConvert($dateText)
             ];
 
             // $slug = Str::slug($jobTitle);
@@ -180,6 +180,21 @@ class ScrapController extends Controller
         return $jobs;
     }
 
+
+    public function dateConvert($dateText)
+    {
+        $dateConvert = explode(' ', $dateText);
+        $numberTime = $dateConvert[0];
+        if ($dateConvert[1] == 'hari') {
+            $date = date('Y-m-d H:i:s', strtotime('-' . $numberTime . ' days'));
+        } else if ($dateConvert[1] == 'jam') {
+            $date = date('Y-m-d H:i:s', strtotime('-' . $numberTime . ' hours'));
+        } else {
+            $date = date('Y-m-d H:i:s');
+        }
+
+        return Carbon::parse($date);
+    }
 
     // CATATAN
 

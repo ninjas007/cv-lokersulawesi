@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    @include('templates.loading')
+    {{-- @include('templates.loading') --}}
 
     <div class="row">
         <div class="col-12">

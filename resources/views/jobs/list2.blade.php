@@ -43,7 +43,7 @@
                 <div class="mt-auto">
                     <div class="d-flex justify-content-between align-items-end">
                         <small class="text-muted">
-                            Dipublikasikan {{ $job->publish_on }}
+                            Dipublikasikan {{ $job->publish_on_date ? \Carbon\Carbon::parse($job->publish_on_date)->diffForHumans() : $job->publish_on }}
                         </small>
                         <div class="btn btn-info btn-sm" title="Bagikan Lowongan" data-toggle="modal"
                             data-target="#share" onclick="showModal(`{{ url('lowongan') }}/{{ $job->slug }}`)">
