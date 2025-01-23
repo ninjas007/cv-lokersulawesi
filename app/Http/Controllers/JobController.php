@@ -22,7 +22,7 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        $jobs = Job::orderBy('publish_on_date')->limit($this->perPage)->offset($request->offset);
+        $jobs = Job::orderBy('publish_on_date', 'desc')->limit($this->perPage)->offset($request->offset);
 
         if ($request->keyword != '') {
             $jobs = $jobs->where('title', 'like', '%'.$request->keyword.'%');
