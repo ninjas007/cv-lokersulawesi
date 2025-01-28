@@ -26,6 +26,9 @@ class Kernel extends ConsoleKernel
     {
         // every 24 hours
         $schedule->command('app:save-loker')->every24Hours();
+
+        // every 7 days
+        $schedule->command('app:delete-loker')->weekly();
     }
 
     /**
