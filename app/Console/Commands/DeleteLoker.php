@@ -38,7 +38,7 @@ class DeleteLoker extends Command
     public function handle()
     {
         // Hapus loker yang sudah lebih dari 7 hari
-        $loker = \App\Job::where('created_at', '<', now()->subDays(3))->get();
+        $loker = \App\Job::where('created_at', '<', now()->subDays(7))->get();
 
         foreach ($loker as $l) {
             // hard delete
