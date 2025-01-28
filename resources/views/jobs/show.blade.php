@@ -78,7 +78,7 @@
                 <div class="card-footer border-0">
                     <div class="d-flex justify-content-between align-items-end">
                         <small class="text-muted bold">
-                            Dipublikasikan {{ $job->publish_on }}
+                            Dipublikasikan {{ $job->publish_on_date ? \Carbon\Carbon::parse($job->publish_on_date)->diffForHumans() : $job->publish_on }}
                         </small>
                         <div class="d-flex justify-content-between align-items-end">
                             <div class="bold me-2 text-muted">Share:</div>
