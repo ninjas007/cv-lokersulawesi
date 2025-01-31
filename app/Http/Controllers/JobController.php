@@ -90,44 +90,106 @@ class JobController extends Controller
         $job->save();
     }
 
-    public function postToLinkedin($job)
+    public function postToLinkedinWithoutDescription($job)
     {
-        $textDescription = $this->formatText($job->company_name, $job->description, $job->title);
         $client = new Client();
-        $response = $client->request('POST', 'https://api.linkedin.com/v2/ugcPosts', [
+        $response = $client->request('POST', 'https://api.linkedin.com/v2/shares', [
             'headers' => [
                 'Authorization' => 'Bearer ' . env('LINKEDIN_ACCESS_TOKEN'),
                 'X-Restli-Protocol-Version' => '2.0.0',
                 'Content-Type' => 'application/json',
             ],
             'json' => [
-                'author' => 'urn:li:person:sAQ_4I23Xp',
-                'lifecycleState' => 'PUBLISHED',
-                'specificContent' => [
-                    'com.linkedin.ugc.ShareContent' => [
-                        'shareCommentary' => [
-                            'text' => $textDescription,
-                        ],
-                        'shareMediaCategory' => 'ARTICLE',
-                        'media' => [
-                            [
-                                'status' => 'READY',
-                                'description' => [
-                                    'text' => $job->company_name . ' - ' . $job->title,
-                                ],
-                                'originalUrl' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
-                                'title' => [
-                                    'text' => $job->company_name . ' - ' . $job->title,
-                                ],
-                            ],
-                        ],
+                'owner' => 'urn:li:person:sAQ_4I23Xp', // Sesuaikan dengan LinkedIn ID
+                'subject' => $job->company_name . ' - ' . $job->title,
+                'text' => [
+                    'text' => $job->company_name . ' Sedang Membutuhkan: ' . $job->title
+                ],
+                'content' => [
+                    'contentEntities' => [
+                        [
+                            'entityLocation' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
+                            'thumbnails' => [
+                                [
+                                    'resolvedUrl' =>  $job->image
+                                ]
+                            ]
+                        ]
                     ],
-                ],
-                'visibility' => [
-                    'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC',
-                ],
+                    'title' => $job->company_name . ' - ' . $job->title
+                ]
             ],
         ]);
+
+        return $response->getBody();
+    }
+
+    public function postToLinkedin($job)
+    {
+        $textDescription = $this->formatText($job->company_name, $job->description, $job->title);
+        $client = new Client();
+        $response = $client->request('POST', 'https://api.linkedin.com/v2/shares', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('LINKEDIN_ACCESS_TOKEN'),
+                'X-Restli-Protocol-Version' => '2.0.0',
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'owner' => 'urn:li:person:sAQ_4I23Xp', // Sesuaikan dengan LinkedIn ID
+                'subject' => $job->company_name . ' - ' . $job->title,
+                'text' => [
+                    'text' => $textDescription
+                ],
+                'content' => [
+                    'contentEntities' => [
+                        [
+                            'entityLocation' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
+                            'thumbnails' => [
+                                [
+                                    'resolvedUrl' =>  $job->image
+                                ]
+                            ]
+                        ]
+                    ],
+                    'title' => $job->company_name . ' - ' . $job->title
+                ]
+            ],
+        ]);
+
+        // $response = $client->request('POST', 'https://api.linkedin.com/v2/ugcPosts', [
+        //     'headers' => [
+        //         'Authorization' => 'Bearer ' . env('LINKEDIN_ACCESS_TOKEN'),
+        //         'X-Restli-Protocol-Version' => '2.0.0',
+        //         'Content-Type' => 'application/json',
+        //     ],
+        //     'json' => [
+        //         'author' => 'urn:li:person:sAQ_4I23Xp',
+        //         'lifecycleState' => 'PUBLISHED',
+        //         'specificContent' => [
+        //             'com.linkedin.ugc.ShareContent' => [
+        //                 'shareCommentary' => [
+        //                     'text' => $textDescription,
+        //                 ],
+        //                 'shareMediaCategory' => 'ARTICLE',
+        //                 'media' => [
+        //                     [
+        //                         'status' => 'READY',
+        //                         'description' => [
+        //                             'text' => $job->company_name . ' - ' . $job->title,
+        //                         ],
+        //                         'originalUrl' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
+        //                         'title' => [
+        //                             'text' => $job->company_name . ' - ' . $job->title,
+        //                         ],
+        //                     ],
+        //                 ],
+        //             ],
+        //         ],
+        //         'visibility' => [
+        //             'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC',
+        //         ],
+        //     ],
+        // ]);
 
         return $response->getBody();
     }
@@ -151,6 +213,9 @@ class JobController extends Controller
 
         // Replace <p> tags with a newline
         $text = preg_replace('/<p>(.*?)<\/p>/', "$1\n", $text);
+
+        // Replace &nbsp; with a newline
+        $text = preg_replace('/&nbsp;/', "\n\n", $text);
 
         // Remove any remaining HTML tags
         $text = strip_tags($text);

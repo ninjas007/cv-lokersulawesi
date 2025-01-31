@@ -44,7 +44,8 @@ class SaveLoker extends Command
                 'https://id.jobstreet.com/id/jobs/in-Sulawesi-Selatan?daterange=7',
                 'https://id.jobstreet.com/id/jobs/in-sulawesi-tenggara?daterange=7',
                 'https://id.jobstreet.com/id/jobs/in-sulawesi-tengah?daterange=7',
-                'https://id.jobstreet.com/id/jobs/in-manado?daterange=7'
+                'https://id.jobstreet.com/id/jobs/in-manado?daterange=7',
+                'https://id.jobstreet.com/id/jobs-in-information-communication-technology?daterange=7&subclassification=6282%2C6284%2C6287%2C6289%2C6290%2C6288%2C6291%2C6302%2C6303%2C6293%2C6294%2C6292%2C6283%2C6286'
             ];
 
             foreach ($urls as $url) {
