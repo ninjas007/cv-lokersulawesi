@@ -25,7 +25,7 @@ class JobController extends Controller
         $jobs = Job::orderBy('publish_on_date', 'desc')->limit($this->perPage)->offset($request->offset);
 
         if ($request->keyword != '') {
-            $jobs = $jobs->where('title', 'like', '%'.$request->keyword.'%');
+            $jobs = $jobs->where('title', 'like', '%' . $request->keyword . '%');
         }
 
         $jobs = $jobs->get();
@@ -57,222 +57,111 @@ class JobController extends Controller
         return view('jobs.show', ['job' => $job]);
     }
 
-    // public function index(Request $request)
-    // {
-    //     while ($this->attempt < $this->maxRetries) {
-    //         try {
-    //             $client = new Client();
-    //             $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?per_page='.$this->perPage;
-
-    //             if ($request->has('offset')) {
-    //                 $endpoint .= '&offset='.$request->input('offset');
-    //             }
-
-    //             if ($request->keyword != '') {
-    //                 $endpoint .= '&search='.$request->input('keyword');
-    //             }
-
-    //             $response = $client->request('GET', $endpoint);
-    //             $res = $response->getBody()->getContents();
-
-    //             $result = collect(json_decode($res, true))->map(function ($item) {
-    //                 $jobTypes = $this->jobTypes($item['job-types']);
-    //                 return [
-    //                     // 'id' => $item['id'],
-    //                     'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
-    //                     'title' => $item['title']['rendered'] ?? '',
-    //                     'company' => $item['meta']['_company_name']  ?? 'Tidak diketahui',
-    //                     'location' => $item['meta']['_job_location'] != '' ? $item['meta']['_job_location'] : 'Tidak diketahui',
-    //                     'slug' => $item['slug'] ?? '',
-    //                     'job_types' => $jobTypes,
-    //                     'gaji' => $item['meta']['_job_salary'] != ''  ? 'Rp. '. $this->formatHuruf($item['meta']['_job_salary']) : '',
-    //                     'status' => $item['status'],
-    //                     'created_at' => $item['date'],
-    //                     'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
-    //                 ];
-    //             })
-    //             ->toArray();
-
-    //             if ($request->ajax()) {
-    //                 $viewHtml = view('jobs.list', [
-    //                     'jobs' => $result,
-    //                 ])->render();
-
-    //                 return response()->json([
-    //                     'jobs' => $viewHtml,
-    //                     'countJobs' => count($result),
-    //                 ], 200);
-    //             }
-
-    //             return view('jobs.index');
-    //         } catch (\Exception $e) {
-    //             $this->attempt++;
-    //             if ($this->attempt >= $this->maxRetries) {
-    //                 if (config('app.debug')) {
-    //                     return $e->getMessage();
-    //                 }
-
-    //                 return abort(500);
-    //             }
-    //         }
-    //     }
-    // }
-
-    // public function show(Request $request, $slug)
-    // {
-    //     while ($this->attempt < $this->maxRetries) {
-    //         try {
-    //             $client = new Client();
-    //             $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/job-listings?slug='.$slug;
-    //             $response = $client->request('GET', $endpoint);
-    //             $res = $response->getBody()->getContents();
-
-    //             $result = collect(json_decode($res, true))->transform(function ($item) {
-    //                 $jobTypes = $this->jobTypes($item['job-types']);
-    //                 return [
-    //                     'id' => $item['id'],
-    //                     'image' => $item['yoast_head_json']['og_image'][0]['url'] ?? asset('assets/images/default-lowongan.png'),
-    //                     'title' => $item['title']['rendered'] ?? '',
-    //                     'company' => $item['meta']['_company_name']  ?? 'Tidak Diketahui',
-    //                     'content' => $item['content']['rendered'] ?? '',
-    //                     'location' => $item['meta']['_job_location']  ?? 'Seluruh Sulawesi',
-    //                     'yoast_head' => $item['yoast_head'] ?? '',
-    //                     'slug' => $item['slug'] ?? '',
-    //                     'job_types' => $jobTypes,
-    //                     'status' => $item['status'],
-    //                     'created_at' => $item['date'],
-    //                     'publish_on' => Carbon::parse($item['date'])->diffForHumans(),
-    //                 ];
-    //             })
-    //             ->first();
-
-    //             return view('jobs.show', ['job' => $result]);
-    //         } catch (\Exception $e) {
-    //             $this->attempt++;
-    //             if ($this->attempt >= $this->maxRetries) {
-    //                 if (config('app.debug')) {
-    //                     return $e->getMessage();
-    //                 }
-
-    //                 return '<div class="alert alert-danger">Server Error</div>';
-    //             }
-    //         }
-    //     }
-    // }
-
-    public function pasangLowongan(Request $request)
+    public function getUserInfo()
     {
-        try {
-            // $client = new Client();
-            // $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/pages/7';
-            // $response = $client->request('GET', $endpoint);
-            // $res = $response->getBody()->getContents();
-
-
-            // $content = collect(json_decode($res));
-            // return view('jobs.test', [
-            //     'content' => $content['content']->rendered
-            // ]);
-            return view('jobs.pasang-lowongan', [
-                'jobTypes' => $this->jobTypes(),
-                'action' => 'https://lokersulawesi.com/wp-json/wp/v2/pages/7',
-            ]);
-        } catch (\Exception $e) {
-            if (config('app.debug')) {
-                return $e->getMessage();
-            }
-
-            return abort(500);
-        }
-    }
-
-    public function postLoker(Request $request)
-    {
-        $request->validate([
-            'nama_pekerjaan' => 'required',
-            'lokasi_pekerjaan' => 'required',
-            'tipe_pekerjaan' => 'required|in:2,3,4,5,6',
-            'deskripsi_pekerjaan' => 'required',
-            'gaji' => 'nullable|numeric',
-            'nama_perusahaan' => 'required',
-            // 'logo_perusahaan' => 'sometimes|image|mimes:jpeg,png,jpg|max:512',
-        ], [
-            'logo_perusahaan.max' => 'Ukuran gambar melebihi batas',
-            'nama_pekerjaan.required' => 'Tidak boleh kosong',
-            'lokasi_pekerjaan.required' => 'Tidak boleh kosong',
-            'gaji.numeric' => 'Gaji harus berupa angka',
-            'tipe_pekerjaan.required' => 'Tidak boleh kosong',
-            'deskripsi_pekerjaan.required' => 'Tidak boleh kosong',
-            'nama_perusahaan.required' => 'Tidak boleh kosong',
-            // 'logo_perusahaan.image' => 'File harus berupa gambar',
-            // 'logo_perusahaan.mimes' => 'File harus berupa jpeg, png, jpg',
-            'tipe_pekerjaan.in' => 'Tipe pekerjaan tidak valid',
+        $client = new Client();
+        $response = $client->request('GET', 'https://api.linkedin.com/v2/userinfo', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('LINKEDIN_ACCESS_TOKEN'),
+            ],
         ]);
 
-        $this->attempt = 0;
-
-        $username = 'tiliztiadi@gmail.com';
-        $password = 'Pa55w0rd1993!@#';
-        while ($this->attempt < $this->maxRetries) {
-           try {
-                $client = new Client();
-                $endpoint = 'https://lokersulawesi.com/wp-json/wp/v2/pages/7';
-                $response = $client->request('POST', $endpoint, [
-                    'password' => $password,
-                    'username' => $username,
-                ]);
-                $res = $response->getBody()->getContents();
-                // Proses $res sesuai kebutuhan
-            } catch (\GuzzleHttp\Exception\RequestException $e) {
-                // Penanganan kesalahan request
-                echo $e->getMessage();
-            } catch (\Exception $e) {
-                // Penanganan kesalahan umum
-                echo $e->getMessage();
-            }
-        }
+        return $response->getBody()->getContents();
     }
 
-    public function jobTypes($types = [])
+    public function getTokenLinkedin()
     {
-        $jobTypes = [
-            2 => [
-                "name" => 'Full Time',
-                "html_name" => '<div class="badge badge-success">Full Time</div>',
-                "slug" => "full-time",
+        $client = new Client();
+        $response = $client->request('POST', 'https://www.linkedin.com/oauth/v2/accessToken', [
+            'form_params' => [
+                'grant_type' => 'client_credentials',
+                'client_id' => env('LINKEDIN_CLIENT_ID'),
+                'client_secret' => env('LINKEDIN_CLIENT_SECRET'),
             ],
-            3 => [
-                "name" => 'Part Time',
-                "html_name" => '<div class="badge badge-info">Part Time</div>',
-                "slug" => "part-time",
-            ],
-            4 => [
-                "name" => 'Temporary',
-                "html_name" => '<div class="badge badge-warning">Temporary</div>',
-                "slug" => "temporary",
-            ],
-            5 => [
-                "name" => 'Freelance',
-                "html_name" => '<div class="badge badge-primary">Freelance</div>',
-                "slug" => "freelance",
-            ],
-            6 => [
-                "name" => 'Internship',
-                "html_name" => '<div class="badge badge-danger">Internship</div>',
-                "slug" => "internship",
-            ]
-        ];
+        ]);
 
-        if (count($types) > 0) {
-            $listType = [];
-            foreach ($types as $typeId) {
-                $listType[$typeId] = $jobTypes[$typeId];
-            }
+        return $response->getBody();
+    }
 
-            return $listType;
-        }
+    public function updatePostLinkedin($id)
+    {
+        $job = Job::find($id);
+        $job->post_linkedin = 1;
+        $job->save();
+    }
 
-        return $jobTypes;
+    public function postToLinkedin($job)
+    {
+        $textDescription = $this->formatText($job->company_name, $job->description, $job->title);
+        $client = new Client();
+        $response = $client->request('POST', 'https://api.linkedin.com/v2/ugcPosts', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . env('LINKEDIN_ACCESS_TOKEN'),
+                'X-Restli-Protocol-Version' => '2.0.0',
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'author' => 'urn:li:person:sAQ_4I23Xp',
+                'lifecycleState' => 'PUBLISHED',
+                'specificContent' => [
+                    'com.linkedin.ugc.ShareContent' => [
+                        'shareCommentary' => [
+                            'text' => $textDescription,
+                        ],
+                        'shareMediaCategory' => 'ARTICLE',
+                        'media' => [
+                            [
+                                'status' => 'READY',
+                                'description' => [
+                                    'text' => $job->title,
+                                ],
+                                'originalUrl' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
+                                'title' => [
+                                    'text' => $job->title,
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+                'visibility' => [
+                    'com.linkedin.ugc.MemberNetworkVisibility' => 'PUBLIC',
+                ],
+            ],
+        ]);
+
+        return $response->getBody();
+    }
+
+    private function formatText($company, $decription, $title)
+    {
+        // company name
+        $text1 = $company . "\n\n";
+
+        // title
+        $text1 .= "Sedang Membutuhkan: " . $title . "\n\n";
+
+        // Convert <strong> tags to bold with **
+        $text = preg_replace('/<strong>(.*?)<\/strong>/', "$1", $decription);
+
+        // Replace <li> tags with "- " and a newline
+        $text = preg_replace('/<li>(.*?)<\/li>/', "- $1\n", $text);
+
+        // Replace <ol>, <ul>, and </ol>, </ul> with a newline
+        $text = preg_replace('/<\/?(ol|ul)>/', '', $text);
+
+        // Replace <p> tags with a newline
+        $text = preg_replace('/<p>(.*?)<\/p>/', "$1\n", $text);
+
+        // Remove any remaining HTML tags
+        $text = strip_tags($text);
+
+        // Replace multiple newlines with a single newline
+        $text = preg_replace('/\n+/', "\n", $text);
+
+        // Trim leading and trailing whitespace
+        $text = trim($text);
+
+        return $text1 . $text;
     }
 
     private function formatHuruf($gaji)
@@ -300,9 +189,33 @@ class JobController extends Controller
     }
 }
 
-// List API
+// {
+//     "author": "urn:li:person:sAQ_4I23Xp",
+//     "lifecycleState": "PUBLISHED",
+//     "specificContent": {
+//         "com.linkedin.ugc.ShareContent": {
+//             "shareCommentary": {
+//                 "text": "Requirements:\n- Bachelor’s Degree in a food – related discipline, such as Food Science/Nutritional backgrounds, Microbiology, Chemistry, or Food Industry Management.\n- Junior Manager: Minimum 5 years working experience in the related field and Supervisor or Managerial Level. Willing to be placed HO Malang, Jawa Timur.\n- Supervisor: Minimum 3 years working experience in the related field and Supervisor or Managerial Level. Willing to be placed in Area Makassar, Sulawesi.\n- Have a good knowledge and experienced of Food Hygiene & Food Safety Standard, HACCP, and Halal\n- Good analytical thinking, good team player with interpersonal communication skills.\n\nJob Responsibilities:\n\nJunior Manager:\n- To responsible to lead QA Ops Supervisor (regional/national)\n- To create and improve new procedures, standards, and specifications aimed at meeting a company’s food quality goals in restaurant or operational scopes\n- To responsible to document food safety management & halal assurance system.\n- To develop and review quality and safety policies and manage audits by third-party inspectors.\n- Prepare reports on food safety & quality status to relay to CI & Food Safety Group Head and may keep records of all tests and inspections that have been conducted.\n- To evaluate the food safety complaints and ensuring appropriate corrective & preventive actions.\n- Implements training and awareness programs to ensure employees are up-to-date with food quality & safety systems and requirements (HACCP, Halal).\n\nSupervisor:\n- To supervise and lead QA Resto (west/east area)\n- To control and document the food safety management & halal assurance system in store\n- To inspect food products to ensure they are safe and of a high quality in store\n- To verify and evaluate food safety complaints and ensuring appropriate corrective & preventive actions in store\n- Implements training and awareness programs to ensure employees are up-to-date with food quality & safety systems and requirements (HACCP, Halal, etc)."
+//             },
+//             "shareMediaCategory": "ARTICLE",
+//             "media": [
+//                 {
+//                     "status": "READY",
+//                     "description": {
+//                         "text": "QA OPERATION & FOOD SAFETY SYSTEM"
+//                     },
+//                     "originalUrl": "https://lokersulawesi.com/lowongan/qa-operation-food-safety-system",
+//                     "title": {
+//                         "text": "QA OPERATION & FOOD SAFETY SYSTEM"
+//                     }
+//                 }
+//             ]
+//         }
+//     },
+//     "visibility": {
+//         "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC"
+//     }
+// }
 
-// https://lokersulawesi.com/wp-json/wp/v2/pages - pages
-// https://lokersulawesi.com/wp-json/wp/v2/job-listings - List Job
-// https://lokersulawesi.com/wp-json/wp/v2/job-types - List Job Types
-// https://lokersulawesi.com/wp-json/wp/v2/media/8310 - Gambar berdasarkan ID
+
+// List API

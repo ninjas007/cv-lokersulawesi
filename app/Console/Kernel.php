@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SaveLoker::class
+        Commands\SaveLoker::class,
+        Commands\DeleteLoker::class,
+        Commands\PushLinkedin::class
     ];
 
     /**
@@ -29,6 +31,9 @@ class Kernel extends ConsoleKernel
 
         // every 7 days
         $schedule->command('app:delete-loker')->weekly();
+
+        // every 3 hour
+        $schedule->command('app:push-linkedin')->everyThreeHours();
     }
 
     /**
