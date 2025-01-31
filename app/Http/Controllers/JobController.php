@@ -113,11 +113,11 @@ class JobController extends Controller
                             [
                                 'status' => 'READY',
                                 'description' => [
-                                    'text' => $job->title,
+                                    'text' => $job->company_name . ' - ' . $job->title,
                                 ],
                                 'originalUrl' => 'https://lokersulawesi.com/lowongan/' . $job->slug,
                                 'title' => [
-                                    'text' => $job->title,
+                                    'text' => $job->company_name . ' - ' . $job->title,
                                 ],
                             ],
                         ],
