@@ -24,7 +24,20 @@
     <meta property="og:image:height" content="100">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543298433003530"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B5XJWG70V3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-B5XJWG70V3');
+    </script>
 
     <title>@yield('title', 'LOKER SULAWESI')</title>
 

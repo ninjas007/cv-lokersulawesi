@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="https://cv.lokersulawesi.com">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543298433003530"
-     crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -34,9 +34,26 @@
     <link href="{{ asset('css/mdb.min.css') }}" rel="stylesheet" />
     <!-- End MDBootstrap -->
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543298433003530"
+        crossorigin="anonymous"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B5XJWG70V3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-B5XJWG70V3');
+    </script>
+
     <style>
         :root {
-            --width-page : 480px;
+            --width-page: 480px;
         }
 
         * {
@@ -274,7 +291,6 @@
                 $('#modalPilihTemplate').modal('hide');
             });
         }
-
     </script>
 </body>
 
