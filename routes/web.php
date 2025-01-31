@@ -10,6 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/sitemap.xml', function () {
+    return response()->file(public_path('sitemap.xml'));
+});
+
 Route::get('/surat', function() {
     return view('welcome');
 });
