@@ -13,6 +13,16 @@
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
     <link rel="apple-touch-icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="180x180" />
 
+    {{-- description meta --}}
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
+    <meta name="author" content="LOKER SULAWESI">
+
+    {{-- thumbnail meta --}}
+    <meta property="og:image" content="@yield('thumbnail')">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="100">
+
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5543298433003530"
      crossorigin="anonymous"></script>
 

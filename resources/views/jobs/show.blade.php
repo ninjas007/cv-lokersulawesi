@@ -2,7 +2,8 @@
 
 @section('description', `{{ $job->description }}`)
 @section('title', 'Loker Sulawesi - ' . strtoupper($job->title))
-@section('keywords', '')
+@section('keywords', `Lowongan Kerja, {{ $job->title }}, {{ $job->company_name }}, {{ $job->location }}`)
+@section('thumbnail', $job->image)
 
 @section('css')
     @include('jobs.style')
