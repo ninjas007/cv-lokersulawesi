@@ -38,7 +38,7 @@ class PushLinkedin extends Command
     public function handle()
     {
         try {
-            $jobs = \App\Job::where('post_linkedin', 0)->limit(5)->get();
+            $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(5)->get();
 
             if (count($jobs) == 0) {
                 return;
