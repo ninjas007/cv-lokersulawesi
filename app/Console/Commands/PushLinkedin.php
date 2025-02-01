@@ -14,7 +14,7 @@ class PushLinkedin extends Command
     protected $signature = 'app:push-linkedin';
 
     /**
-     * The console command description.W
+     * The console command description.
      *
      * @var string
      */
@@ -38,7 +38,7 @@ class PushLinkedin extends Command
     public function handle()
     {
         try {
-            $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(5)->get();
+            $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(8)->get();
 
             if (count($jobs) == 0) {
                 return;
@@ -51,8 +51,13 @@ class PushLinkedin extends Command
             foreach ($jobs as $job) {
                 $job->post_linkedin = 1;
                 $job->save();
-
-                app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
+                try {
+                    app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
+                } catch (\Exception $e) {
+                    // Menangani exception untuk setiap job tanpa menghentikan loop
+                    $this->error("Error posting job {$job->id}: " . $e->getMessage());
+                    continue; // Lanjutkan ke job berikutnya meskipun terjadi error
+                }
             }
 
             $this->info('Post to linkedin success');
