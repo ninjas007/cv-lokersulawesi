@@ -37,32 +37,28 @@ class PushLinkedin extends Command
      */
     public function handle()
     {
-        try {
-            $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(8)->get();
+        $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(8)->get();
 
-            if (count($jobs) == 0) {
-                return;
-            }
-
-            app(\App\Http\Controllers\JobController::class)->getUserInfo();
-
-            $this->info('Start post to linkedin');
-
-            foreach ($jobs as $job) {
-                $job->post_linkedin = 1;
-                $job->save();
-                try {
-                    app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
-                } catch (\Exception $e) {
-                    // Menangani exception untuk setiap job tanpa menghentikan loop
-                    $this->error("Error posting job {$job->id}: " . $e->getMessage());
-                    continue; // Lanjutkan ke job berikutnya meskipun terjadi error
-                }
-            }
-
-            $this->info('Post to linkedin success');
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
+        if (count($jobs) == 0) {
+            return;
         }
+
+        app(\App\Http\Controllers\JobController::class)->getUserInfo();
+
+        $this->info('Start post to linkedin');
+
+        foreach ($jobs as $job) {
+            $job->post_linkedin = 1;
+            $job->save();
+            try {
+                app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
+            } catch (\Exception $e) {
+                // Menangani exception untuk setiap job tanpa menghentikan loop
+                $this->error("Error posting job {$job->id}: " . $e->getMessage());
+                continue; // Lanjutkan ke job berikutnya meskipun terjadi error
+            }
+        }
+
+        $this->info('Post to linkedin success');
     }
 }
