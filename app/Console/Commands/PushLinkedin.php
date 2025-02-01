@@ -37,30 +37,27 @@ class PushLinkedin extends Command
      */
     public function handle()
     {
-        $jobs = \App\Job::where('post_linkedin', 0)->orderBy('created_at', 'desc')->limit(5)->get();
+        try {
+            $jobs = \App\Job::where('post_linkedin', 0)->orderBy('publish_on_date', 'desc')->limit(5)->get();
 
-        if (count($jobs) == 0) {
-            return;
-        }
-
-        $this->info('Start post to linkedin');
-
-        foreach ($jobs as $job) {
-            try {
-                app(\App\Http\Controllers\JobController::class)->getUserInfo();
-                app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
-
-                $job->post_linkedin = 1;
-                $job->save();
-            } catch (\Exception $e) {
-                app(\App\Http\Controllers\JobController::class)->postToLinkedinWithoutDescription($job);
-                $job->post_linkedin = 1;
-                $job->save();
-
-                $this->error($e->getMessage());
+            if (count($jobs) == 0) {
+                return;
             }
-        }
 
-        $this->info('Post to linkedin success');
+            app(\App\Http\Controllers\JobController::class)->getUserInfo();
+
+            $this->info('Start post to linkedin');
+
+            foreach ($jobs as $job) {
+                $job->post_linkedin = 1;
+                $job->save();
+
+                app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
+            }
+
+            $this->info('Post to linkedin success');
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+        }
     }
 }

@@ -127,6 +127,11 @@ class JobController extends Controller
     public function postToLinkedin($job)
     {
         $textDescription = $this->formatText($job->company_name, $job->description, $job->title);
+        $maxLength = 500;
+        if (strlen($textDescription) > $maxLength) {
+            $textDescription = substr($textDescription, 0, $maxLength) . ".... Lihat selengkapnya https://lokersulawesi.com/lowongan/" . $job->slug;
+        }
+
         $client = new Client();
         $response = $client->request('POST', 'https://api.linkedin.com/v2/shares', [
             'headers' => [
@@ -138,6 +143,7 @@ class JobController extends Controller
                 'owner' => 'urn:li:person:sAQ_4I23Xp', // Sesuaikan dengan LinkedIn ID
                 'subject' => $job->company_name . ' - ' . $job->title,
                 'text' => [
+                    // 'text' => 'Perusahaan ' . $job->company_name . ' sedang membutuhkan ' . $job->title
                     'text' => $textDescription
                 ],
                 'content' => [
