@@ -28,8 +28,14 @@
                     <div class="mb-2">
                         <div class="text-muted">
                             <i class="fa fa-map-marker"></i>
-                            {{ implode(',', json_decode($job->location, true)) }}
+                            @php
+                                $location = implode(', ', json_decode($job->location, true));
+                            @endphp
+                            {{ $location }}
                         </div>
+                        @if (strpos(strtolower($location), 'sulawesi') === false)
+                            <span class="badge badge-success mt-2 text-dark">Luar Sulawesi</span>
+                        @endif
                     </div>
                     @if ($job->salary != '')
                         <div class="mb-2">
