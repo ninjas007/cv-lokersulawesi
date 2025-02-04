@@ -45,7 +45,7 @@ class PushLinkedin extends Command
 
         app(\App\Http\Controllers\JobController::class)->getUserInfo();
 
-        $this->info('Start post to linkedin');
+        $this->info('Start post to social media');
 
         foreach ($jobs as $job) {
             $job->post_linkedin = 1;
@@ -54,11 +54,21 @@ class PushLinkedin extends Command
                 app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
             } catch (\Exception $e) {
                 // Menangani exception untuk setiap job tanpa menghentikan loop
-                $this->error("Error posting job {$job->id}: " . $e->getMessage());
+                $this->error("Error posting job linkedin {$job->id}: " . $e->getMessage());
+                continue; // Lanjutkan ke job berikutnya meskipun terjadi error
+            }
+
+            sleep(1);
+
+            try {
+                app(\App\Http\Controllers\JobController::class)->postToFacebook($job);
+            } catch (\Exception $e) {
+                // Menangani exception untuk setiap job tanpa menghentikan loop
+                $this->error("Error posting job facebook {$job->id}: " . $e->getMessage());
                 continue; // Lanjutkan ke job berikutnya meskipun terjadi error
             }
         }
 
-        $this->info('Post to linkedin success');
+        $this->info('Post to social media success');
     }
 }

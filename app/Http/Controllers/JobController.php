@@ -90,6 +90,23 @@ class JobController extends Controller
         $job->save();
     }
 
+    public function postToFacebook($job)
+    {
+        $client = new Client();
+        $response = $client->request('POST', 'https://graph.facebook.com/v22.0/116352099737875/photos', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+            ],
+            'json' => [
+                'access_token' => env('FACEBOOK_ACCESS_TOKEN_LONGTIME'),
+                'url' => $job->image,
+                'caption' => $job->company_name . ' Sedang Membutuhkan: ' . $job->title . '\n' . 'Selengkapnya https://lokersulawesi.com/lowongan/' . $job->slug . '\n'
+            ],
+        ]);
+
+        return $response->getBody();
+    }
+
     public function postToLinkedinWithoutDescription($job)
     {
         $client = new Client();
