@@ -2,7 +2,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home1/lokersul/cv.lokersulawesi.com/cv-lokersulawesi2/
+    - export DEPLOYPATH=/home1/lokersul/public_html/cv-lokersulawesi/
     - /bin/cp -R .vscode $DEPLOYPATH
     - /bin/cp -R assets $DEPLOYPATH
     - /bin/cp -R css $DEPLOYPATH

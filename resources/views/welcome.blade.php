@@ -25,7 +25,7 @@
     CV Maker Lokersulawesi.com. Dapatkan keunggulan di pasar kerja Sulawesi dengan alat CV terbaik kami.">
     <meta property="og:image" content="{{ asset('assets/photos/lokersulawesi.jpeg') }}">
     <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:site_name" content="https://cv.lokersulawesi.com">
+    <meta property="og:site_name" content="https://lokersulawesi.com">
 
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-32x32.jpeg') }}" sizes="32x32" />
     <link rel="icon" href="{{ asset('assets/photos/lokersulawesi-192x192.jpeg') }}" sizes="192x192" />
