@@ -52,19 +52,10 @@ class PushLinkedin extends Command
             $job->save();
             try {
                 app(\App\Http\Controllers\JobController::class)->postToLinkedin($job);
-            } catch (\Exception $e) {
-                // Menangani exception untuk setiap job tanpa menghentikan loop
-                $this->error("Error posting job linkedin {$job->id}: " . $e->getMessage());
-                continue; // Lanjutkan ke job berikutnya meskipun terjadi error
-            }
-
-            sleep(1);
-
-            try {
                 app(\App\Http\Controllers\JobController::class)->postToFacebook($job);
             } catch (\Exception $e) {
                 // Menangani exception untuk setiap job tanpa menghentikan loop
-                $this->error("Error posting job facebook {$job->id}: " . $e->getMessage());
+                $this->error(now() . "Error posting job {$job->id}: " . $e->getMessage());
                 continue; // Lanjutkan ke job berikutnya meskipun terjadi error
             }
         }
