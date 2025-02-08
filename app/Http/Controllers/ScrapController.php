@@ -48,13 +48,13 @@ class ScrapController extends Controller
         // $crawler->filter('[data-card-type="JobCard"]')->each(function ($node) use (&$jobs, $browser) {
 
         //     // Mengambil data setiap elemen pekerjaan
-        //     $companyLogo = $node->filter('.snwpn00[data-automation="company-logo-container"]')->filter('img')->extract(['src']);
-        //     $jobTitle = $node->filter('.snwpn00[data-automation="jobTitle"]')->text();
-        //     $companyName = $node->filter('.snwpn00[data-automation="jobCompany"]')->text();
-        //     $location = $node->filter('.snwpn00[data-automation="jobLocation"]')->each(function ($node) {
+        //     $companyLogo = $node->filter('._1fggenz0[data-automation="company-logo-container"]')->filter('img')->extract(['src']);
+        //     $jobTitle = $node->filter('._1fggenz0[data-automation="jobTitle"]')->text();
+        //     $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->text();
+        //     $location = $node->filter('._1fggenz0[data-automation="jobLocation"]')->each(function ($node) {
         //         return $node->text();
         //     });
-        //     $dateText = $node->filter('.snwpn00[data-automation="jobListingDate"]')->text();
+        //     $dateText = $node->filter('._1fggenz0[data-automation="jobListingDate"]')->text();
 
         //     // Mengambil link detail pekerjaan
         //     $detailJob = $node->filter('a[data-automation="job-list-item-link-overlay"]')->attr('href');
@@ -97,15 +97,15 @@ class ScrapController extends Controller
         $crawler->filter('[data-card-type="JobCard"]')->each(function ($node) use (&$jobs, $browser) {
 
             // Mengambil data setiap elemen pekerjaan
-            $companyLogo = $node->filter('.snwpn00[data-automation="company-logo-container"]');
+            $companyLogo = $node->filter('._1fggenz0[data-automation="company-logo-container"]');
             if (count($companyLogo->extract(['src'])) > 0) {
                 $companyLogo = $companyLogo->filter('img')->extract(['src']);
             } else {
                 $companyLogo = '';
             }
 
-            $jobTitle = $node->filter('.snwpn00[data-automation="jobTitle"]')->text();
-            $companyName = $node->filter('.snwpn00[data-automation="jobCompany"]')->extract(['title']);
+            $jobTitle = $node->filter('._1fggenz0[data-automation="jobTitle"]')->text();
+            $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->extract(['title']);
 
             // skip jika tidak punya company
             if (count($companyName) <= 0) {
@@ -120,11 +120,11 @@ class ScrapController extends Controller
                 return;
             }
 
-            $companyName = $node->filter('.snwpn00[data-automation="jobCompany"]')->text();
-            $location = $node->filter('.snwpn00[data-automation="jobLocation"]')->each(function ($node) {
+            $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->text();
+            $location = $node->filter('._1fggenz0[data-automation="jobLocation"]')->each(function ($node) {
                 return $node->text();
             });
-            $dateText = $node->filter('.snwpn00[data-automation="jobListingDate"]')->text();
+            $dateText = $node->filter('._1fggenz0[data-automation="jobListingDate"]')->text();
 
             // Mengambil link detail pekerjaan
             $detailJob = $node->filter('a[data-automation="job-list-item-link-overlay"]')->attr('href');
