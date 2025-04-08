@@ -44,6 +44,18 @@
                         </div>
                     </div>
 
+                    <div class="carousel-item">
+                        <img src="https://static1.freebitco.in/banners/728x90-3.png"
+                            class="d-block w-100" alt="Image 2" style="height: 150px;">
+                        <div class="carousel-caption caption-2">
+                            <p>Dapatkan bitcoin setiap jamnya gratis
+                            </p>
+                            <a href="https://freebitco.in/?r=1351077" target="_blank" class="btn btn-info btn-sm">
+                                Daftar Sekarang
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- Inner -->
 
@@ -75,6 +87,11 @@
     <div class="row pb-5">
         <div class="col-12 px-4" id="jobs">
 
+        </div>
+        <div class="col-12 px-4 mb-3">
+            <a href="https://freebitco.in/?r=1351077" target="_blank">
+                <img src="https://static1.freebitco.in/banners/468x60-3.png" class="img-fluid" alt="">
+            </a>
         </div>
         <div class="col-12 px-4">
             <button class="form-control btn btn-info" onclick="loadMore()" id="loadMore">

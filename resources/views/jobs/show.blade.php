@@ -111,7 +111,12 @@
     </div>
 
     <div class="row pb-2">
-        <div class="col-12 px-4 py-4">
+        <div class="col-12 px-4 mb-3 mt-3">
+            <a href="https://freebitco.in/?r=1351077" target="_blank">
+                <img src="https://static1.freebitco.in/banners/468x60-3.png" class="img-fluid" alt="">
+            </a>
+        </div>
+        <div class="col-12 px-4 mb-3">
             <a href="{{ url('/lowongan') }}" class="btn btn-info btn-lg form-control">
                 <i class="fa fa-arrow-left"></i> Kembali
             </a>
