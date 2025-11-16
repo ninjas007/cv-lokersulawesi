@@ -38,7 +38,7 @@
                         <div class="carousel-caption caption-2">
                             <p>Buat CV impianmu secara profesional di Loker Sulawesi dengan lebih mudah
                             </p>
-                            <a href="https://cv.lokersulawesi.com/cv-kerja" target="_blank" class="btn btn-info btn-sm">
+                            <a href="https://lokersulawesi.com/cv-kerja" target="_blank" class="btn btn-info btn-sm">
                                 CV Loker Sulawesi
                             </a>
                         </div>

@@ -43,7 +43,7 @@ class PushLinkedin extends Command
             return;
         }
 
-        app(\App\Http\Controllers\JobController::class)->getUserInfo();
+        // app(\App\Http\Controllers\JobController::class)->getUserInfoLinkedin();
 
         $this->info('Start post to social media');
 

@@ -1,6 +1,6 @@
 <nav class="navbar-wrap">
     <div class="menubar-footer">
-        <a href="{{ url('https://lokersulawesi.com') }}">
+        <a href="{{ url('/') }}">
             <button class="btn-menubar">
                 <i class="fa fa-home color-2" style="width: 24px; height: 24px; font-size: 20px"></i>
                 <span class="color-2" style="font-size: 10px">Loker</span>

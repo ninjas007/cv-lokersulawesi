@@ -48,13 +48,13 @@ class ScrapController extends Controller
         // $crawler->filter('[data-card-type="JobCard"]')->each(function ($node) use (&$jobs, $browser) {
 
         //     // Mengambil data setiap elemen pekerjaan
-        //     $companyLogo = $node->filter('._1fggenz0[data-automation="company-logo-container"]')->filter('img')->extract(['src']);
-        //     $jobTitle = $node->filter('._1fggenz0[data-automation="jobTitle"]')->text();
-        //     $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->text();
-        //     $location = $node->filter('._1fggenz0[data-automation="jobLocation"]')->each(function ($node) {
+        //     $companyLogo = $node->filter(''.$prefix.'[data-automation="company-logo-container"]')->filter('img')->extract(['src']);
+        //     $jobTitle = $node->filter(''.$prefix.'[data-automation="jobTitle"]')->text();
+        //     $companyName = $node->filter(''.$prefix.'[data-automation="jobCompany"]')->text();
+        //     $location = $node->filter(''.$prefix.'[data-automation="jobLocation"]')->each(function ($node) {
         //         return $node->text();
         //     });
-        //     $dateText = $node->filter('._1fggenz0[data-automation="jobListingDate"]')->text();
+        //     $dateText = $node->filter(''.$prefix.'[data-automation="jobListingDate"]')->text();
 
         //     // Mengambil link detail pekerjaan
         //     $detailJob = $node->filter('a[data-automation="job-list-item-link-overlay"]')->attr('href');
@@ -90,22 +90,24 @@ class ScrapController extends Controller
 
         // Mengunduh dan mem-parsing HTML dari halaman target
         $crawler = $browser->request('GET', $url);
+        $settings = DB::table('settings')->get()->keyBy('key');
+        $prefix = $settings['JOBSTREET_PREFIX']->value;
 
         $jobs = [];
 
         // $html = $crawler->html();
-        $crawler->filter('[data-card-type="JobCard"]')->each(function ($node) use (&$jobs, $browser) {
+        $crawler->filter('[data-card-type="JobCard"]')->each(function ($node) use (&$jobs, $browser, $prefix) {
 
             // Mengambil data setiap elemen pekerjaan
-            $companyLogo = $node->filter('._1fggenz0[data-automation="company-logo-container"]');
+            $companyLogo = $node->filter(''.$prefix.'[data-automation="company-logo-container"]');
             if (count($companyLogo->extract(['src'])) > 0) {
                 $companyLogo = $companyLogo->filter('img')->extract(['src']);
             } else {
                 $companyLogo = '';
             }
 
-            $jobTitle = $node->filter('._1fggenz0[data-automation="jobTitle"]')->text();
-            $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->extract(['title']);
+            $jobTitle = $node->filter(''.$prefix.'[data-automation="jobTitle"]')->text();
+            $companyName = $node->filter(''.$prefix.'[data-automation="jobCompany"]')->extract(['title']);
 
             // skip jika tidak punya company
             if (count($companyName) <= 0) {
@@ -120,11 +122,11 @@ class ScrapController extends Controller
                 return;
             }
 
-            $companyName = $node->filter('._1fggenz0[data-automation="jobCompany"]')->text();
-            $location = $node->filter('._1fggenz0[data-automation="jobLocation"]')->each(function ($node) {
+            $companyName = $node->filter(''.$prefix.'[data-automation="jobCompany"]')->text();
+            $location = $node->filter(''.$prefix.'[data-automation="jobLocation"]')->each(function ($node) {
                 return $node->text();
             });
-            $dateText = $node->filter('._1fggenz0[data-automation="jobListingDate"]')->text();
+            $dateText = $node->filter(''.$prefix.'[data-automation="jobListingDate"]')->text();
 
             // Mengambil link detail pekerjaan
             $detailJob = $node->filter('a[data-automation="job-list-item-link-overlay"]')->attr('href');
@@ -159,20 +161,6 @@ class ScrapController extends Controller
                 'link_url' => $linkUrl ?? '',
                 'publish_on_date' => $this->dateConvert($dateText)
             ];
-
-            // $slug = Str::slug($jobTitle);
-            // Job::where('slug', $slug)->where('title', $jobTitle)->firstOrCreate([
-            //     'slug' => $slug,
-            //     'title' => $jobTitle,
-            //     'company_name' => $companyName,
-            //     'location' => json_encode($location),
-            //     'image' => $companyLogo != '' ? $companyLogo[0] : null,
-            //     'job_types' => json_encode(['Full Time']),
-            //     'salary' => '',
-            //     'status' => '',
-            //     'publish_on' => $dateText,
-            //     'description' => $deskripsiJob
-            // ]);
         });
 
         DB::table('jobs')->insert($jobs);
@@ -195,184 +183,4 @@ class ScrapController extends Controller
 
         return Carbon::parse($date);
     }
-
-    // CATATAN
-
-//     tidak adakah library php yang seperti puppetter untuk membuka browser dan mencapture networknya?
-
-// ChatGPT said:
-// ChatGPT
-// Sayangnya, di PHP tidak ada library yang langsung setara dengan Puppeteer yang digunakan di Node.js untuk mengontrol browser secara langsung dan menangkap jaringan (network requests) dengan cara yang sama. Namun, ada beberapa alternatif yang bisa Anda coba untuk mengontrol browser dan menangani automasi web menggunakan PHP. Berikut adalah beberapa opsi yang bisa Anda pertimbangkan:
-
-// 1. PHP WebDriver (Selenium WebDriver)
-// Salah satu cara terbaik untuk mengontrol browser dan menangkap interaksi atau respons di PHP adalah dengan menggunakan Selenium WebDriver. Selenium mendukung berbagai bahasa pemrograman, termasuk PHP, dan memungkinkan Anda untuk berinteraksi dengan browser secara langsung (menggunakan browser seperti Chrome, Firefox, Safari, dll).
-
-// Anda perlu menginstal Selenium Server dan menjalankan browser dalam mode otomatis (headless atau tidak).
-// PHP WebDriver adalah binding PHP untuk Selenium, yang memungkinkan Anda mengontrol browser dan menangkap interaksi.
-// Langkah-langkah untuk menggunakan PHP WebDriver dengan Selenium:
-
-// Instal Selenium di server Anda. Anda bisa mengunduhnya dari situs resmi Selenium.
-
-// Instal library PHP WebDriver melalui Composer:
-
-// bash
-// Copy code
-// composer require facebook/webdriver
-// Gunakan kode berikut untuk mengontrol browser:
-
-// php
-// Copy code
-// <?php
-
-// require_once('vendor/autoload.php');
-
-// use Facebook\WebDriver\Chrome\ChromeOptions;
-// use Facebook\WebDriver\Remote\RemoteWebDriver;
-// use Facebook\WebDriver\Remote\DesiredCapabilities;
-
-// // Menyiapkan WebDriver untuk mengontrol browser
-// $options = new ChromeOptions();
-// $options->addArguments(["--headless", "--disable-gpu", "--no-sandbox"]);
-
-// $capabilities = DesiredCapabilities::chrome();
-// $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
-
-// // URL Selenium Server (misalnya, localhost:4444)
-// $driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
-
-// // Arahkan ke halaman yang diinginkan
-// $driver->get('https://www.example.com');
-
-// // Ambil HTML halaman atau data lainnya
-// echo $driver->getPageSource();
-
-// // Tutup driver setelah selesai
-// $driver->quit();
-// Keterbatasan: Meskipun Anda bisa mengontrol browser dengan cara ini, Selenium WebDriver tidak secara langsung menangkap request jaringan (network requests). Untuk menangkap request jaringan, Anda mungkin perlu menggunakan fitur tambahan seperti BrowserMob Proxy atau alat lain yang bisa diintegrasikan dengan Selenium.
-
-// 2. BrowserMob Proxy
-// BrowserMob Proxy adalah proxy yang dapat digunakan bersama dengan Selenium atau PHP untuk menangkap lalu lintas HTTP/HTTPS dari browser. Anda dapat menggunakannya untuk menganalisis dan menangkap data dari request atau respons jaringan.
-
-// Langkah-langkah menggunakan BrowserMob Proxy dengan PHP:
-
-// Anda perlu menginstal BrowserMob Proxy di sistem Anda. Anda dapat mengunduhnya dari situs BrowserMob.
-// Anda juga perlu menjalankan Selenium WebDriver dan mengonfigurasi BrowserMob Proxy untuk menangkap request.
-// Contoh kode dengan BrowserMob Proxy dan PHP WebDriver:
-
-// php
-// Copy code
-// require_once('vendor/autoload.php');
-
-// use Facebook\WebDriver\Chrome\ChromeOptions;
-// use Facebook\WebDriver\Remote\RemoteWebDriver;
-// use Facebook\WebDriver\Remote\DesiredCapabilities;
-// use BrowserMobProxy\Client as BrowserMobProxy;
-
-// // Setup BrowserMob Proxy
-// $proxy = new BrowserMobProxy('http://localhost:8080');
-// $proxy->newHar();  // Mulai perekaman request
-
-// // Setup WebDriver untuk menggunakan proxy
-// $options = new ChromeOptions();
-// $options->addArguments(["--headless", "--proxy-server=http://localhost:8080"]);
-
-// $capabilities = DesiredCapabilities::chrome();
-// $capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
-
-// $driver = RemoteWebDriver::create('http://localhost:4444/wd/hub', $capabilities);
-
-// // Mengunjungi halaman
-// $driver->get('https://www.example.com');
-
-// // Dapatkan request dan response dari proxy
-// $har = $proxy->getHar();
-// echo json_encode($har->log->entries);
-
-// // Tutup driver
-// $driver->quit();
-// Dengan ini, Anda bisa menangkap request dan response HTTP dari browser dan menganalisisnya.
-
-// 3. Puppeteer-Style PHP Alternatives:
-// Saat ini, tidak ada library PHP yang sebanding dengan Puppeteer dalam hal menangani browser dan interaksi dengan request jaringan.
-// Playwright adalah alternatif lain yang lebih modern dan lebih mirip dengan Puppeteer, namun tidak secara langsung didukung di PHP.
-// Kesimpulan:
-// Jika Anda ingin menggunakan PHP untuk menangkap request jaringan secara langsung, opsi terbaik adalah menggabungkan Selenium WebDriver dengan BrowserMob Proxy. Anda akan dapat mengontrol browser dan menangkap request jaringan yang terjadi selama proses rendering halaman.
-
-// Namun, jika tujuan Anda adalah meniru pengalaman Puppeteer secara langsung di PHP, Anda harus mempertimbangkan untuk menggabungkan beberapa alat atau bahkan menggunakan solusi yang berbasis Node.js seperti Puppeteer, jika memungkinkan.
-
-// Jika Anda membutuhkan penjelasan lebih lanjut tentang salah satu opsi ini, beri tahu saya!
-
-
-
-    // public function index()
-    // {
-    //     $browser = new HttpBrowser(HttpClient::create());
-
-    //     // download and parse the HTML of the target page
-    //     $crawler = $browser->request('GET', 'https://quotes.toscrape.com/');
-
-    //     // where to store the scraped data
-    //     $quotes = [];
-
-    //     // select all quote HTML elements on the page
-    //     $quote_html_elements = $crawler->filter('.quote');
-
-    //     // iterate over each quote HTML element and apply
-
-    //     // the scraping logic
-
-    //     foreach ($quote_html_elements as $quote_html_element) {
-
-    //         // create a new quote crawler
-
-    //         $quote_crawler = new Crawler($quote_html_element);
-
-    //         // perform the data extraction logic
-
-    //         $text_html_element = $quote_crawler->filter('.text');
-
-    //         $raw_text = $text_html_element->text();
-
-    //         // remove special characters from the raw text information
-
-    //         $text = str_replace(["\u{201c}", "\u{201d}"], '', $raw_text);
-
-    //         $author_html_element = $quote_crawler->filter('.author');
-
-    //         $author = $author_html_element->text();
-
-    //         $tag_html_elements = $quote_crawler->filter('.tag');
-
-    //         $tags = [];
-
-    //         foreach ($tag_html_elements as $tag_html_element) {
-
-    //             $tag = $tag_html_element->textContent;
-
-    //             $tags[] = $tag;
-    //         }
-
-    //         // create a new quote object
-
-    //         // with the scraped data
-
-    //         $quote = [
-
-    //             'text' => $text,
-
-    //             'author' => $author,
-
-    //             'tags' => $tags
-
-    //         ];
-
-    //         // add the quote object to the quotes array
-
-    //         $quotes[] = $quote;
-    //     }
-
-    //     // var_dump($quotes);
-
-    //     return response()->json(['quotes' => $quotes]);
-    // }
 }
